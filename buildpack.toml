@@ -1,0 +1,26 @@
+
+[buildpack]
+id = "org.cloudfoundry.buildpacks.go"
+name = "Golang Buildpack"
+version = "0.0.1"
+
+[[stacks]]
+id = "org.cloudfoundry.stacks.cflinuxfs3"
+
+[metadata]
+    include_files = [
+        "bin/build",
+        "bin/detect",
+        "buildpack.toml",
+        "go.mod",
+        "go.sum",
+    ]
+    pre_package = "./scripts/build.sh"
+
+[[metadata.dependencies]]
+id = "go"
+name = "Go"
+sha256 = "e68279204493307782c51105c3dd5254ab066d0b5d9aafa3ce3a2878ebbef53f"
+stacks = ["io.buildpacks.stacks.cflinuxfs3"]
+uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.12.4.linux-amd64-cflinuxfs3-e6827920.tar.gz"
+version = "1.12.4"

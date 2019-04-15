@@ -1,0 +1,100 @@
+package golang_test
+
+import (
+	"path/filepath"
+	"testing"
+
+	"github.com/cloudfoundry/go-cnb/golang"
+
+	"github.com/buildpack/libbuildpack/buildplan"
+	"github.com/sclevine/spec/report"
+
+	"github.com/cloudfoundry/libcfbuildpack/test"
+	. "github.com/onsi/gomega"
+	"github.com/sclevine/spec"
+)
+
+func TestUnitGolang(t *testing.T) {
+	spec.Run(t, "Golang", testGolang, spec.Report(report.Terminal{}))
+}
+
+func testGolang(t *testing.T, when spec.G, it spec.S) {
+	var (
+		f               *test.BuildFactory
+		stubNodeFixture = filepath.Join("testdata", "stub-golang.tar.gz")
+	)
+
+	it.Before(func() {
+		RegisterTestingT(t)
+		f = test.NewBuildFactory(t)
+		f.AddDependency(golang.Layer, stubNodeFixture)
+	})
+
+	when("node.NewContributor", func() {
+		it("returns true if a build plan exists", func() {
+			f.AddBuildPlan(golang.Layer, buildplan.Dependency{})
+
+			_, willContribute, err := golang.NewContributor(f.Build)
+			Expect(err).NotTo(HaveOccurred())
+			Expect(willContribute).To(BeTrue())
+		})
+
+		it("returns false if a build plan does not exist", func() {
+			_, willContribute, err := golang.NewContributor(f.Build)
+			Expect(err).NotTo(HaveOccurred())
+			Expect(willContribute).To(BeFalse())
+		})
+	})
+
+	when("Contribute", func() {
+		it("contributes node to the build and cache layer when included in the build plan", func() {
+			f.AddBuildPlan(golang.Layer, buildplan.Dependency{
+				Metadata: buildplan.Metadata{"build": true},
+			})
+
+			golangContributor, _, err := golang.NewContributor(f.Build)
+			Expect(err).NotTo(HaveOccurred())
+
+			Expect(golangContributor.Contribute()).To(Succeed())
+
+			layer := f.Build.Layers.Layer(golang.Layer)
+			Expect(layer).To(test.HaveLayerMetadata(true, true, false))
+		})
+
+		//it("writes default env vars, installs the golang dependency, writes profile scripts", func() {
+		//	f.AddBuildPlan(golang.Layer, buildplan.Dependency{})
+		//
+		//	golangContributor, _, err := golang.NewContributor(f.Build)
+		//	Expect(err).NotTo(HaveOccurred())
+		//
+		//	Expect(golangContributor.Contribute()).To(Succeed())
+		//
+		//	layer := f.Build.Layers.Layer(golang.Layer)
+		//	Expect(filepath.Join(layer.Root, "stub.txt")).To(BeARegularFile())
+		//})
+
+		//it("uses the default version when a version is not requested", func(){
+		//	f.AddDependencyWithVersion(golang.Layer, "0.9", filepath.Join("testdata", "stub-golang-default.tar.gz"))
+		//	f.SetDefaultVersion(golang.Layer, "0.9")
+		//	f.AddBuildPlan(golang.Layer, buildplan.Dependency{})
+		//
+		//	golangContributor, _, err := golang.NewContributor(f.Build)
+		//	Expect(err).NotTo(HaveOccurred())
+		//
+		//	Expect(golangContributor.Contribute()).To(Succeed())
+		//	layer := f.Build.Layers.Layer(golang.Layer)
+		//	Expect(layer).To(test.HaveLayerVersion("0.9"))
+		//})
+
+		//it("returns an error when unsupported version of golang is included in the build plan", func() {
+		//	f.AddBuildPlan(golang.Layer, buildplan.Dependency{
+		//		Version:  "9000.0.0",
+		//		Metadata: buildplan.Metadata{"launch": true},
+		//	})
+		//
+		//	_, shouldContribute, err := golang.NewContributor(f.Build)
+		//	Expect(err).To(HaveOccurred())
+		//	Expect(shouldContribute).To(BeFalse())
+		//})
+	})
+}
