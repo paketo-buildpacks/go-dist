@@ -2,6 +2,7 @@ package golang
 
 import (
 	"github.com/cloudfoundry/libcfbuildpack/build"
+	"github.com/cloudfoundry/libcfbuildpack/helper"
 	"github.com/cloudfoundry/libcfbuildpack/layers"
 )
 
@@ -24,7 +25,14 @@ func NewContributor(context build.Build) (Contributor, bool, error) {
 		return Contributor{}, false, err
 	}
 
-	dep, err := deps.Best(Layer, "", context.Stack)
+	version := plan.Version
+	if version == "" {
+		if version, err = context.Buildpack.DefaultVersion(Layer); err != nil {
+			return Contributor{}, false, err
+		}
+	}
+
+	dep, err := deps.Best(Layer, version, context.Stack)
 	if err != nil {
 		return Contributor{}, false, err
 	}
@@ -44,7 +52,8 @@ func NewContributor(context build.Build) (Contributor, bool, error) {
 
 func (c Contributor) Contribute() error {
 	return c.layer.Contribute(func(artifact string, layer layers.DependencyLayer) error {
-		return nil
+		layer.Logger.SubsequentLine("Expanding to %s", layer.Root)
+		return helper.ExtractTarGz(artifact, layer.Root, 1)
 	}, c.flags()...)
 }
 

@@ -20,14 +20,14 @@ func TestUnitGolang(t *testing.T) {
 
 func testGolang(t *testing.T, when spec.G, it spec.S) {
 	var (
-		f               *test.BuildFactory
-		stubNodeFixture = filepath.Join("testdata", "stub-golang.tar.gz")
+		f                 *test.BuildFactory
+		stubGolangFixture = filepath.Join("testdata", "stub-golang.tar.gz")
 	)
 
 	it.Before(func() {
 		RegisterTestingT(t)
 		f = test.NewBuildFactory(t)
-		f.AddDependency(golang.Layer, stubNodeFixture)
+		f.AddDependency(golang.Layer, stubGolangFixture)
 	})
 
 	when("node.NewContributor", func() {
@@ -61,40 +61,42 @@ func testGolang(t *testing.T, when spec.G, it spec.S) {
 			Expect(layer).To(test.HaveLayerMetadata(true, true, false))
 		})
 
-		//it("writes default env vars, installs the golang dependency, writes profile scripts", func() {
-		//	f.AddBuildPlan(golang.Layer, buildplan.Dependency{})
-		//
-		//	golangContributor, _, err := golang.NewContributor(f.Build)
-		//	Expect(err).NotTo(HaveOccurred())
-		//
-		//	Expect(golangContributor.Contribute()).To(Succeed())
-		//
-		//	layer := f.Build.Layers.Layer(golang.Layer)
-		//	Expect(filepath.Join(layer.Root, "stub.txt")).To(BeARegularFile())
-		//})
+		it("installs the golang dependency", func() {
+			f.AddBuildPlan(golang.Layer, buildplan.Dependency{})
 
-		//it("uses the default version when a version is not requested", func(){
-		//	f.AddDependencyWithVersion(golang.Layer, "0.9", filepath.Join("testdata", "stub-golang-default.tar.gz"))
-		//	f.SetDefaultVersion(golang.Layer, "0.9")
-		//	f.AddBuildPlan(golang.Layer, buildplan.Dependency{})
-		//
-		//	golangContributor, _, err := golang.NewContributor(f.Build)
-		//	Expect(err).NotTo(HaveOccurred())
-		//
-		//	Expect(golangContributor.Contribute()).To(Succeed())
-		//	layer := f.Build.Layers.Layer(golang.Layer)
-		//	Expect(layer).To(test.HaveLayerVersion("0.9"))
-		//})
+			golangContributor, _, err := golang.NewContributor(f.Build)
+			Expect(err).NotTo(HaveOccurred())
 
-		//it("returns an error when unsupported version of golang is included in the build plan", func() {
-		//	f.AddBuildPlan(golang.Layer, buildplan.Dependency{
-		//		Version:  "9000.0.0",
-		//		Metadata: buildplan.Metadata{"launch": true},
-		//	})
-		//
-		//	_, shouldContribute, err := golang.NewContributor(f.Build)
-		//	Expect(err).To(HaveOccurred())
-		//	Expect(shouldContribute).To(BeFalse())
-		//})
+			Expect(golangContributor.Contribute()).To(Succeed())
+
+			layer := f.Build.Layers.Layer(golang.Layer)
+			Expect(filepath.Join(layer.Root, "stub.txt")).To(BeARegularFile())
+		})
+
+		it("uses the default version when a version is not requested", func() {
+			f.AddDependencyWithVersion(golang.Layer, "0.9", filepath.Join("testdata", "stub-golang-default.tar.gz"))
+			f.SetDefaultVersion(golang.Layer, "0.9")
+			f.AddBuildPlan(golang.Layer, buildplan.Dependency{})
+
+			golangContributor, _, err := golang.NewContributor(f.Build)
+			Expect(err).NotTo(HaveOccurred())
+
+			Expect(golangContributor.Contribute()).To(Succeed())
+			layer := f.Build.Layers.Layer(golang.Layer)
+			Expect(layer).To(test.HaveLayerVersion("0.9"))
+
+			Expect(filepath.Join(layer.Root, "version-0.9.txt")).To(BeARegularFile())
+		})
+
+		it("returns an error when unsupported version of golang is included in the build plan", func() {
+			f.AddBuildPlan(golang.Layer, buildplan.Dependency{
+				Version:  "9000.0.0",
+				Metadata: buildplan.Metadata{"launch": true},
+			})
+
+			_, shouldContribute, err := golang.NewContributor(f.Build)
+			Expect(err).To(HaveOccurred())
+			Expect(shouldContribute).To(BeFalse())
+		})
 	})
 }
