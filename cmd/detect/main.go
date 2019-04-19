@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/cloudfoundry/go-cnb/golang"
 	"os"
+
+	"github.com/cloudfoundry/go-cnb/golang"
 
 	"github.com/buildpack/libbuildpack/buildplan"
 	"github.com/cloudfoundry/libcfbuildpack/detect"
@@ -27,6 +28,6 @@ func main() {
 func runDetect(context detect.Detect) (int, error) {
 	return context.Pass(buildplan.BuildPlan{
 		golang.Layer: buildplan.Dependency{
-		Metadata: buildplan.Metadata{"build": true, "launch": true},
-	}})
+			Metadata: buildplan.Metadata{"build": true, "launch": false},
+		}})
 }

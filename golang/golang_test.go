@@ -47,9 +47,9 @@ func testGolang(t *testing.T, when spec.G, it spec.S) {
 	})
 
 	when("Contribute", func() {
-		it("contributes node to the build and cache layer when included in the build plan", func() {
+		it("contributes golang to the build and cache layer when included in the build plan", func() {
 			f.AddBuildPlan(golang.Layer, buildplan.Dependency{
-				Metadata: buildplan.Metadata{"build": true},
+				Metadata: buildplan.Metadata{"build": true, "launch": true},
 			})
 
 			golangContributor, _, err := golang.NewContributor(f.Build)
@@ -58,7 +58,7 @@ func testGolang(t *testing.T, when spec.G, it spec.S) {
 			Expect(golangContributor.Contribute()).To(Succeed())
 
 			layer := f.Build.Layers.Layer(golang.Layer)
-			Expect(layer).To(test.HaveLayerMetadata(true, true, false))
+			Expect(layer).To(test.HaveLayerMetadata(true, true, true))
 		})
 
 		it("installs the golang dependency", func() {

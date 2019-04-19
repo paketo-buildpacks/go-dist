@@ -1,10 +1,11 @@
 package main
 
 import (
+	"testing"
+
 	"github.com/buildpack/libbuildpack/buildplan"
 	"github.com/buildpack/libbuildpack/detect"
 	"github.com/cloudfoundry/go-cnb/golang"
-	"testing"
 
 	. "github.com/onsi/gomega"
 
@@ -31,9 +32,9 @@ func testDetect(t *testing.T, when spec.G, it spec.S) {
 
 		Expect(f.Output).To(Equal(buildplan.BuildPlan{
 			golang.Layer: buildplan.Dependency{
-			Version:  "",
-			Metadata: buildplan.Metadata{"build": true, "launch": true},
-		}}))
+				Version:  "",
+				Metadata: buildplan.Metadata{"build": true, "launch": false},
+			}}))
 	})
 
 }
