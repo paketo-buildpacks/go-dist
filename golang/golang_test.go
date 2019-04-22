@@ -52,10 +52,8 @@ func testGolang(t *testing.T, when spec.G, it spec.S) {
 				Metadata: buildplan.Metadata{"build": true, "launch": true},
 			})
 
-			golangContributor, _, err := golang.NewContributor(f.Build)
+			_, _, err := golang.NewContributor(f.Build)
 			Expect(err).NotTo(HaveOccurred())
-
-			Expect(golangContributor.Contribute()).To(Succeed())
 
 			layer := f.Build.Layers.Layer(golang.Layer)
 			Expect(layer).To(test.HaveLayerMetadata(true, true, true))
