@@ -6,7 +6,7 @@ import (
 	"github.com/cloudfoundry/libcfbuildpack/layers"
 )
 
-const Layer = "go"
+const Dependency = "go"
 
 type Contributor struct {
 	layer              layers.DependencyLayer
@@ -15,7 +15,7 @@ type Contributor struct {
 }
 
 func NewContributor(context build.Build) (Contributor, bool, error) {
-	plan, wantLayer := context.BuildPlan[Layer]
+	plan, wantLayer := context.BuildPlan[Dependency]
 	if !wantLayer {
 		return Contributor{}, false, nil
 	}
@@ -27,12 +27,12 @@ func NewContributor(context build.Build) (Contributor, bool, error) {
 
 	version := plan.Version
 	if version == "" {
-		if version, err = context.Buildpack.DefaultVersion(Layer); err != nil {
+		if version, err = context.Buildpack.DefaultVersion(Dependency); err != nil {
 			return Contributor{}, false, err
 		}
 	}
 
-	dep, err := deps.Best(Layer, version, context.Stack)
+	dep, err := deps.Best(Dependency, version, context.Stack)
 	if err != nil {
 		return Contributor{}, false, err
 	}

@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/buildpack/libbuildpack/buildplan"
-	"github.com/cloudfoundry/go-cnb/golang"
 	"path/filepath"
 	"testing"
+
+	"github.com/buildpack/libbuildpack/buildplan"
+	"github.com/cloudfoundry/go-cnb/golang"
 
 	. "github.com/onsi/gomega"
 
@@ -21,7 +22,7 @@ func TestUnitBuild(t *testing.T) {
 func testBuild(t *testing.T, _ spec.G, it spec.S) {
 
 	var (
-		f *test.BuildFactory
+		f               *test.BuildFactory
 		stubNodeFixture = filepath.Join("testdata", "stub-golang.tar.gz")
 	)
 
@@ -38,15 +39,15 @@ func testBuild(t *testing.T, _ spec.G, it spec.S) {
 	})
 
 	it("adds the go layer if in the build plan", func() {
-		f.AddDependency(golang.Layer, stubNodeFixture)
-		f.AddBuildPlan(golang.Layer, buildplan.Dependency{
+		f.AddDependency(golang.Dependency, stubNodeFixture)
+		f.AddBuildPlan(golang.Dependency, buildplan.Dependency{
 			Metadata: buildplan.Metadata{"build": true},
 		})
 
 		code, err := runBuild(f.Build)
 		Expect(err).NotTo(HaveOccurred())
 		Expect(code).To(Equal(build.SuccessStatusCode))
-		goLayer := f.Build.Layers.Layer(golang.Layer)
+		goLayer := f.Build.Layers.Layer(golang.Dependency)
 		Expect(goLayer).To(test.HaveLayerMetadata(true, true, false))
 	})
 }

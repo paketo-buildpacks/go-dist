@@ -31,7 +31,7 @@ func testDetect(t *testing.T, when spec.G, it spec.S) {
 		Expect(code).To(Equal(detect.PassStatusCode))
 
 		Expect(f.Output).To(Equal(buildplan.BuildPlan{
-			golang.Layer: buildplan.Dependency{
+			golang.Dependency: buildplan.Dependency{
 				Version:  "",
 				Metadata: buildplan.Metadata{"build": true, "launch": false},
 			}}))

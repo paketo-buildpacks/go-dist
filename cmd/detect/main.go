@@ -27,7 +27,7 @@ func main() {
 
 func runDetect(context detect.Detect) (int, error) {
 	return context.Pass(buildplan.BuildPlan{
-		golang.Layer: buildplan.Dependency{
+		golang.Dependency: buildplan.Dependency{
 			Metadata: buildplan.Metadata{"build": true, "launch": false},
 		}})
 }
