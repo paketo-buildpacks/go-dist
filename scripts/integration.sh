@@ -19,9 +19,13 @@ export CNB_RUN_IMAGE=${CNB_RUN_IMAGE:-cfbuildpacks/cflinuxfs3-cnb-experimental:r
 docker pull $CNB_BUILD_IMAGE
 docker pull $CNB_RUN_IMAGE
 
+# Get GIT_TOKEN for github rate limiting
+GIT_TOKEN=${GIT_TOKEN:-"$(lpass show Shared-CF\ Buildpacks/concourse-private.yml | grep buildpacks-github-token | cut -d ' ' -f 2)"}
+export GIT_TOKEN
+
 echo "Run Buildpack Runtime Integration Tests"
 set +e
-go test ./integration/... -v -run Integration
+go test -timeout 0 -mod=vendor ./integration/... -v -run Integration
 exit_code=$?
 
 if [ "$exit_code" != "0" ]; then

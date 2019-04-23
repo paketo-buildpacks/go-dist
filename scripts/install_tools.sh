@@ -20,6 +20,18 @@ if [ "$#" -eq 1  ]; then
     PACK_VERSION="$1"
 fi
 
+
+install_pack_master() {
+    if [[ -f ".bin/pack" ]]; then return 0; fi
+
+    git clone https://github.com/buildpack/pack ./.bin/pack-repo
+    pushd .bin/pack-repo
+        go build -o ../pack ./cmd/pack/main.go
+    popd
+
+    rm -rf .bin/pack-repo
+}
+
 install_pack() {
     OS=$(uname -s)
 
@@ -53,7 +65,7 @@ install_pack() {
 install_packager () {
     if [ ! -f .bin/packager ]; then
         echo "installing packager in .bin directory"
-        go build -o .bin/packager github.com/dwillist/libcfbuildpack/packager
+        go build -o .bin/packager github.com/cloudfoundry/libcfbuildpack/packager
     fi
 }
 
@@ -75,18 +87,12 @@ expand() {
     rm $PACK_ARTIFACT
 }
 
-configure_pack() {
-    pack add-stack org.cloudfoundry.stacks.cflinuxfs3 \
-        --build-image cfbuildpacks/cflinuxfs3-cnb-experimental:build \
-        --run-image cfbuildpacks/cflinuxfs3-cnb-experimental:run || echo "Ignoring add stack error"
-}
 
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
 mkdir -p .bin
 export PATH=$(pwd)/.bin:$PATH
 
-install_pack
-configure_pack
+install_pack_master
 install_packager
 
