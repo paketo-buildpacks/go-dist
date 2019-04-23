@@ -2,7 +2,13 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
+	"path/filepath"
+
+	"github.com/cloudfoundry/libcfbuildpack/helper"
+
+	"gopkg.in/yaml.v2"
 
 	"github.com/cloudfoundry/go-cnb/golang"
 
@@ -26,8 +32,41 @@ func main() {
 }
 
 func runDetect(context detect.Detect) (int, error) {
+	buildpackYAMLPath := filepath.Join(context.Application.Root, "buildpack.yml")
+	exists, err := helper.FileExists(buildpackYAMLPath)
+	if err != nil {
+		return detect.FailStatusCode, err
+	}
+
+	version := context.BuildPlan[golang.Dependency].Version
+	if exists {
+		version, err = readBuildpackYamlVersion(buildpackYAMLPath)
+		if err != nil {
+			return detect.FailStatusCode, err
+		}
+	}
+
 	return context.Pass(buildplan.BuildPlan{
 		golang.Dependency: buildplan.Dependency{
+			Version:  version,
 			Metadata: buildplan.Metadata{"build": true, "launch": false},
 		}})
+}
+
+func readBuildpackYamlVersion(buildpackYAMLPath string) (string, error) {
+	buf, err := ioutil.ReadFile(buildpackYAMLPath)
+	if err != nil {
+		return "", err
+	}
+
+	config := struct {
+		Python struct {
+			Version string `yaml:"version"`
+		} `yaml:"golang"`
+	}{}
+	if err := yaml.Unmarshal(buf, &config); err != nil {
+		return "", err
+	}
+
+	return config.Python.Version, nil
 }
