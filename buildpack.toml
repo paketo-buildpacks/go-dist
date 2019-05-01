@@ -1,7 +1,7 @@
 
 [buildpack]
-id = "org.cloudfoundry.buildpacks.go"
-name = "Golang Buildpack"
+id = "org.cloudfoundry.go"
+name = "Go Buildpack"
 version = "0.0.1"
 
 [metadata]
