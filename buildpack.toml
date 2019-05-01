@@ -2,7 +2,7 @@
 [buildpack]
 id = "org.cloudfoundry.go"
 name = "Go Buildpack"
-version = "0.0.1"
+version = "0.0.2"
 
 [metadata]
 include_files = ["bin/build","bin/detect","buildpack.toml","go.mod","go.sum"]
