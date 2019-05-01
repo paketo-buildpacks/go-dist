@@ -2,7 +2,7 @@
 github.com/BurntSushi/toml
 # github.com/Masterminds/semver v1.4.2
 github.com/Masterminds/semver
-# github.com/buildpack/libbuildpack v1.13.0
+# github.com/buildpack/libbuildpack v1.14.0
 github.com/buildpack/libbuildpack/buildplan
 github.com/buildpack/libbuildpack/internal
 github.com/buildpack/libbuildpack/build
@@ -14,7 +14,7 @@ github.com/buildpack/libbuildpack/logger
 github.com/buildpack/libbuildpack/platform
 github.com/buildpack/libbuildpack/services
 github.com/buildpack/libbuildpack/stack
-# github.com/cloudfoundry/libcfbuildpack v1.51.0
+# github.com/cloudfoundry/libcfbuildpack v1.53.0
 github.com/cloudfoundry/libcfbuildpack/build
 github.com/cloudfoundry/libcfbuildpack/detect
 github.com/cloudfoundry/libcfbuildpack/helper
@@ -49,13 +49,13 @@ github.com/onsi/gomega/matchers/support/goraph/util
 # github.com/sclevine/spec v1.2.0
 github.com/sclevine/spec
 github.com/sclevine/spec/report
-# golang.org/x/net v0.0.0-20190420063019-afa5a82059c6
+# golang.org/x/net v0.0.0-20190424112056-4829fb13d2c6
 golang.org/x/net/html/charset
 golang.org/x/net/html
 golang.org/x/net/html/atom
-# golang.org/x/sys v0.0.0-20190422165155-953cdadca894
+# golang.org/x/sys v0.0.0-20190425145619-16072639606e
 golang.org/x/sys/unix
-# golang.org/x/text v0.3.0
+# golang.org/x/text v0.3.1
 golang.org/x/text/encoding
 golang.org/x/text/encoding/charmap
 golang.org/x/text/encoding/htmlindex
@@ -70,6 +70,8 @@ golang.org/x/text/encoding/unicode
 golang.org/x/text/language
 golang.org/x/text/internal/utf8internal
 golang.org/x/text/runes
+golang.org/x/text/internal/language
+golang.org/x/text/internal/language/compact
 golang.org/x/text/internal/tag
 # gopkg.in/yaml.v2 v2.2.2
 gopkg.in/yaml.v2
