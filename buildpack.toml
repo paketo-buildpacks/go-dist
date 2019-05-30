@@ -23,6 +23,7 @@ version = "1.10.7"
 
 [[metadata.dependencies]]
 id = "go"
+name = "Go"
 sha256 = "f57bb9f0b1e9c0407393afb4508453f2a1283a89daee99c0d3732e0ba827a889"
 stacks = ["org.cloudfoundry.stacks.cflinuxfs2"]
 uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.10.8.linux-amd64-cflinuxfs2-f57bb9f0.tar.gz"
@@ -30,6 +31,7 @@ version = "1.10.8"
 
 [[metadata.dependencies]]
 id = "go"
+name = "Go"
 sha256 = "c80a4f0dc4fa53119bf582aec47ced368ba1f4ca1e0773fc0010097bc9211622"
 stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
 uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.10.8.linux-amd64-cflinuxfs3-c80a4f0d.tar.gz"
@@ -37,6 +39,7 @@ version = "1.10.8"
 
 [[metadata.dependencies]]
 id = "go"
+name = "Go"
 sha256 = "a51895e02d00a7aa72c645a724cd43bf546af40c10df0cb193ff8266b6218ed6"
 stacks = ["org.cloudfoundry.stacks.cflinuxfs2"]
 uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.11.9.linux-amd64-cflinuxfs2-a51895e0.tar.gz"
@@ -44,6 +47,7 @@ version = "1.11.9"
 
 [[metadata.dependencies]]
 id = "go"
+name = "Go"
 sha256 = "4217f379920aae70b4086ee987884cd745ab6f0f2c82fdf88a184f77ae6b8c8d"
 stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
 uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.11.9.linux-amd64-cflinuxfs3-4217f379.tar.gz"
@@ -51,6 +55,7 @@ version = "1.11.9"
 
 [[metadata.dependencies]]
 id = "go"
+name = "Go"
 sha256 = "d82ad290db8548265283bfe9d8f8485ed2f13599b4256b3b10a9638e025a23de"
 stacks = ["org.cloudfoundry.stacks.cflinuxfs2"]
 uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.11.10.linux-amd64-cflinuxfs2-d82ad290.tar.gz"
@@ -58,6 +63,7 @@ version = "1.11.10"
 
 [[metadata.dependencies]]
 id = "go"
+name = "Go"
 sha256 = "ce35e1a2b3d9c45bd687bb99946fade14572d97793a8788e2436c1cfe860e5fe"
 stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
 uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.11.10.linux-amd64-cflinuxfs3-ce35e1a2.tar.gz"
@@ -65,6 +71,7 @@ version = "1.11.10"
 
 [[metadata.dependencies]]
 id = "go"
+name = "Go"
 sha256 = "1a6d80b16a845f6a9692857a5978c0d69a89b58af4d50f66209435beafb07b5b"
 stacks = ["org.cloudfoundry.stacks.cflinuxfs2"]
 uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.12.4.linux-amd64-cflinuxfs2-1a6d80b1.tar.gz"
@@ -72,6 +79,7 @@ version = "1.12.4"
 
 [[metadata.dependencies]]
 id = "go"
+name = "Go"
 sha256 = "e68279204493307782c51105c3dd5254ab066d0b5d9aafa3ce3a2878ebbef53f"
 stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
 uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.12.4.linux-amd64-cflinuxfs3-e6827920.tar.gz"
@@ -79,6 +87,7 @@ version = "1.12.4"
 
 [[metadata.dependencies]]
 id = "go"
+name = "Go"
 sha256 = "904d2357e20b5647bcdcf6b370f9d5a618deffce8bcbfbf4b56fb37f4c97032c"
 stacks = ["org.cloudfoundry.stacks.cflinuxfs2"]
 uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.12.5.linux-amd64-cflinuxfs2-904d2357.tar.gz"
@@ -86,6 +95,7 @@ version = "1.12.5"
 
 [[metadata.dependencies]]
 id = "go"
+name = "Go"
 sha256 = "7caf172bf643d63d63528d51cb3e530d3198baba1ba25e591a2f2b45eb1d6798"
 stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
 uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.12.5.linux-amd64-cflinuxfs3-7caf172b.tar.gz"
