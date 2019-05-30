@@ -49,8 +49,6 @@ github.com/onsi/gomega/matchers/support/goraph/util
 # github.com/sclevine/spec v1.2.0
 github.com/sclevine/spec
 github.com/sclevine/spec/report
-# github.com/spf13/cast v1.3.0
-github.com/spf13/cast
 # golang.org/x/net v0.0.0-20190522155817-f3200d17e092
 golang.org/x/net/html/charset
 golang.org/x/net/html
