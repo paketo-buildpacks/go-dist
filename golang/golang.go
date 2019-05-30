@@ -4,6 +4,7 @@ import (
 	"github.com/cloudfoundry/libcfbuildpack/build"
 	"github.com/cloudfoundry/libcfbuildpack/helper"
 	"github.com/cloudfoundry/libcfbuildpack/layers"
+	"github.com/spf13/cast"
 )
 
 const Dependency = "go"
@@ -38,14 +39,8 @@ func NewContributor(context build.Build) (Contributor, bool, error) {
 	}
 
 	contributor := Contributor{layer: context.Layers.DependencyLayer(dep)}
-
-	if _, ok := plan.Metadata["build"]; ok {
-		contributor.buildContribution = true
-	}
-
-	if _, ok := plan.Metadata["launch"]; ok {
-		contributor.launchContribution = true
-	}
+	contributor.buildContribution = cast.ToBool(plan.Metadata["build"])
+	contributor.launchContribution = cast.ToBool(plan.Metadata["launch"])
 
 	return contributor, true, nil
 }
