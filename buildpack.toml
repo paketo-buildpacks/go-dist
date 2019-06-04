@@ -8,8 +8,8 @@ version = "0.0.3"
 include_files = ["bin/build","bin/detect","buildpack.toml","go.mod","go.sum"]
 pre_package = "./scripts/build.sh"
 
-[metadata.default_versions]
-go = "1.12.4"
+[metadata.default-version]
+go = "1.10.*"
 
 [[metadata.dependencies]]
 id = "go"

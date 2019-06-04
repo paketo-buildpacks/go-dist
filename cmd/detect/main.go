@@ -60,7 +60,7 @@ func readBuildpackYamlVersion(buildpackYAMLPath string) (string, error) {
 	}
 
 	config := struct {
-		Python struct {
+		Golang struct {
 			Version string `yaml:"version"`
 		} `yaml:"golang"`
 	}{}
@@ -68,5 +68,5 @@ func readBuildpackYamlVersion(buildpackYAMLPath string) (string, error) {
 		return "", err
 	}
 
-	return config.Python.Version, nil
+	return config.Golang.Version, nil
 }
