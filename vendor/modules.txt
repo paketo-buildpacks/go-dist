@@ -14,7 +14,7 @@ github.com/buildpack/libbuildpack/logger
 github.com/buildpack/libbuildpack/platform
 github.com/buildpack/libbuildpack/services
 github.com/buildpack/libbuildpack/stack
-# github.com/cloudfoundry/libcfbuildpack v1.59.0
+# github.com/cloudfoundry/libcfbuildpack v1.60.0
 github.com/cloudfoundry/libcfbuildpack/build
 github.com/cloudfoundry/libcfbuildpack/detect
 github.com/cloudfoundry/libcfbuildpack/helper
@@ -49,6 +49,8 @@ github.com/onsi/gomega/matchers/support/goraph/util
 # github.com/sclevine/spec v1.2.0
 github.com/sclevine/spec
 github.com/sclevine/spec/report
+# github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8
+github.com/xi2/xz
 # golang.org/x/net v0.0.0-20190603091049-60506f45cf65
 golang.org/x/net/html/charset
 golang.org/x/net/html
