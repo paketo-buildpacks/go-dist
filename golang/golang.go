@@ -20,21 +20,9 @@ func NewContributor(context build.Build) (Contributor, bool, error) {
 		return Contributor{}, false, nil
 	}
 
-	deps, err := context.Buildpack.Dependencies()
+	dep, err := context.Buildpack.RuntimeDependency(Dependency, plan.Version, context.Stack)
 	if err != nil {
-		return Contributor{}, false, err
-	}
-
-	version := plan.Version
-	if version == "" {
-		if version, err = context.Buildpack.DefaultVersion(Dependency); err != nil {
 			return Contributor{}, false, err
-		}
-	}
-
-	dep, err := deps.Best(Dependency, version, context.Stack)
-	if err != nil {
-		return Contributor{}, false, err
 	}
 
 	contributor := Contributor{layer: context.Layers.DependencyLayer(dep)}
