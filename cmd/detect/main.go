@@ -37,7 +37,7 @@ func runDetect(context detect.Detect) (int, error) {
 
 	version := context.BuildPlan[golang.Dependency].Version
 	if exists {
-		version, err = helper.ReadBuildpackYamlVersion(buildpackYAMLPath, "golang")
+		version, err = helper.ReadBuildpackYamlVersion(buildpackYAMLPath, golang.Dependency)
 		if err != nil {
 			return detect.FailStatusCode, err
 		}

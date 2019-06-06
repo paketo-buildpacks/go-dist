@@ -64,7 +64,7 @@ func testDetect(t *testing.T, when spec.G, it spec.S) {
 			const version string = "1.2.3"
 
 			it.Before(func() {
-				buildpackYAMLString := fmt.Sprintf("golang:\n  version: %s", version)
+				buildpackYAMLString := fmt.Sprintf("go:\n  version: %s", version)
 				Expect(helper.WriteFile(filepath.Join(factory.Detect.Application.Root, "buildpack.yml"), 0666, buildpackYAMLString)).To(Succeed())
 			})
 
@@ -91,7 +91,7 @@ func testDetect(t *testing.T, when spec.G, it spec.S) {
 					Version: existingVersion,
 				})
 
-				buildpackYAMLString := fmt.Sprintf("golang:\n  version: %s", buildpackYAMLVersion)
+				buildpackYAMLString := fmt.Sprintf("go:\n  version: %s", buildpackYAMLVersion)
 				Expect(helper.WriteFile(filepath.Join(factory.Detect.Application.Root, "buildpack.yml"), 0666, buildpackYAMLString)).To(Succeed())
 			})
 
