@@ -14,7 +14,7 @@ github.com/buildpack/libbuildpack/logger
 github.com/buildpack/libbuildpack/platform
 github.com/buildpack/libbuildpack/services
 github.com/buildpack/libbuildpack/stack
-# github.com/cloudfoundry/libcfbuildpack v1.60.1-0.20190606150141-ab3efe642a22
+# github.com/cloudfoundry/libcfbuildpack v1.61.0
 github.com/cloudfoundry/libcfbuildpack/build
 github.com/cloudfoundry/libcfbuildpack/detect
 github.com/cloudfoundry/libcfbuildpack/helper
