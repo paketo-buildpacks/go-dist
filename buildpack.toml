@@ -65,23 +65,35 @@ version = "1.11.11"
 
 [[metadata.dependencies]]
 id = "go"
-name = "Go"
-sha256 = "e68279204493307782c51105c3dd5254ab066d0b5d9aafa3ce3a2878ebbef53f"
-source = "https://dl.google.com/go/go1.12.4.src.tar.gz"
-source_sha256 = "4affc3e610cd8182c47abbc5b0c0e4e3c6a2b945b55aaa2ba952964ad9df1467"
-stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
-uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.12.4.linux-amd64-cflinuxfs3-e6827920.tar.gz"
-version = "1.12.4"
+sha256 = "904d2357e20b5647bcdcf6b370f9d5a618deffce8bcbfbf4b56fb37f4c97032c"
+stacks = ["org.cloudfoundry.stacks.cflinuxfs2"]
+uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.12.5.linux-amd64-cflinuxfs2-904d2357.tar.gz"
+version = "1.12.5"
 
 [[metadata.dependencies]]
 id = "go"
-name = "Go"
 sha256 = "7caf172bf643d63d63528d51cb3e530d3198baba1ba25e591a2f2b45eb1d6798"
-source = "https://dl.google.com/go/go1.12.5.src.tar.gz"
-source_sha256 = "2aa5f088cbb332e73fc3def546800616b38d3bfe6b8713b8a6404060f22503e8"
 stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
 uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.12.5.linux-amd64-cflinuxfs3-7caf172b.tar.gz"
 version = "1.12.5"
+
+[[metadata.dependencies]]
+id = "go"
+sha256 = "75a8f165c577fec0faedffe98494df795a6a9e5039ab1daeacc00ca04f83fc38"
+source = "https://dl.google.com/go/go1.12.6.src.tar.gz"
+source_sha256 = "c96c5ccc7455638ae1a8b7498a030fe653731c8391c5f8e79590bce72f92b4ca"
+stacks = ["org.cloudfoundry.stacks.cflinuxfs2"]
+uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.12.6.linux-amd64-cflinuxfs2-75a8f165.tar.gz"
+version = "1.12.6"
+
+[[metadata.dependencies]]
+id = "go"
+sha256 = "888b9bf862b1c553ba0b69b0d25c4d29e04d3f7e24c96d8aff3e3141326d6044"
+source = "https://dl.google.com/go/go1.12.6.src.tar.gz"
+source_sha256 = "c96c5ccc7455638ae1a8b7498a030fe653731c8391c5f8e79590bce72f92b4ca"
+stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
+uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.12.6.linux-amd64-cflinuxfs3-888b9bf8.tar.gz"
+version = "1.12.6"
 
 [[stacks]]
 id = "org.cloudfoundry.stacks.cflinuxfs3"
