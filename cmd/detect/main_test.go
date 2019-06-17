@@ -82,6 +82,49 @@ func testDetect(t *testing.T, when spec.G, it spec.S) {
 			})
 		})
 
+		when("there is a buildpack.yml with additional values", func() {
+			const version string = "1.2.3"
+
+			it.Before(func() {
+				buildpackYAMLString := fmt.Sprintf("go:\n  version: %s\nfoo: bar", version)
+				Expect(helper.WriteFile(filepath.Join(factory.Detect.Application.Root, "buildpack.yml"), 0666, buildpackYAMLString)).To(Succeed())
+			})
+
+			it("should pass with the requested version of golang", func() {
+				code, err := runDetect(factory.Detect)
+				Expect(err).NotTo(HaveOccurred())
+				Expect(code).To(Equal(detect.PassStatusCode))
+
+				Expect(factory.Output).To(Equal(buildplan.BuildPlan{
+					golang.Dependency: buildplan.Dependency{
+						Version:  version,
+						Metadata: buildplan.Metadata{"build": true, "launch": false},
+					},
+				}))
+			})
+		})
+
+		when("there is a buildpack.yml with value related to another buildpack", func() {
+
+			it.Before(func() {
+				buildpackYAMLString := "foo: bar"
+				Expect(helper.WriteFile(filepath.Join(factory.Detect.Application.Root, "buildpack.yml"), 0666, buildpackYAMLString)).To(Succeed())
+			})
+
+			it("should pass with the requested version of golang", func() {
+				code, err := runDetect(factory.Detect)
+				Expect(err).NotTo(HaveOccurred())
+				Expect(code).To(Equal(detect.PassStatusCode))
+
+				Expect(factory.Output).To(Equal(buildplan.BuildPlan{
+					golang.Dependency: buildplan.Dependency{
+						Version:  "",
+						Metadata: buildplan.Metadata{"build": true, "launch": false},
+					},
+				}))
+			})
+		})
+
 		when("there is a is an existing version from the build plan and a buildpack.yml", func() {
 			const buildpackYAMLVersion string = "1.2.3"
 			const existingVersion string = "4.5.6"

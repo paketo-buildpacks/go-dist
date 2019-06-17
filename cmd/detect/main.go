@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"gopkg.in/yaml.v2"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 
@@ -37,7 +39,7 @@ func runDetect(context detect.Detect) (int, error) {
 
 	version := context.BuildPlan[golang.Dependency].Version
 	if exists {
-		version, err = helper.ReadBuildpackYamlVersion(buildpackYAMLPath, golang.Dependency)
+		version, err = readBuildpackYamlVersion(buildpackYAMLPath)
 		if err != nil {
 			return detect.FailStatusCode, err
 		}
@@ -48,4 +50,25 @@ func runDetect(context detect.Detect) (int, error) {
 			Version:  version,
 			Metadata: buildplan.Metadata{"build": true, "launch": false},
 		}})
+}
+
+type BuildpackYaml struct {
+	Go struct {
+		Version string `yaml:"version"`
+	} `yaml:"go"`
+}
+
+
+func readBuildpackYamlVersion(buildpackYAMLPath string) (string, error) {
+	buf, err := ioutil.ReadFile(buildpackYAMLPath)
+	if err != nil {
+		return "", err
+	}
+
+	config := BuildpackYaml{}
+	if err := yaml.Unmarshal(buf, &config); err != nil {
+		return "", err
+	}
+
+	return config.Go.Version, nil
 }
