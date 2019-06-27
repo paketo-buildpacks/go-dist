@@ -67,6 +67,7 @@ version = "1.12.5"
 
 [[metadata.dependencies]]
 id = "go"
+name = "Go"
 sha256 = "0319ec00e6b1eaaf21862da083f291b484fca175334c00c5a7a0a8ae7299ff3e"
 source = "https://dl.google.com/go/go1.12.6.src.tar.gz"
 source_sha256 = "c96c5ccc7455638ae1a8b7498a030fe653731c8391c5f8e79590bce72f92b4ca"
@@ -76,6 +77,7 @@ version = "1.12.6"
 
 [[metadata.dependencies]]
 id = "go"
+name = "Go"
 sha256 = "f67ab420493b30d0d4f0d36a7526169c93de55ae5cf8ceb73c7647a252fcf0f2"
 source = "https://dl.google.com/go/go1.12.6.src.tar.gz"
 source_sha256 = "c96c5ccc7455638ae1a8b7498a030fe653731c8391c5f8e79590bce72f92b4ca"
