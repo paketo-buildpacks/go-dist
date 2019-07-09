@@ -1,4 +1,5 @@
 .bin
-bin/
+/bin/
 *.tgz
 go-cnb_*
+/buildpack.toml
