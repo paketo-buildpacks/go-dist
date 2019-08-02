@@ -3,4 +3,3 @@
 *.tgz
 go-cnb_*
 go-compiler-cnb_*
-/buildpack.toml
