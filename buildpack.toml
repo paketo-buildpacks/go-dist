@@ -82,3 +82,4 @@ id = "org.cloudfoundry.stacks.cflinuxfs3"
 
 [[stacks]]
 id = "io.buildpacks.stacks.bionic"
+mixins = ["build:git", "build:build-essential"]
