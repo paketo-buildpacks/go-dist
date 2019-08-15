@@ -35,7 +35,7 @@ func runDetect(context detect.Detect) (int, error) {
 		return detect.FailStatusCode, err
 	}
 
-	version := context.BuildPlan[golang.Dependency].Version
+	version := ""
 	if exists {
 		bpYml := &BuildpackYaml{}
 		err = helper.ReadBuildpackYaml(buildpackYAMLPath, bpYml)
@@ -45,11 +45,14 @@ func runDetect(context detect.Detect) (int, error) {
 		version = bpYml.Go.Version
 	}
 
-	return context.Pass(buildplan.BuildPlan{
-		golang.Dependency: buildplan.Dependency{
-			Version:  version,
-			Metadata: buildplan.Metadata{"build": true, "launch": false},
-		}})
+	return context.Pass(buildplan.Plan{
+		Provides: []buildplan.Provided{{Name: golang.Dependency}},
+		Requires: []buildplan.Required{{
+				Name: golang.Dependency,
+				Version:  version,
+				Metadata: buildplan.Metadata{"build":  true, "launch": false},
+			}},
+		})
 }
 
 type BuildpackYaml struct {

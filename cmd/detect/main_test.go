@@ -8,7 +8,7 @@ import (
 	"github.com/cloudfoundry/libcfbuildpack/helper"
 
 	"github.com/buildpack/libbuildpack/buildplan"
-	"github.com/buildpack/libbuildpack/detect"
+	"github.com/cloudfoundry/libcfbuildpack/detect"
 	"github.com/cloudfoundry/go-cnb/golang"
 
 	. "github.com/onsi/gomega"
@@ -36,11 +36,15 @@ func testDetect(t *testing.T, when spec.G, it spec.S) {
 
 		Expect(code).To(Equal(detect.PassStatusCode))
 
-		Expect(factory.Output).To(Equal(buildplan.BuildPlan{
-			golang.Dependency: buildplan.Dependency{
-				Version:  "",
-				Metadata: buildplan.Metadata{"build": true, "launch": false},
-			}}))
+		provided := []buildplan.Provided{{Name: golang.Dependency}}
+		required := []buildplan.Required{{
+			Name:    golang.Dependency,
+			Version: "",
+			Metadata: buildplan.Metadata{"build": true, "launch": false},
+		}}
+
+		Expect(factory.Plans.Plan.Provides).To(Equal(provided))
+		Expect(factory.Plans.Plan.Requires).To(Equal(required))
 	})
 
 	when("testing versions", func() {
@@ -51,12 +55,16 @@ func testDetect(t *testing.T, when spec.G, it spec.S) {
 				Expect(err).NotTo(HaveOccurred())
 				Expect(code).To(Equal(detect.PassStatusCode))
 
-				Expect(factory.Output).To(Equal(buildplan.BuildPlan{
-					golang.Dependency: buildplan.Dependency{
-						Version:  "",
-						Metadata: buildplan.Metadata{"build": true, "launch": false},
-					},
-				}))
+				provided := []buildplan.Provided{{Name: golang.Dependency}}
+				required := []buildplan.Required{{
+					Name:    golang.Dependency,
+					Version: "",
+					Metadata: buildplan.Metadata{"build": true, "launch": false},
+				}}
+
+				Expect(factory.Plans.Plan.Provides).To(Equal(provided))
+				Expect(factory.Plans.Plan.Requires).To(Equal(required))
+
 			})
 		})
 
@@ -73,12 +81,15 @@ func testDetect(t *testing.T, when spec.G, it spec.S) {
 				Expect(err).NotTo(HaveOccurred())
 				Expect(code).To(Equal(detect.PassStatusCode))
 
-				Expect(factory.Output).To(Equal(buildplan.BuildPlan{
-					golang.Dependency: buildplan.Dependency{
-						Version:  version,
-						Metadata: buildplan.Metadata{"build": true, "launch": false},
-					},
-				}))
+				provided := []buildplan.Provided{{Name: golang.Dependency}}
+				required := []buildplan.Required{{
+					Name:    golang.Dependency,
+					Version: version,
+					Metadata: buildplan.Metadata{"build": true, "launch": false},
+				}}
+
+				Expect(factory.Plans.Plan.Provides).To(Equal(provided))
+				Expect(factory.Plans.Plan.Requires).To(Equal(required))
 			})
 		})
 
@@ -95,12 +106,15 @@ func testDetect(t *testing.T, when spec.G, it spec.S) {
 				Expect(err).NotTo(HaveOccurred())
 				Expect(code).To(Equal(detect.PassStatusCode))
 
-				Expect(factory.Output).To(Equal(buildplan.BuildPlan{
-					golang.Dependency: buildplan.Dependency{
-						Version:  version,
-						Metadata: buildplan.Metadata{"build": true, "launch": false},
-					},
-				}))
+				provided := []buildplan.Provided{{Name: golang.Dependency}}
+				required := []buildplan.Required{{
+					Name:    golang.Dependency,
+					Version: version,
+					Metadata: buildplan.Metadata{"build": true, "launch": false},
+				}}
+
+				Expect(factory.Plans.Plan.Provides).To(Equal(provided))
+				Expect(factory.Plans.Plan.Requires).To(Equal(required))
 			})
 		})
 
@@ -116,39 +130,16 @@ func testDetect(t *testing.T, when spec.G, it spec.S) {
 				Expect(err).NotTo(HaveOccurred())
 				Expect(code).To(Equal(detect.PassStatusCode))
 
-				Expect(factory.Output).To(Equal(buildplan.BuildPlan{
-					golang.Dependency: buildplan.Dependency{
-						Version:  "",
-						Metadata: buildplan.Metadata{"build": true, "launch": false},
-					},
-				}))
-			})
-		})
+				provided := []buildplan.Provided{{Name: golang.Dependency}}
+				required := []buildplan.Required{{
+					Name:    golang.Dependency,
+					Version: "",
+					Metadata: buildplan.Metadata{"build": true, "launch": false},
+				}}
 
-		when("there is a is an existing version from the build plan and a buildpack.yml", func() {
-			const buildpackYAMLVersion string = "1.2.3"
-			const existingVersion string = "4.5.6"
+				Expect(factory.Plans.Plan.Provides).To(Equal(provided))
+				Expect(factory.Plans.Plan.Requires).To(Equal(required))
 
-			it.Before(func() {
-				factory.AddBuildPlan(golang.Dependency, buildplan.Dependency{
-					Version: existingVersion,
-				})
-
-				buildpackYAMLString := fmt.Sprintf("go:\n  version: %s", buildpackYAMLVersion)
-				Expect(helper.WriteFile(filepath.Join(factory.Detect.Application.Root, "buildpack.yml"), 0666, buildpackYAMLString)).To(Succeed())
-			})
-
-			it("should pass with the requested version of golang defined in buildpack.yml", func() {
-				code, err := runDetect(factory.Detect)
-				Expect(err).NotTo(HaveOccurred())
-				Expect(code).To(Equal(detect.PassStatusCode))
-
-				Expect(factory.Output).To(Equal(buildplan.BuildPlan{
-					golang.Dependency: buildplan.Dependency{
-						Version:  buildpackYAMLVersion,
-						Metadata: buildplan.Metadata{"build": true, "launch": false},
-					},
-				}))
 			})
 		})
 	})

@@ -3,9 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/cloudfoundry/go-cnb/golang"
+	"github.com/cloudfoundry/libcfbuildpack/buildpackplan"
 	"os"
-
-	"github.com/buildpack/libbuildpack/buildplan"
 
 	"github.com/cloudfoundry/libcfbuildpack/build"
 )
@@ -27,7 +26,7 @@ func main() {
 }
 
 func runBuild(context build.Build) (int, error) {
-	context.Logger.FirstLine(context.Logger.PrettyIdentity(context.Buildpack))
+	context.Logger.Title(context.Buildpack)
 
 	goContributor, willContribute, err := golang.NewContributor(context)
 	if err != nil {
@@ -40,5 +39,5 @@ func runBuild(context build.Build) (int, error) {
 		}
 	}
 
-	return context.Success(buildplan.BuildPlan{})
+	return context.Success(buildpackplan.Plan{})
 }

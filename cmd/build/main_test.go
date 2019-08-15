@@ -1,10 +1,10 @@
 package main
 
 import (
+	"github.com/cloudfoundry/libcfbuildpack/buildpackplan"
 	"path/filepath"
 	"testing"
 
-	"github.com/buildpack/libbuildpack/buildplan"
 	"github.com/cloudfoundry/go-cnb/golang"
 
 	. "github.com/onsi/gomega"
@@ -40,8 +40,9 @@ func testBuild(t *testing.T, _ spec.G, it spec.S) {
 
 	it("adds the go layer if in the build plan", func() {
 		f.AddDependency(golang.Dependency, stubNodeFixture)
-		f.AddBuildPlan(golang.Dependency, buildplan.Dependency{
-			Metadata: buildplan.Metadata{"build": true},
+		f.AddPlan(buildpackplan.Plan{
+			Name: golang.Dependency,
+			Metadata: buildpackplan.Metadata{"build": true},
 		})
 
 		code, err := runBuild(f.Build)

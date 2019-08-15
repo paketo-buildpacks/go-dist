@@ -1,12 +1,12 @@
 package golang_test
 
 import (
+	"github.com/cloudfoundry/libcfbuildpack/buildpackplan"
 	"path/filepath"
 	"testing"
 
 	"github.com/cloudfoundry/go-cnb/golang"
 
-	"github.com/buildpack/libbuildpack/buildplan"
 	"github.com/sclevine/spec/report"
 
 	"github.com/cloudfoundry/libcfbuildpack/test"
@@ -32,7 +32,7 @@ func testGolang(t *testing.T, when spec.G, it spec.S) {
 
 	when("node.NewContributor", func() {
 		it("returns true if a build plan exists", func() {
-			f.AddBuildPlan(golang.Dependency, buildplan.Dependency{})
+			f.AddPlan(buildpackplan.Plan{Name: golang.Dependency})
 
 			_, willContribute, err := golang.NewContributor(f.Build)
 			Expect(err).NotTo(HaveOccurred())
@@ -47,9 +47,10 @@ func testGolang(t *testing.T, when spec.G, it spec.S) {
 	})
 
 	when("Contribute", func() {
-		it("contributes golang to the build and cache layer but not cachen layer when included in the build plan", func() {
-			f.AddBuildPlan(golang.Dependency, buildplan.Dependency{
-				Metadata: buildplan.Metadata{"build": true, "launch": false},
+		it("contributes golang to the build and launch layer but not cache layer when included in the build plan", func() {
+			f.AddPlan(buildpackplan.Plan{
+				Name: golang.Dependency,
+				Metadata: buildpackplan.Metadata{"build": true, "launch": false},
 			})
 
 			golangContributor, _, err := golang.NewContributor(f.Build)
@@ -62,7 +63,9 @@ func testGolang(t *testing.T, when spec.G, it spec.S) {
 		})
 
 		it("installs the golang dependency", func() {
-			f.AddBuildPlan(golang.Dependency, buildplan.Dependency{})
+			f.AddPlan(buildpackplan.Plan{
+				Name: golang.Dependency,
+			})
 
 			golangContributor, _, err := golang.NewContributor(f.Build)
 			Expect(err).NotTo(HaveOccurred())
@@ -76,7 +79,7 @@ func testGolang(t *testing.T, when spec.G, it spec.S) {
 		it("uses the default version when a version is not requested", func() {
 			f.AddDependencyWithVersion(golang.Dependency, "0.9", filepath.Join("testdata", "stub-golang-default.tar.gz"))
 			f.SetDefaultVersion(golang.Dependency, "0.9")
-			f.AddBuildPlan(golang.Dependency, buildplan.Dependency{})
+			f.AddPlan(buildpackplan.Plan{Name: golang.Dependency})
 
 			golangContributor, _, err := golang.NewContributor(f.Build)
 			Expect(err).NotTo(HaveOccurred())
@@ -89,9 +92,10 @@ func testGolang(t *testing.T, when spec.G, it spec.S) {
 		})
 
 		it("returns an error when unsupported version of golang is included in the build plan", func() {
-			f.AddBuildPlan(golang.Dependency, buildplan.Dependency{
+			f.AddPlan(buildpackplan.Plan{
+				Name: golang.Dependency,
 				Version:  "9000.0.0",
-				Metadata: buildplan.Metadata{"launch": true},
+				Metadata: buildpackplan.Metadata{"launch": true},
 			})
 
 			_, shouldContribute, err := golang.NewContributor(f.Build)
