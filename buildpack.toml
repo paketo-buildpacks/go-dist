@@ -16,7 +16,7 @@ go = "1.12.*"
 id = "go"
 name = "Go"
 sha256 = "14ec881815eb9e6618f95df5eb385d961283efc196d97912595ba6484a56180d"
-stacks = ["io.buildpacks.stacks.bionic"]
+stacks = ["io.buildpacks.stacks.bionic", "org.cloudfoundry.stacks.tiny"]
 uri = "https://dl.google.com/go/go1.11.12.linux-amd64.tar.gz"
 version = "1.11.12"
 
@@ -34,7 +34,7 @@ version = "1.11.12"
 id = "go"
 name = "Go"
 sha256 = "50fe8e13592f8cf22304b9c4adfc11849a2c3d281b1d7e09c924ae24874c6daa"
-stacks = ["io.buildpacks.stacks.bionic"]
+stacks = ["io.buildpacks.stacks.bionic", "org.cloudfoundry.stacks.tiny"]
 uri = "https://dl.google.com/go/go1.11.13.linux-amd64.tar.gz"
 version = "1.11.13"
 
@@ -52,7 +52,7 @@ version = "1.11.13"
 id = "go"
 name = "Go"
 sha256 = "bd26cd4962a362ed3c11835bca32c2e131c2ae050304f2c4df9fa6ded8db85d2"
-stacks = ["io.buildpacks.stacks.bionic"]
+stacks = ["io.buildpacks.stacks.bionic", "org.cloudfoundry.stacks.tiny"]
 uri = "https://dl.google.com/go/go1.12.8.linux-amd64.tar.gz"
 version = "1.12.8"
 
@@ -70,7 +70,7 @@ version = "1.12.8"
 id = "go"
 name = "Go"
 sha256 = "ac2a6efcc1f5ec8bdc0db0a988bb1d301d64b6d61b7e8d9e42f662fbb75a2b9b"
-stacks = ["io.buildpacks.stacks.bionic"]
+stacks = ["io.buildpacks.stacks.bionic", "org.cloudfoundry.stacks.tiny"]
 uri = "https://dl.google.com/go/go1.12.9.linux-amd64.tar.gz"
 version = "1.12.9"
 
@@ -102,3 +102,6 @@ id = "org.cloudfoundry.stacks.cflinuxfs3"
 [[stacks]]
 id = "io.buildpacks.stacks.bionic"
 mixins = ["build:git","build:build-essential"]
+
+[[stacks]]
+id = "org.cloudfoundry.stacks.tiny"
