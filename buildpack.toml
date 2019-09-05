@@ -16,7 +16,7 @@ go = "1.12.*"
 id = "go"
 name = "Go"
 sha256 = "14ec881815eb9e6618f95df5eb385d961283efc196d97912595ba6484a56180d"
-stacks = ["io.buildpacks.stacks.bionic", "org.cloudfoundry.stacks.tiny"]
+stacks = ["io.buildpacks.stacks.bionic","org.cloudfoundry.stacks.tiny"]
 uri = "https://dl.google.com/go/go1.11.12.linux-amd64.tar.gz"
 version = "1.11.12"
 
@@ -34,7 +34,7 @@ version = "1.11.12"
 id = "go"
 name = "Go"
 sha256 = "50fe8e13592f8cf22304b9c4adfc11849a2c3d281b1d7e09c924ae24874c6daa"
-stacks = ["io.buildpacks.stacks.bionic", "org.cloudfoundry.stacks.tiny"]
+stacks = ["io.buildpacks.stacks.bionic","org.cloudfoundry.stacks.tiny"]
 uri = "https://dl.google.com/go/go1.11.13.linux-amd64.tar.gz"
 version = "1.11.13"
 
@@ -52,7 +52,7 @@ version = "1.11.13"
 id = "go"
 name = "Go"
 sha256 = "bd26cd4962a362ed3c11835bca32c2e131c2ae050304f2c4df9fa6ded8db85d2"
-stacks = ["io.buildpacks.stacks.bionic", "org.cloudfoundry.stacks.tiny"]
+stacks = ["io.buildpacks.stacks.bionic","org.cloudfoundry.stacks.tiny"]
 uri = "https://dl.google.com/go/go1.12.8.linux-amd64.tar.gz"
 version = "1.12.8"
 
@@ -70,7 +70,7 @@ version = "1.12.8"
 id = "go"
 name = "Go"
 sha256 = "ac2a6efcc1f5ec8bdc0db0a988bb1d301d64b6d61b7e8d9e42f662fbb75a2b9b"
-stacks = ["io.buildpacks.stacks.bionic", "org.cloudfoundry.stacks.tiny"]
+stacks = ["io.buildpacks.stacks.bionic","org.cloudfoundry.stacks.tiny"]
 uri = "https://dl.google.com/go/go1.12.9.linux-amd64.tar.gz"
 version = "1.12.9"
 
@@ -84,6 +84,24 @@ stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
 uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.12.9.linux-amd64-cflinuxfs3-14ae7a71.tar.gz"
 version = "1.12.9"
 
+[[metadata.dependencies]]
+id = "go"
+name = "Go"
+sha256 = "68a2297eb099d1a76097905a2ce334e3155004ec08cdea85f24527be3c48e856"
+stacks = ["io.buildpacks.stacks.bionic"]
+uri = "https://dl.google.com/go/go1.13.linux-amd64.tar.gz"
+version = "1.13"
+
+[[metadata.dependencies]]
+id = "go"
+name = "Go"
+sha256 = "8b3c3fb89261a596233f7d4c5574fe87c6702f128a01d582243dfa787c0addf3"
+source = "https://dl.google.com/go/go1.13.src.tar.gz"
+source_sha256 = "3fc0b8b6101d42efd7da1da3029c0a13f22079c0c37ef9730209d8ec665bf122"
+stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
+uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.13.linux-amd64-cflinuxfs3-8b3c3fb8.tar.gz"
+version = "1.13"
+
 [[metadata.dependency_deprecation_dates]]
 date = 2019-08-01T00:00:00Z
 link = "https://golang.org/doc/devel/release.html"
@@ -95,6 +113,12 @@ date = 2020-02-01T00:00:00Z
 link = "https://golang.org/doc/devel/release.html"
 name = "go"
 version_line = "1.12.x"
+
+[[metadata.dependency_deprecation_dates]]
+date = 2020-09-03T00:00:00Z
+link = "https://golang.org/doc/devel/release.html"
+name = "go"
+version_line = "1.13.x"
 
 [[stacks]]
 id = "org.cloudfoundry.stacks.cflinuxfs3"
