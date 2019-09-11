@@ -34,7 +34,7 @@ version = "1.12.8"
 id = "go"
 name = "Go"
 sha256 = "ac2a6efcc1f5ec8bdc0db0a988bb1d301d64b6d61b7e8d9e42f662fbb75a2b9b"
-stacks = ["io.buildpacks.stacks.bionic"]
+stacks = ["io.buildpacks.stacks.bionic","org.cloudfoundry.stacks.tiny"]
 uri = "https://dl.google.com/go/go1.12.9.linux-amd64.tar.gz"
 version = "1.12.9"
 
@@ -60,7 +60,7 @@ version = "1.12.9"
 id = "go"
 name = "Go"
 sha256 = "68a2297eb099d1a76097905a2ce334e3155004ec08cdea85f24527be3c48e856"
-stacks = ["io.buildpacks.stacks.bionic"]
+stacks = ["io.buildpacks.stacks.bionic","org.cloudfoundry.stacks.tiny"]
 uri = "https://dl.google.com/go/go1.13.linux-amd64.tar.gz"
 version = "1.13"
 
