@@ -4,8 +4,8 @@ github.com/Masterminds/semver v1.5.0 h1:H65muMkzWKEuNDnfl9d70GUjFniHKHRbFPGBuZ3Q
 github.com/Masterminds/semver v1.5.0/go.mod h1:MB6lktGJrhw8PrUyiEoblNEGEQ+RzHPF078ddwwvV3Y=
 github.com/buildpack/libbuildpack v1.24.2 h1:OsbbQS1VYwnHZpZwtFgKi0f5DkqDnmzBTRPjSDNfhrQ=
 github.com/buildpack/libbuildpack v1.24.2/go.mod h1:W54e1K2bhBxTkTC0B+FlvTOrdkTHD1JwNrzSt9qODJU=
-github.com/cloudfoundry/libcfbuildpack v1.85.2 h1:WTH8/Oa/B6G/YW7JsX9wPExErEU2af9gXTyJA1E1/3c=
-github.com/cloudfoundry/libcfbuildpack v1.85.2/go.mod h1:BCJrNwVR24GDa/6DOP0NU5KJCRE2aIH04jTFML8r6Yw=
+github.com/cloudfoundry/libcfbuildpack v1.85.3 h1:3al9uXCU7jHdqWmM+vCn3e8tR9Rjb+lDSvltUSiS4aU=
+github.com/cloudfoundry/libcfbuildpack v1.85.3/go.mod h1:BCJrNwVR24GDa/6DOP0NU5KJCRE2aIH04jTFML8r6Yw=
 github.com/fatih/color v1.7.0 h1:DkWD4oS2D8LGGgTQ6IvwJJXSL5Vp2ffcQg58nFV38Ys=
 github.com/fatih/color v1.7.0/go.mod h1:Zm6kSWBoL9eyXnKyktHP6abPY2pDugNf5KwzbycvMj4=
 github.com/fsnotify/fsnotify v1.4.7 h1:IXs+QLmnXW2CcXuY+8Mzv/fWEsPGWxqefPtCP5CnV9I=
