@@ -1,9 +1,10 @@
 package golang_test
 
 import (
-	"github.com/cloudfoundry/libcfbuildpack/buildpackplan"
 	"path/filepath"
 	"testing"
+
+	"github.com/cloudfoundry/libcfbuildpack/buildpackplan"
 
 	"github.com/cloudfoundry/go-cnb/golang"
 
@@ -49,7 +50,7 @@ func testGolang(t *testing.T, when spec.G, it spec.S) {
 	when("Contribute", func() {
 		it("contributes golang to the build and launch layer but not cache layer when included in the build plan", func() {
 			f.AddPlan(buildpackplan.Plan{
-				Name: golang.Dependency,
+				Name:     golang.Dependency,
 				Metadata: buildpackplan.Metadata{"build": true, "launch": false},
 			})
 
@@ -74,33 +75,6 @@ func testGolang(t *testing.T, when spec.G, it spec.S) {
 
 			layer := f.Build.Layers.Layer(golang.Dependency)
 			Expect(filepath.Join(layer.Root, "stub.txt")).To(BeARegularFile())
-		})
-
-		it("uses the default version when a version is not requested", func() {
-			f.AddDependencyWithVersion(golang.Dependency, "0.9", filepath.Join("testdata", "stub-golang-default.tar.gz"))
-			f.SetDefaultVersion(golang.Dependency, "0.9")
-			f.AddPlan(buildpackplan.Plan{Name: golang.Dependency})
-
-			golangContributor, _, err := golang.NewContributor(f.Build)
-			Expect(err).NotTo(HaveOccurred())
-
-			Expect(golangContributor.Contribute()).To(Succeed())
-			layer := f.Build.Layers.Layer(golang.Dependency)
-			Expect(layer).To(test.HaveLayerVersion("0.9"))
-
-			Expect(filepath.Join(layer.Root, "version-0.9.txt")).To(BeARegularFile())
-		})
-
-		it("returns an error when unsupported version of golang is included in the build plan", func() {
-			f.AddPlan(buildpackplan.Plan{
-				Name: golang.Dependency,
-				Version:  "9000.0.0",
-				Metadata: buildpackplan.Metadata{"launch": true},
-			})
-
-			_, shouldContribute, err := golang.NewContributor(f.Build)
-			Expect(err).To(HaveOccurred())
-			Expect(shouldContribute).To(BeFalse())
 		})
 	})
 }
