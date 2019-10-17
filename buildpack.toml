@@ -51,24 +51,6 @@ version = "1.12.11"
 [[metadata.dependencies]]
 id = "go"
 name = "Go"
-sha256 = "94f874037b82ea5353f4061e543681a0e79657f787437974214629af8407d124"
-stacks = ["io.buildpacks.stacks.bionic","org.cloudfoundry.stacks.tiny"]
-uri = "https://dl.google.com/go/go1.13.1.linux-amd64.tar.gz"
-version = "1.13.1"
-
-[[metadata.dependencies]]
-id = "go"
-name = "Go"
-sha256 = "d74137f4554c8cf04e080d0a27d8fbe47dc221b5c6be314df07d87085cc21abf"
-source = "https://dl.google.com/go/go1.13.1.src.tar.gz"
-source_sha256 = "81f154e69544b9fa92b1475ff5f11e64270260d46e7e36c34aafc8bc96209358"
-stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
-uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.13.1.linux-amd64-cflinuxfs3-d74137f4.tar.gz"
-version = "1.13.1"
-
-[[metadata.dependencies]]
-id = "go"
-name = "Go"
 sha256 = "293b41a6ccd735eebcfb4094b6931bfd187595555cecf3e4386e9e119220c0b7"
 stacks = ["io.buildpacks.stacks.bionic","org.cloudfoundry.stacks.tiny"]
 uri = "https://dl.google.com/go/go1.13.2.linux-amd64.tar.gz"
@@ -83,6 +65,24 @@ source_sha256 = "1ea68e01472e4276526902b8817abd65cf84ed921977266f0c11968d5e915f4
 stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
 uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.13.2.linux-amd64-cflinuxfs3-6a2c8366.tar.gz"
 version = "1.13.2"
+
+[[metadata.dependencies]]
+id = "go"
+name = "Go"
+sha256 = "0804bf02020dceaa8a7d7275ee79f7a142f1996bfd0c39216ccb405f93f994c0"
+stacks = ["io.buildpacks.stacks.bionic","org.cloudfoundry.stacks.tiny"]
+uri = "https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz"
+version = "1.13.3"
+
+[[metadata.dependencies]]
+id = "go"
+name = "Go"
+sha256 = "699a1b2bce87264d959d3cdabc6bc7402735345cf156c033617fb053ba0f78f1"
+source = "https://dl.google.com/go/go1.13.3.src.tar.gz"
+source_sha256 = "4f7123044375d5c404280737fbd2d0b17064b66182a65919ffe20ffe8620e3df"
+stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
+uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.13.3.linux-amd64-cflinuxfs3-699a1b2b.tar.gz"
+version = "1.13.3"
 
 [[metadata.dependency_deprecation_dates]]
 date = 2020-02-01T00:00:00Z
