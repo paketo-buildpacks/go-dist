@@ -51,24 +51,6 @@ version = "1.12.10"
 [[metadata.dependencies]]
 id = "go"
 name = "Go"
-sha256 = "68a2297eb099d1a76097905a2ce334e3155004ec08cdea85f24527be3c48e856"
-stacks = ["io.buildpacks.stacks.bionic","org.cloudfoundry.stacks.tiny"]
-uri = "https://dl.google.com/go/go1.13.linux-amd64.tar.gz"
-version = "1.13"
-
-[[metadata.dependencies]]
-id = "go"
-name = "Go"
-sha256 = "8b3c3fb89261a596233f7d4c5574fe87c6702f128a01d582243dfa787c0addf3"
-source = "https://dl.google.com/go/go1.13.src.tar.gz"
-source_sha256 = "3fc0b8b6101d42efd7da1da3029c0a13f22079c0c37ef9730209d8ec665bf122"
-stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
-uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.13.linux-amd64-cflinuxfs3-8b3c3fb8.tar.gz"
-version = "1.13"
-
-[[metadata.dependencies]]
-id = "go"
-name = "Go"
 sha256 = "94f874037b82ea5353f4061e543681a0e79657f787437974214629af8407d124"
 stacks = ["io.buildpacks.stacks.bionic","org.cloudfoundry.stacks.tiny"]
 uri = "https://dl.google.com/go/go1.13.1.linux-amd64.tar.gz"
@@ -83,6 +65,24 @@ source_sha256 = "81f154e69544b9fa92b1475ff5f11e64270260d46e7e36c34aafc8bc9620935
 stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
 uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.13.1.linux-amd64-cflinuxfs3-d74137f4.tar.gz"
 version = "1.13.1"
+
+[[metadata.dependencies]]
+id = "go"
+name = "Go"
+sha256 = "293b41a6ccd735eebcfb4094b6931bfd187595555cecf3e4386e9e119220c0b7"
+stacks = ["io.buildpacks.stacks.bionic","org.cloudfoundry.stacks.tiny"]
+uri = "https://dl.google.com/go/go1.13.2.linux-amd64.tar.gz"
+version = "1.13.2"
+
+[[metadata.dependencies]]
+id = "go"
+name = "Go"
+sha256 = "6a2c8366b8b0ef4ec3df6b0c0a0e58a466a7af4136252398920c88d889a13843"
+source = "https://dl.google.com/go/go1.13.2.src.tar.gz"
+source_sha256 = "1ea68e01472e4276526902b8817abd65cf84ed921977266f0c11968d5e915f44"
+stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
+uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.13.2.linux-amd64-cflinuxfs3-6a2c8366.tar.gz"
+version = "1.13.2"
 
 [[metadata.dependency_deprecation_dates]]
 date = 2020-02-01T00:00:00Z
