@@ -15,24 +15,6 @@ go = "1.13.*"
 [[metadata.dependencies]]
 id = "go"
 name = "Go"
-sha256 = "2c5960292da8b747d83f171a28a04116b2977e809169c344268c893e4cf0a857"
-stacks = ["io.buildpacks.stacks.bionic","org.cloudfoundry.stacks.tiny"]
-uri = "https://dl.google.com/go/go1.12.11.linux-amd64.tar.gz"
-version = "1.12.11"
-
-[[metadata.dependencies]]
-id = "go"
-name = "Go"
-sha256 = "3fff35734538bdbc7f1cef4339114e30033bd1ebe387029ed70ec8f373b76e10"
-source = "https://dl.google.com/go/go1.12.11.src.tar.gz"
-source_sha256 = "fcf58935236802929f5726e96cd1d900853b377bec2c51b2e37219c658a4950f"
-stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
-uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.12.11.linux-amd64-cflinuxfs3-3fff3573.tar.gz"
-version = "1.12.11"
-
-[[metadata.dependencies]]
-id = "go"
-name = "Go"
 sha256 = "4cf11ac6a8fa42d26ab85e27a5d916ee171900a87745d9f7d4a29a21587d78fc"
 stacks = ["io.buildpacks.stacks.bionic","org.cloudfoundry.stacks.tiny"]
 uri = "https://dl.google.com/go/go1.12.12.linux-amd64.tar.gz"
@@ -47,6 +29,24 @@ source_sha256 = "fcb33b5290fa9bcc52be3211501540df7483d7276b031fc77528672a3c705b9
 stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
 uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.12.12.linux-amd64-cflinuxfs3-0759805b.tar.gz"
 version = "1.12.12"
+
+[[metadata.dependencies]]
+id = "go"
+name = "Go"
+sha256 = "da036454cb3353f9f507f0ceed4048feac611065e4e1818b434365eb32ac9bdc"
+stacks = ["io.buildpacks.stacks.bionic","org.cloudfoundry.stacks.tiny"]
+uri = "https://dl.google.com/go/go1.12.13.linux-amd64.tar.gz"
+version = "1.12.13"
+
+[[metadata.dependencies]]
+id = "go"
+name = "Go"
+sha256 = "e218849aaf190cfdada98d3e36662eab64c60914bf6d7ba8e520be040f673191"
+source = "https://dl.google.com/go/go1.12.13.src.tar.gz"
+source_sha256 = "5383d3b8db4baa48284ffcb14606d9cad6f03e9db843fa6d835b94d63cccf5a7"
+stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
+uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.12.13.linux-amd64-cflinuxfs3-e218849a.tar.gz"
+version = "1.12.13"
 
 [[metadata.dependencies]]
 id = "go"
