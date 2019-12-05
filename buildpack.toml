@@ -50,24 +50,6 @@ api = "0.2"
   [[metadata.dependencies]]
     id = "go"
     name = "Go"
-    sha256 = "0804bf02020dceaa8a7d7275ee79f7a142f1996bfd0c39216ccb405f93f994c0"
-    stacks = ["io.buildpacks.stacks.bionic", "org.cloudfoundry.stacks.tiny"]
-    uri = "https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz"
-    version = "1.13.3"
-
-  [[metadata.dependencies]]
-    id = "go"
-    name = "Go"
-    sha256 = "699a1b2bce87264d959d3cdabc6bc7402735345cf156c033617fb053ba0f78f1"
-    source = "https://dl.google.com/go/go1.13.3.src.tar.gz"
-    source_sha256 = "4f7123044375d5c404280737fbd2d0b17064b66182a65919ffe20ffe8620e3df"
-    stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
-    uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.13.3.linux-amd64-cflinuxfs3-699a1b2b.tar.gz"
-    version = "1.13.3"
-
-  [[metadata.dependencies]]
-    id = "go"
-    name = "Go"
     sha256 = "692d17071736f74be04a72a06dab9cac1cd759377bd85316e52b2227604c004c"
     stacks = ["io.buildpacks.stacks.bionic", "org.cloudfoundry.stacks.tiny"]
     uri = "https://dl.google.com/go/go1.13.4.linux-amd64.tar.gz"
@@ -82,6 +64,24 @@ api = "0.2"
     stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
     uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.13.4.linux-amd64-cflinuxfs3-d7e7ae00.tar.gz"
     version = "1.13.4"
+
+  [[metadata.dependencies]]
+    id = "go"
+    name = "Go"
+    sha256 = "512103d7ad296467814a6e3f635631bd35574cab3369a97a323c9a585ccaa569"
+    stacks = ["io.buildpacks.stacks.bionic", "org.cloudfoundry.stacks.tiny"]
+    uri = "https://dl.google.com/go/go1.13.5.linux-amd64.tar.gz"
+    version = "1.13.5"
+
+  [[metadata.dependencies]]
+    id = "go"
+    name = "Go"
+    sha256 = "fedef14df0fc373546067501db2009d31516bfe9217045028b4cf8fd06afc9df"
+    source = "https://dl.google.com/go/go1.13.5.src.tar.gz"
+    source_sha256 = "27d356e2a0b30d9983b60a788cf225da5f914066b37a6b4f69d457ba55a626ff"
+    stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
+    uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.13.5.linux-amd64-cflinuxfs3-fedef14d.tar.gz"
+    version = "1.13.5"
 
   [[metadata.dependency_deprecation_dates]]
     date = 2020-02-01T00:00:00Z
