@@ -21,8 +21,8 @@ github.com/Masterminds/semver v1.5.0/go.mod h1:MB6lktGJrhw8PrUyiEoblNEGEQ+RzHPF0
 github.com/buildpack/libbuildpack v1.25.9 h1:gjyVuYGnSrRgx520b+s+vqqt4oedUnMPHEPgH7bISkc=
 github.com/buildpack/libbuildpack v1.25.9/go.mod h1:SAar5bFlgGoIk0umOpPyl5XvnWt4gFVbvKsLmdIPnS4=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
-github.com/cloudfoundry/libcfbuildpack v1.91.16 h1:x0w2FCTQAOabz2Is+47d7Tz/lvkfMm237bgLYrEAsDU=
-github.com/cloudfoundry/libcfbuildpack v1.91.16/go.mod h1:hoAcV8yAsfkkMPikDuhDhx/2WGegFrsmGQoVqie23dE=
+github.com/cloudfoundry/libcfbuildpack v1.91.17 h1:XX14E9qfX22mRtGP6+0U4Hmg39axJjRQUFl1BvNl/bE=
+github.com/cloudfoundry/libcfbuildpack v1.91.17/go.mod h1:hoAcV8yAsfkkMPikDuhDhx/2WGegFrsmGQoVqie23dE=
 github.com/fatih/color v1.8.0 h1:5bzFgL+oy7JITMTxUPJ00n7VxmYd/PdMp5mHFX40/RY=
 github.com/fatih/color v1.8.0/go.mod h1:3l45GVGkyrnYNl9HoIjnp2NnNWvh6hLAqD8yTfGjnw8=
 github.com/fsnotify/fsnotify v1.4.7 h1:IXs+QLmnXW2CcXuY+8Mzv/fWEsPGWxqefPtCP5CnV9I=
