@@ -18,11 +18,11 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/Masterminds/semver v1.5.0 h1:H65muMkzWKEuNDnfl9d70GUjFniHKHRbFPGBuZ3QEww=
 github.com/Masterminds/semver v1.5.0/go.mod h1:MB6lktGJrhw8PrUyiEoblNEGEQ+RzHPF078ddwwvV3Y=
-github.com/buildpack/libbuildpack v1.25.9 h1:gjyVuYGnSrRgx520b+s+vqqt4oedUnMPHEPgH7bISkc=
-github.com/buildpack/libbuildpack v1.25.9/go.mod h1:SAar5bFlgGoIk0umOpPyl5XvnWt4gFVbvKsLmdIPnS4=
+github.com/buildpack/libbuildpack v1.25.10 h1:r8iC8TS3x7PNfofX0RGg3GnVqT02ABgagxCMEosWtrk=
+github.com/buildpack/libbuildpack v1.25.10/go.mod h1:SAar5bFlgGoIk0umOpPyl5XvnWt4gFVbvKsLmdIPnS4=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
-github.com/cloudfoundry/libcfbuildpack v1.91.18 h1:v0KjQ23g2CPPOoqEP0jcNdoET47KFX/NKwKcWF++hqU=
-github.com/cloudfoundry/libcfbuildpack v1.91.18/go.mod h1:hoAcV8yAsfkkMPikDuhDhx/2WGegFrsmGQoVqie23dE=
+github.com/cloudfoundry/libcfbuildpack v1.91.19 h1:9tZR/w4sngP5Von694tpkLsK+PYfVrdmQTVLoMsI5mg=
+github.com/cloudfoundry/libcfbuildpack v1.91.19/go.mod h1:LLXPiEr7YjuU4sx0lHNBeg8cnWImlwtUSKUOp5tLN6U=
 github.com/fatih/color v1.8.0 h1:5bzFgL+oy7JITMTxUPJ00n7VxmYd/PdMp5mHFX40/RY=
 github.com/fatih/color v1.8.0/go.mod h1:3l45GVGkyrnYNl9HoIjnp2NnNWvh6hLAqD8yTfGjnw8=
 github.com/fsnotify/fsnotify v1.4.7 h1:IXs+QLmnXW2CcXuY+8Mzv/fWEsPGWxqefPtCP5CnV9I=
@@ -146,6 +146,8 @@ golang.org/x/sys v0.0.0-20190726091711-fc99dfbffb4e/go.mod h1:h1NjWce9XRLGQEsW7w
 golang.org/x/sys v0.0.0-20191026070338-33540a1f6037/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/sys v0.0.0-20200102141924-c96a22e43c9c h1:OYFUffxXPezb7BVTx9AaD4Vl0qtxmklBIkwCKH1YwDY=
 golang.org/x/sys v0.0.0-20200102141924-c96a22e43c9c/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200103143344-a1369afcdac7 h1:/W9OPMnnpmFXHYkcp2rQsbFUbRlRzfECQjmAFiOyHE8=
+golang.org/x/sys v0.0.0-20200103143344-a1369afcdac7/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/text v0.3.1-0.20180807135948-17ff2d5776d2/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/text v0.3.2 h1:tW2bmiBqwgJj/UpqtC8EpXEZVYOwU0yG4iWbprSVAcs=
