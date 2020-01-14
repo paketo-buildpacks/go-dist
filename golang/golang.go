@@ -15,8 +15,8 @@ type Contributor struct {
 }
 
 func NewContributor(context build.Build) (Contributor, bool, error) {
-	plan, wantLayer , err := context.Plans.GetShallowMerged(Dependency)
-	if err != nil{
+	plan, wantLayer, err := context.Plans.GetShallowMerged(Dependency)
+	if err != nil {
 		return Contributor{}, false, err
 
 	}
@@ -39,7 +39,7 @@ func NewContributor(context build.Build) (Contributor, bool, error) {
 func (c Contributor) Contribute() error {
 	return c.layer.Contribute(func(artifact string, layer layers.DependencyLayer) error {
 		layer.Logger.Body("Expanding to %s", layer.Root)
-		return helper.ExtractTarGz(artifact, layer.Root, 1)
+		return helper.ExtractTarGz(artifact, layer.Root, 0)
 	}, c.flags()...)
 }
 
