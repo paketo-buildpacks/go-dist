@@ -47,7 +47,7 @@ api = "0.2"
     sha256 = "4c15009a5f28f9c7b9e5b446ef41a333ad0a303ed4394a355006e43c66599803"
     source = "https://dl.google.com/go/go1.12.15.linux-amd64.tar.gz"
     source_sha256 = "61068419f3d3fcd3cc415c352c4a93d6ae0e723ac18a22ac572b4904d78b5a4c"
-    stacks = ["io.buldpacks.stacks.bionic"]
+    stacks = ["io.buildpacks.stacks.bionic"]
     uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go-1.12.15-bionic-4c15009a.tgz"
     version = "1.12.15"
 
