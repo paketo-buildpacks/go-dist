@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# shellcheck source=.util/tools.sh
+source "$SCRIPT_DIR/.util/tools.sh"
+
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -11,7 +14,10 @@ if [[ ! -d integration ]]; then
 fi
 
 PACK_VERSION=${PACK_VERSION:-"latest"}
-source "$SCRIPT_DIR"/install_tools.sh "$PACK_VERSION"
+
+util::tools::install \
+    --directory "${PWD}/.bin" \
+    --pack-version "${PACK_VERSION}"
 
 export CNB_BUILD_IMAGE=${CNB_BUILD_IMAGE:-cloudfoundry/build:full-cnb}
 export CNB_RUN_IMAGE=${CNB_RUN_IMAGE:-cloudfoundry/run:full-cnb}
