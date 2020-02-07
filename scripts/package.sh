@@ -37,6 +37,11 @@ function main() {
           shift 2
           ;;
 
+        "")
+          # skip if the argument is empty
+          shift 1
+          ;;
+
         *)
           util::print::error "unknown argument \"${1}\""
       esac
