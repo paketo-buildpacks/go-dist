@@ -8,31 +8,20 @@ source "$(dirname "${BASH_SOURCE[0]}")/print.sh"
 # shellcheck source=./git.sh
 source "$(dirname "${BASH_SOURCE[0]}")/git.sh"
 
-function util::tools::install() {
-    util::print::title "Installing Testing Tools"
+function util::tools::pack::install() {
+    local dir version os
 
-    local dir pack_version cnb2cf_version
-    cnb2cf_version=""
+    util::print::title "Installing pack"
 
     while [[ "${#}" != 0 ]]; do
       case "${1}" in
-        --help|-h)
-          util::tools::usage
-          exit 0
-          ;;
-
         --directory)
           dir="${2}"
           shift 2
           ;;
 
-        --pack-version)
-          pack_version="${2}"
-          shift 2
-          ;;
-
-        --cnb2cf-version)
-          cnb2cf_version="${2}"
+        --version)
+          version="${2}"
           shift 2
           ;;
 
@@ -42,18 +31,6 @@ function util::tools::install() {
     done
 
     mkdir -p "${dir}"
-
-    util::tools::pack::install "${dir}" "${pack_version}"
-    util::tools::packager::install "${dir}"
-    util::tools::cnb2cf::install "${dir}" "${cnb2cf_version}"
-}
-
-function util::tools::pack::install() {
-    local dir version os
-    dir="${1}"
-    version="${2}"
-
-    util::print::title "Installing pack"
 
     os="$(uname -s)"
 
@@ -117,21 +94,23 @@ function util::tools::pack::expand() {
 
 function util::tools::packager::install () {
     local dir
-    dir="${1}"
+
+    while [[ "${#}" != 0 ]]; do
+      case "${1}" in
+        --directory)
+          dir="${2}"
+          shift 2
+          ;;
+
+        *)
+          util::print::error "unknown argument \"${1}\""
+      esac
+    done
+
+    mkdir -p "${dir}"
 
     if [[ ! -f "${dir}/packager" ]]; then
         util::print::title "Installing packager"
         go build -o "${dir}/packager" github.com/cloudfoundry/libcfbuildpack/packager
-    fi
-}
-
-function util::tools::cnb2cf::install() {
-    local dir version
-    dir="${1}"
-    version="${2}"
-
-    if [[ -n "${version}" && ! -f "${dir}/cnb2cf" ]]; then
-        util::print::title "Installing cnb2cf"
-        go build -o "${dir}/cnb2cf" github.com/cloudfoundry/cnb2cf
     fi
 }

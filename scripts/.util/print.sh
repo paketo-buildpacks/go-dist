@@ -39,3 +39,12 @@ function util::print::success() {
   exit 0
 }
 
+function util::print::warn() {
+  local message yellow reset
+  message="${1}"
+  yellow="\033[0;33m"
+  reset="\033[0;39m"
+
+  echo -e "${yellow}${message}${reset}" >&2
+  exit 0
+}
