@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 # shellcheck source=.util/tools.sh
 source "$SCRIPT_DIR/.util/tools.sh"
 
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
-
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 if [[ ! -d integration ]]; then
     echo -e "\n\033[0;31m** WARNING  No Integration tests **\033[0m"

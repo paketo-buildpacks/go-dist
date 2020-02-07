@@ -15,6 +15,10 @@ PACKAGE_DIR=${PACKAGE_DIR:-"${PWD##*/}_$(openssl rand -hex 4)"}
 full_path=$(realpath "$PACKAGE_DIR")
 args=".bin/packager -uncached"
 
+archive=false
+cached=false
+version=""
+
 while getopts "acv:" arg
 do
     case $arg in
@@ -42,7 +46,7 @@ args="${args} -version ${version}"
 
 eval "${args}" "${full_path}"
 
-if [[ -n "$BP_REWRITE_HOST" ]]; then
+if [[ -n "${BP_REWRITE_HOST:-}" ]]; then
     sed -i '' -e "s|^uri = \"https:\/\/buildpacks\.cloudfoundry\.org\(.*\)\"$|uri = \"http://$BP_REWRITE_HOST\1\"|g" "$full_path/buildpack.toml"
 fi
 
