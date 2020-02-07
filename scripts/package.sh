@@ -13,29 +13,26 @@ PACKAGE_DIR=${PACKAGE_DIR:-"${PWD##*/}_$(openssl rand -hex 4)"}
 full_path=$(realpath "$PACKAGE_DIR")
 args=".bin/packager -uncached"
 
-archive=false
-cached=false
-version=""
-
 while getopts "acv:" arg
 do
-    case $arg in
+    case "${arg}" in
     a) archive=true;;
     c) cached=true;;
     v) version="${OPTARG}";;
+    *) echo "unknown argument ${arg}"; exit 1;;
     esac
 done
 
-if [[ ! -z "$cached" ]]; then #package as cached
+if [[ -n "${cached:-}" ]]; then #package as cached
     full_path="$full_path-cached"
     args=".bin/packager"
 fi
 
-if [[ ! -z "$archive" ]]; then #package as archive
+if [[ -n "${archive:-}" ]]; then #package as archive
     args="${args} -archive"
 fi
 
-if [[ -z "$version" ]]; then #version not provided, use latest git tag
+if [[ -z "${version:-}" ]]; then #version not provided, use latest git tag
     git_tag=$(git describe --abbrev=0 --tags)
     version=${git_tag:1}
 fi
