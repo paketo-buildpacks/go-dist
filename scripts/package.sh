@@ -1,47 +1,70 @@
 #!/usr/bin/env bash
-set -eo pipefail
+set -eu
+set -o pipefail
 
-cd "$(dirname "${BASH_SOURCE[0]}")/.."
+readonly PROGDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly BUILDPACKDIR="$(cd "${PROGDIR}/.." && pwd)"
 
 # shellcheck source=.util/tools.sh
 source "${PWD}/scripts/.util/tools.sh"
 
-util::tools::packager::install --directory "${PWD}/.bin"
+# shellcheck source=.util/print.sh
+source "${PWD}/scripts/.util/print.sh"
 
-PACKAGE_DIR=${PACKAGE_DIR:-"${PWD##*/}_$(openssl rand -hex 4)"}
+function main() {
+    util::tools::packager::install --directory "${BUILDPACKDIR}/.bin"
 
-full_path=$(realpath "$PACKAGE_DIR")
-args=".bin/packager -uncached"
+    PACKAGE_DIR=${PACKAGE_DIR:-"$(dirname "${BUILDPACKDIR}")_$(openssl rand -hex 4)"}
 
-while getopts "acv:" arg
-do
-    case "${arg}" in
-    a) archive=true;;
-    c) cached=true;;
-    v) version="${OPTARG}";;
-    *) echo "unknown argument ${arg}"; exit 1;;
-    esac
-done
+    local full_path args version cached archive
+    full_path="$(realpath "${PACKAGE_DIR}")"
+    args="${BUILDPACKDIR}/.bin/packager -uncached"
 
-if [[ -n "${cached:-}" ]]; then #package as cached
-    full_path="$full_path-cached"
-    args=".bin/packager"
-fi
+    while [[ "${#}" != 0 ]]; do
+      case "${1}" in
+        --archive|-a)
+          archive="true"
+          shift 1
+          ;;
 
-if [[ -n "${archive:-}" ]]; then #package as archive
-    args="${args} -archive"
-fi
+        --cached|-c)
+          cached="true"
+          shift 1
+          ;;
 
-if [[ -z "${version:-}" ]]; then #version not provided, use latest git tag
-    git_tag=$(git describe --abbrev=0 --tags)
-    version=${git_tag:1}
-fi
+        --version|-v)
+          version="${2}"
+          shift 2
+          ;;
 
-args="${args} -version ${version}"
+        *)
+          util::print::error "unknown argument \"${1}\""
+      esac
+    done
 
-eval "${args}" "${full_path}"
+    if [[ -n "${cached:-}" ]]; then
+        full_path="${full_path}-cached"
+        args="${BUILDPACKDIR}/.bin/packager"
+    fi
 
-if [[ -n "${BP_REWRITE_HOST:-}" ]]; then
-    sed -i '' -e "s|^uri = \"https:\/\/buildpacks\.cloudfoundry\.org\(.*\)\"$|uri = \"http://$BP_REWRITE_HOST\1\"|g" "$full_path/buildpack.toml"
-fi
+    if [[ -n "${archive:-}" ]]; then
+        args="${args} -archive"
+    fi
 
+    if [[ -z "${version:-}" ]]; then
+        version="$(cd "${BUILDPACKDIR}" && git describe --abbrev=0 --tags)"
+    fi
+
+    args="${args} -version ${version}"
+
+    pushd "${BUILDPACKDIR}" > /dev/null
+        eval "${args}" "${full_path}"
+    popd > /dev/null
+
+    if [[ -n "${BP_REWRITE_HOST:-}" ]]; then
+        sed -i '' -e "s|^uri = \"https:\/\/buildpacks\.cloudfoundry\.org\(.*\)\"$|uri = \"http://${BP_REWRITE_HOST}\1\"|g" "${full_path}/buildpack.toml"
+    fi
+
+}
+
+main "${@:-}"
