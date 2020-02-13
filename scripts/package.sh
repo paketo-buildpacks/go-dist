@@ -4,7 +4,6 @@ set -o pipefail
 
 readonly PROGDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly BUILDPACKDIR="$(cd "${PROGDIR}/.." && pwd)"
-echo "BUILDPACKDIR $BUILDPACKDIR"
 
 # shellcheck source=.util/tools.sh
 source "${PWD}/scripts/.util/tools.sh"
@@ -15,8 +14,6 @@ source "${PWD}/scripts/.util/print.sh"
 function main() {
     local full_path args version cached archive offline
     PACKAGE_DIR=${PACKAGE_DIR:-"${BUILDPACKDIR}_$(openssl rand -hex 4)"}
-
-    echo "PACKAGE_DIR $PACKAGE_DIR"
 
     full_path="$(realpath "${PACKAGE_DIR}")"
 
@@ -96,7 +93,6 @@ function main() {
         args="${args} -version ${version}"
 
         pushd "${BUILDPACKDIR}" > /dev/null
-            echo "args: ${args}"
             eval "${args}" "${full_path}"
         popd > /dev/null
 

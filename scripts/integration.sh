@@ -30,8 +30,14 @@ function tools::install() {
         --directory "${BUILDPACKDIR}/.bin" \
         --version "latest"
 
-    util::tools::packager::install \
-        --directory "${BUILDPACKDIR}/.bin"
+    if [[ -f "${BUILDPACKDIR}/.packit" ]]; then
+        util::tools::jam::install \
+            --directory "${BUILDPACKDIR}/.bin"
+
+    else
+        util::tools::packager::install \
+            --directory "${BUILDPACKDIR}/.bin"
+    fi
 }
 
 function images::pull() {
