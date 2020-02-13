@@ -40,6 +40,9 @@ function images::pull() {
 
     util::print::title "Pulling Run Image..."
     docker pull "${CNB_RUN_IMAGE:-cloudfoundry/run:full-cnb}"
+
+    util::print::title "Pulling cflinuxfs3 Builder Image..."
+    docker pull "${CNB_BUILDER_IMAGE:-cloudfoundry/cnb:cflinuxfs3}"
 }
 
 function token::fetch() {

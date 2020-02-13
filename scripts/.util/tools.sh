@@ -92,6 +92,30 @@ function util::tools::pack::expand() {
     rm "${tarball}"
 }
 
+function util::tools::jam::install () {
+    local dir
+
+    while [[ "${#}" != 0 ]]; do
+      case "${1}" in
+        --directory)
+          dir="${2}"
+          shift 2
+          ;;
+
+        *)
+          util::print::error "unknown argument \"${1}\""
+      esac
+    done
+
+    mkdir -p "${dir}"
+
+    if [[ ! -f "${dir}/jam" ]]; then
+        util::print::title "Installing jam at"
+        go get -u github.com/cloudfoundry/packit/cargo/jam && \
+            go build -o "${dir}/jam" github.com/cloudfoundry/packit/cargo/jam
+    fi
+}
+
 function util::tools::packager::install () {
     local dir
 
