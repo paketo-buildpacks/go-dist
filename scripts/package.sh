@@ -48,14 +48,14 @@ function main() {
     if [[ -f "${BUILDPACKDIR}/.packit" ]]; then
         #use jam
         util::tools::jam::install --directory "${BUILDPACKDIR}/.bin"
-        if [[ -z "$version" ]]; then #version not provided, use latest git tag
+        if [[ -z "${version:-}" ]]; then #version not provided, use latest git tag
             git_tag=$(git describe --abbrev=0 --tags)
             version=${git_tag:1}
         fi
 
         extra_args=""
 
-        if [[ -n "${offline}" ]]; then
+        if [[ -n "${offline:-}" ]]; then
             PACKAGE_DIR="${PACKAGE_DIR}-cached"
             extra_args+="--offline"
         fi

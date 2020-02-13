@@ -110,7 +110,7 @@ function util::tools::jam::install () {
     mkdir -p "${dir}"
 
     if [[ ! -f "${dir}/jam" ]]; then
-        util::print::title "Installing jam at"
+        util::print::title "Installing jam"
         go get -u github.com/cloudfoundry/packit/cargo/jam && \
             go build -o "${dir}/jam" github.com/cloudfoundry/packit/cargo/jam
     fi
