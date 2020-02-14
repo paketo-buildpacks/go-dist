@@ -41,14 +41,21 @@ function tools::install() {
 }
 
 function images::pull() {
-    util::print::title "Pulling Build Image..."
-    docker pull "${CNB_BUILD_IMAGE:-cloudfoundry/build:full-cnb}"
+    util::print::title "Pulling build image..."
+    docker pull "${CNB_BUILD_IMAGE:=cloudfoundry/build:full-cnb}"
 
-    util::print::title "Pulling Run Image..."
-    docker pull "${CNB_RUN_IMAGE:-cloudfoundry/run:full-cnb}"
+    util::print::title "Pulling run image..."
+    docker pull "${CNB_RUN_IMAGE:=cloudfoundry/run:full-cnb}"
 
-    util::print::title "Pulling cflinuxfs3 Builder Image..."
-    docker pull "${CNB_BUILDER_IMAGE:-cloudfoundry/cnb:cflinuxfs3}"
+    util::print::title "Pulling cflinuxfs3 builder image..."
+    docker pull "${CNB_BUILDER_IMAGE:=cloudfoundry/cnb:cflinuxfs3}"
+
+    export CNB_BUILD_IMAGE
+    export CNB_RUN_IMAGE
+    export CNB_BUILDER_IMAGE
+
+    util::print::title "Setting default pack builder image..."
+    pack set-default-builder "${CNB_BUILDER_IMAGE}"
 }
 
 function token::fetch() {

@@ -2,11 +2,17 @@
 set -eu
 set -o pipefail
 
+readonly PROGDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly BUILDPACKDIR="$(cd "${PROGDIR}/../.." && pwd)"
+
 # shellcheck source=./print.sh
 source "$(dirname "${BASH_SOURCE[0]}")/print.sh"
 
 # shellcheck source=./git.sh
 source "$(dirname "${BASH_SOURCE[0]}")/git.sh"
+
+# export updated path
+export PATH="${BUILDPACKDIR}/.bin:$PATH"
 
 function util::tools::pack::install() {
     local dir version os
