@@ -2,17 +2,21 @@
 set -eu
 set -o pipefail
 
-readonly PROGDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-readonly BUILDPACKDIR="$(cd "${PROGDIR}/../.." && pwd)"
-
 # shellcheck source=./print.sh
 source "$(dirname "${BASH_SOURCE[0]}")/print.sh"
 
 # shellcheck source=./git.sh
 source "$(dirname "${BASH_SOURCE[0]}")/git.sh"
 
-# export updated path
-export PATH="${BUILDPACKDIR}/.bin:$PATH"
+function util::tools::path::export() {
+    local dir
+    dir="${1}"
+
+    if echo "${PATH}" | grep -q "${dir}"; then
+        PATH="${dir}:$PATH"
+        export PATH
+    fi
+}
 
 function util::tools::pack::install() {
     local dir version os
@@ -37,6 +41,7 @@ function util::tools::pack::install() {
     done
 
     mkdir -p "${dir}"
+    util::tools::path::export "${dir}"
 
     os="$(uname -s)"
 
@@ -114,6 +119,7 @@ function util::tools::jam::install () {
     done
 
     mkdir -p "${dir}"
+    util::tools::path::export "${dir}"
 
     if [[ ! -f "${dir}/jam" ]]; then
         util::print::title "Installing jam"
@@ -138,6 +144,7 @@ function util::tools::packager::install () {
     done
 
     mkdir -p "${dir}"
+    util::tools::path::export "${dir}"
 
     if [[ ! -f "${dir}/packager" ]]; then
         util::print::title "Installing packager"
