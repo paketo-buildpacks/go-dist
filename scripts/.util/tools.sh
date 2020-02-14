@@ -12,7 +12,7 @@ function util::tools::path::export() {
     local dir
     dir="${1}"
 
-    if echo "${PATH}" | grep -q "${dir}"; then
+    if ! echo "${PATH}" | grep -q "${dir}"; then
         PATH="${dir}:$PATH"
         export PATH
     fi
