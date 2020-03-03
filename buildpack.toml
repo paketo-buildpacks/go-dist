@@ -44,36 +44,6 @@ api = "0.2"
   [[metadata.dependencies]]
     id = "go"
     name = "Go"
-    sha256 = "acf212877712714e341507c3e97a055c99542a4fac81ff5281e3ac77d9b4cc38"
-    source = "https://dl.google.com/go/go1.12.17.linux-amd64.tar.gz"
-    source_sha256 = "a53dd476129d496047487bfd53d021dd17e0c96895865a0e7d0469ce3db8c8d2"
-    stacks = ["io.buildpacks.stacks.bionic"]
-    uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go-1.12.17-bionic-acf21287.tgz"
-    version = "1.12.17"
-
-  [[metadata.dependencies]]
-    id = "go"
-    name = "Go"
-    sha256 = "43fb5fd45b6c7fdeca2a603fd639d5ecb304daa4c76d8853017bb379ea6701b7"
-    source = "https://dl.google.com/go/go1.12.17.src.tar.gz"
-    source_sha256 = "de878218c43aa3c3bad54c1c52d95e3b0e5d336e1285c647383e775541a28b25"
-    stacks = ["org.cloudfoundry.stacks.cflinuxfs3"]
-    uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go1.12.17.linux-amd64-cflinuxfs3-43fb5fd4.tgz"
-    version = "1.12.17"
-
-  [[metadata.dependencies]]
-    id = "go"
-    name = "Go"
-    sha256 = "19237cb1f835528163ec9dfd033c2e33f868a847bb0a200fffb8fd17812cfcb0"
-    source = "https://dl.google.com/go/go1.12.17.linux-amd64.tar.gz"
-    source_sha256 = "a53dd476129d496047487bfd53d021dd17e0c96895865a0e7d0469ce3db8c8d2"
-    stacks = ["org.cloudfoundry.stacks.tiny"]
-    uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go-1.12.17-tiny-19237cb1.tgz"
-    version = "1.12.17"
-
-  [[metadata.dependencies]]
-    id = "go"
-    name = "Go"
     sha256 = "5bb47c2673c6c14f4bf2102df35967f88f99825ef0751113457ddaab4ad171b7"
     source = "https://dl.google.com/go/go1.13.7.linux-amd64.tar.gz"
     source_sha256 = "b3dd4bd781a0271b33168e627f7f43886b4c5d1c794a4015abf34e99c6526ca3"
