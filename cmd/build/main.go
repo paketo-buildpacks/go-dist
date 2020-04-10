@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/cloudfoundry/go-cnb/golang"
-	"github.com/cloudfoundry/libcfbuildpack/buildpackplan"
 	"os"
+
+	"github.com/cloudfoundry/libcfbuildpack/buildpackplan"
+	"github.com/paketo-buildpacks/go-compiler/golang"
 
 	"github.com/cloudfoundry/libcfbuildpack/build"
 )

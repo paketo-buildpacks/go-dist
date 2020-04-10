@@ -1,4 +1,4 @@
-module github.com/cloudfoundry/go-cnb
+module github.com/paketo-buildpacks/go-compiler
 
 go 1.12
 

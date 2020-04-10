@@ -9,7 +9,7 @@ import (
 
 	"github.com/buildpack/libbuildpack/buildplan"
 	"github.com/cloudfoundry/libcfbuildpack/detect"
-	"github.com/cloudfoundry/go-cnb/golang"
+	"github.com/paketo-buildpacks/go-compiler/golang"
 
 	. "github.com/onsi/gomega"
 
@@ -38,8 +38,8 @@ func testDetect(t *testing.T, when spec.G, it spec.S) {
 
 		provided := []buildplan.Provided{{Name: golang.Dependency}}
 		required := []buildplan.Required{{
-			Name:    golang.Dependency,
-			Version: "",
+			Name:     golang.Dependency,
+			Version:  "",
 			Metadata: buildplan.Metadata{"build": true, "launch": false},
 		}}
 
@@ -57,8 +57,8 @@ func testDetect(t *testing.T, when spec.G, it spec.S) {
 
 				provided := []buildplan.Provided{{Name: golang.Dependency}}
 				required := []buildplan.Required{{
-					Name:    golang.Dependency,
-					Version: "",
+					Name:     golang.Dependency,
+					Version:  "",
 					Metadata: buildplan.Metadata{"build": true, "launch": false},
 				}}
 
@@ -83,8 +83,8 @@ func testDetect(t *testing.T, when spec.G, it spec.S) {
 
 				provided := []buildplan.Provided{{Name: golang.Dependency}}
 				required := []buildplan.Required{{
-					Name:    golang.Dependency,
-					Version: version,
+					Name:     golang.Dependency,
+					Version:  version,
 					Metadata: buildplan.Metadata{"build": true, "launch": false},
 				}}
 
@@ -108,8 +108,8 @@ func testDetect(t *testing.T, when spec.G, it spec.S) {
 
 				provided := []buildplan.Provided{{Name: golang.Dependency}}
 				required := []buildplan.Required{{
-					Name:    golang.Dependency,
-					Version: version,
+					Name:     golang.Dependency,
+					Version:  version,
 					Metadata: buildplan.Metadata{"build": true, "launch": false},
 				}}
 
@@ -132,8 +132,8 @@ func testDetect(t *testing.T, when spec.G, it spec.S) {
 
 				provided := []buildplan.Provided{{Name: golang.Dependency}}
 				required := []buildplan.Required{{
-					Name:    golang.Dependency,
-					Version: "",
+					Name:     golang.Dependency,
+					Version:  "",
 					Metadata: buildplan.Metadata{"build": true, "launch": false},
 				}}
 

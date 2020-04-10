@@ -6,7 +6,7 @@ import (
 
 	"github.com/cloudfoundry/libcfbuildpack/buildpackplan"
 
-	"github.com/cloudfoundry/go-cnb/golang"
+	"github.com/paketo-buildpacks/go-compiler/golang"
 
 	"github.com/sclevine/spec/report"
 

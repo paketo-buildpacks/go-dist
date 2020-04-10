@@ -7,7 +7,7 @@ import (
 
 	"github.com/cloudfoundry/libcfbuildpack/helper"
 
-	"github.com/cloudfoundry/go-cnb/golang"
+	"github.com/paketo-buildpacks/go-compiler/golang"
 
 	"github.com/buildpack/libbuildpack/buildplan"
 	"github.com/cloudfoundry/libcfbuildpack/detect"
@@ -48,11 +48,11 @@ func runDetect(context detect.Detect) (int, error) {
 	return context.Pass(buildplan.Plan{
 		Provides: []buildplan.Provided{{Name: golang.Dependency}},
 		Requires: []buildplan.Required{{
-				Name: golang.Dependency,
-				Version:  version,
-				Metadata: buildplan.Metadata{"build":  true, "launch": false},
-			}},
-		})
+			Name:     golang.Dependency,
+			Version:  version,
+			Metadata: buildplan.Metadata{"build": true, "launch": false},
+		}},
+	})
 }
 
 type BuildpackYaml struct {
