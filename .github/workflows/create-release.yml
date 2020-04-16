@@ -23,7 +23,7 @@ jobs:
     - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
 
     - name: package
-      run: PACKAGE_DIR=artifact ./scripts/package.sh
+      run: PACKAGE_DIR=artifact ./scripts/package.sh -a
 
     - name: Create Release
       id: create_release
@@ -32,18 +32,15 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
         #tag_name: ${{ github.ref }}
-        tag_name: 0.0.121
+        tag_name: 0.0.122
         #release_name: Release ${{ github.ref }}
-        release_name: Release 0.0.121
+        release_name: Release 0.0.122
         body: |
           Changes in this Release
           - First Change
           - Second Change
         draft: false
         prerelease: false
-
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v2
 
     - name: Upload Release Asset
       id: upload-release-asset
@@ -53,7 +50,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
         asset_path: ./artifact.tgz
-        asset_name: artifact-0.0.121.tgz
+        asset_name: artifact-0.0.122.tgz
         asset_content_type: application/gzip
 
 
