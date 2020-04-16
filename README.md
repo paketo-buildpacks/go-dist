@@ -60,6 +60,6 @@ supply another value as the first argument to `package.sh`.
 ```yaml
 go:
   # this allows you to specify a version constaint for the Go dependency
-  # 1.* and 1.14.* are also acceptable
+  # any valid semver constaints (e.g. 1.* and 1.14.*) are also acceptable
   version: 1.14.1
 ```
