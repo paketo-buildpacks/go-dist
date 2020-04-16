@@ -54,3 +54,12 @@ $ ./scripts/package.sh
 
 This builds the buildpack's Go source using `GOOS=linux` by default. You can
 supply another value as the first argument to `package.sh`.
+
+## `buildpack.yml` Configurations
+
+```yaml
+go:
+  # this allows you to specify a version constaint for the Go dependency
+  # 1.* and 1.14.* are also acceptable
+  version: 1.14.1
+```
