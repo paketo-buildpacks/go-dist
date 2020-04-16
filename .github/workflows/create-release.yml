@@ -23,12 +23,14 @@ jobs:
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v2
 
+    - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+
     - name: package
       run: PACKAGE_DIR=artifact ./scripts/package.sh
 
     - name: Create Release
       id: create_release
-      uses: actions/create-release@latest
+      uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
