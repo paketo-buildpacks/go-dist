@@ -1,0 +1,54 @@
+name: Create Release
+
+on:
+  push: # any commit to the master branch
+    branches:
+      - master
+
+jobs:
+  create-release-artifact:
+    name: Create Release Artifact
+    runs-on: ubuntu-latest
+    steps:
+
+    # - name: Set up Go 1.14
+    #   uses: actions/setup-go@v1
+    #   with:
+    #     go-version: 1.14
+    #   id: go
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+
+    - name: package
+      run: PACKAGE_DIR=artifact ./scripts/package.sh
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        #tag_name: ${{ github.ref }}
+        tag_name: 0.0.120
+        #release_name: Release ${{ github.ref }}
+        release_name: Release 0.0.120
+        body: |
+          Changes in this Release
+          - First Change
+          - Second Change
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./artifact.tgz
+          asset_name: artifact-0.0.120.tgz
+          asset_content_type: application/gzip
+
+
