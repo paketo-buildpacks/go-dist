@@ -123,7 +123,7 @@ function util::tools::jam::install () {
 
     if [[ ! -f "${dir}/jam" ]]; then
         util::print::title "Installing jam"
-        GOBIN="${dir}" go install github.com/cloudfoundry/packit/cargo/jam
+        GOBIN="${dir}" go get github.com/cloudfoundry/packit/cargo/jam
     fi
 }
 
@@ -147,6 +147,6 @@ function util::tools::packager::install () {
 
     if [[ ! -f "${dir}/packager" ]]; then
         util::print::title "Installing packager"
-        GOBIN="${dir}" go install github.com/cloudfoundry/libcfbuildpack/packager
+        GOBIN="${dir}" go get github.com/cloudfoundry/libcfbuildpack/packager
     fi
 }
