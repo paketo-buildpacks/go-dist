@@ -4,6 +4,7 @@ api = "0.2"
   id = "paketo-buildpacks/go-compiler"
   name = "Go Compiler Buildpack"
   version = "{{ .Version }}"
+  homepage = "https://github.com/paketo-buildpacks/go-compiler"
 
 [metadata]
   include_files = ["bin/build", "bin/detect", "buildpack.toml", "go.mod", "go.sum"]
