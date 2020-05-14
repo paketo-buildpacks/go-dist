@@ -17,9 +17,9 @@ import (
 )
 
 var (
-	buildpack        string
-	offlineBuildpack string
-	noAppBuildpack   string
+	buildpack          string
+	offlineBuildpack   string
+	buildPlanBuildpack string
 )
 
 func TestIntegration(t *testing.T) {
@@ -34,7 +34,7 @@ func TestIntegration(t *testing.T) {
 	offlineBuildpack, _, err = dagger.PackageCachedBuildpack(root)
 	Expect(err).NotTo(HaveOccurred())
 
-	noAppBuildpack, err = dagger.GetLatestCommunityBuildpack("ForestEckhardt", "no-app-cnb")
+	buildPlanBuildpack, err = dagger.GetLatestCommunityBuildpack("ForestEckhardt", "build-plan")
 	Expect(err).NotTo(HaveOccurred())
 
 	// HACK: we need to fix dagger and the package.sh scripts so that this isn't required
@@ -44,7 +44,7 @@ func TestIntegration(t *testing.T) {
 	defer func() {
 		dagger.DeleteBuildpack(buildpack)
 		dagger.DeleteBuildpack(offlineBuildpack)
-		dagger.DeleteBuildpack(noAppBuildpack)
+		dagger.DeleteBuildpack(buildPlanBuildpack)
 	}()
 
 	SetDefaultEventuallyTimeout(10 * time.Second)

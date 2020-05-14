@@ -65,7 +65,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			firstImage, logs, err = pack.WithNoColor().Build.
 				WithNoPull().
-				WithBuildpacks(buildpack, noAppBuildpack).
+				WithBuildpacks(buildpack, buildPlanBuildpack).
 				Execute(name, filepath.Join("testdata", "default_app"))
 			Expect(err).NotTo(HaveOccurred())
 
@@ -101,7 +101,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 			// Second pack build
 			secondImage, logs, err = pack.WithNoColor().Build.
 				WithNoPull().
-				WithBuildpacks(buildpack, noAppBuildpack).
+				WithBuildpacks(buildpack, buildPlanBuildpack).
 				Execute(name, filepath.Join("testdata", "default_app"))
 			Expect(err).NotTo(HaveOccurred())
 
@@ -155,7 +155,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			firstImage, logs, err = pack.WithNoColor().Build.
 				WithNoPull().
-				WithBuildpacks(buildpack, noAppBuildpack).
+				WithBuildpacks(buildpack, buildPlanBuildpack).
 				Execute(name, filepath.Join("testdata", "buildpack_yaml_app"))
 			Expect(err).NotTo(HaveOccurred())
 
@@ -192,7 +192,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 			// Second pack build
 			secondImage, logs, err = pack.WithNoColor().Build.
 				WithNoPull().
-				WithBuildpacks(buildpack, noAppBuildpack).
+				WithBuildpacks(buildpack, buildPlanBuildpack).
 				Execute(name, filepath.Join("testdata", "different_version_buildpack_yaml_app"))
 			Expect(err).NotTo(HaveOccurred())
 

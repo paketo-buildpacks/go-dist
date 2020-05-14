@@ -52,7 +52,7 @@ func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
 			var logs fmt.Stringer
 			image, logs, err = pack.WithNoColor().Build.
 				WithNoPull().
-				WithBuildpacks(buildpack, noAppBuildpack).
+				WithBuildpacks(buildpack, buildPlanBuildpack).
 				Execute(name, filepath.Join("testdata", "buildpack_yaml_app"))
 			Expect(err).ToNot(HaveOccurred(), logs.String)
 
