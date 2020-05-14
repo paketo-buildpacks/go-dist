@@ -4,9 +4,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/cloudfoundry/packit"
 	main "github.com/paketo-buildpacks/go-compiler"
 	"github.com/paketo-buildpacks/go-compiler/fakes"
+	"github.com/paketo-buildpacks/packit"
 	"github.com/sclevine/spec"
 
 	. "github.com/onsi/gomega"

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/cloudfoundry/packit"
-	"github.com/cloudfoundry/packit/postal"
+	"github.com/paketo-buildpacks/packit"
+	"github.com/paketo-buildpacks/packit/postal"
 )
 
 type BuildPlanRefinery struct{}

@@ -3,7 +3,7 @@ package main
 import (
 	"path/filepath"
 
-	"github.com/cloudfoundry/packit"
+	"github.com/paketo-buildpacks/packit"
 )
 
 //go:generate faux --interface VersionParser --output fakes/version_parser.go

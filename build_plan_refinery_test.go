@@ -3,9 +3,9 @@ package main_test
 import (
 	"testing"
 
-	"github.com/cloudfoundry/packit"
-	"github.com/cloudfoundry/packit/postal"
 	main "github.com/paketo-buildpacks/go-compiler"
+	"github.com/paketo-buildpacks/packit"
+	"github.com/paketo-buildpacks/packit/postal"
 	"github.com/sclevine/spec"
 
 	. "github.com/onsi/gomega"
