@@ -1,10 +1,12 @@
 module github.com/paketo-buildpacks/go-compiler
 
-go 1.12
+go 1.14
 
 require (
-	github.com/buildpack/libbuildpack v1.25.11
-	github.com/cloudfoundry/libcfbuildpack v1.91.23
+	github.com/cloudfoundry/dagger v0.0.0-20200424213418-5178da286b3e
 	github.com/onsi/gomega v1.10.0
+	github.com/paketo-buildpacks/occam v0.0.6
+	github.com/paketo-buildpacks/packit v0.0.8
 	github.com/sclevine/spec v1.4.0
+	gopkg.in/yaml.v2 v2.2.8
 )

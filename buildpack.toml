@@ -7,7 +7,7 @@ api = "0.2"
   homepage = "https://github.com/paketo-buildpacks/go-compiler"
 
 [metadata]
-  include_files = ["bin/build", "bin/detect", "buildpack.toml", "go.mod", "go.sum"]
+  include_files = ["bin/run", "bin/build", "bin/detect", "buildpack.toml", "go.mod", "go.sum"]
   pre_package = "./scripts/build.sh"
   [metadata.default-versions]
     go = "1.13.*"
