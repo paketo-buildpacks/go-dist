@@ -30,7 +30,6 @@ func Detect(buildpackYAMLParser VersionParser) packit.DetectFunc {
 				Version: version,
 				Metadata: BuildPlanMetadata{
 					VersionSource: "buildpack.yml",
-					Build:         true,
 				},
 			})
 		}
