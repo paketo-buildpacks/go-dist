@@ -8,5 +8,5 @@ require (
 	github.com/paketo-buildpacks/occam v0.0.6
 	github.com/paketo-buildpacks/packit v0.0.8
 	github.com/sclevine/spec v1.4.0
-	gopkg.in/yaml.v2 v2.2.8
+	gopkg.in/yaml.v2 v2.3.0
 )
