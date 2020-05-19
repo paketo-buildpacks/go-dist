@@ -113,6 +113,8 @@ github.com/paketo-buildpacks/occam v0.0.4/go.mod h1:GNW2KzdEjWkcAJZj/aI+PSfXxGHk
 github.com/paketo-buildpacks/occam v0.0.5/go.mod h1:WSAaKpxQ6YtaKZMm+nwgpPI6S+KPs2SdN9zuP0O9eis=
 github.com/paketo-buildpacks/occam v0.0.6 h1:2agmAZFnK9tufHi2O6T5GGMsJIIcBYz3k6PiyumR0vM=
 github.com/paketo-buildpacks/occam v0.0.6/go.mod h1:WSAaKpxQ6YtaKZMm+nwgpPI6S+KPs2SdN9zuP0O9eis=
+github.com/paketo-buildpacks/occam v0.0.8 h1:Of7BUZi/EzwO89XEhLhFULDBeggtSP2wpHzPCJBjnk0=
+github.com/paketo-buildpacks/occam v0.0.8/go.mod h1:kJRrFPHH2/mr7nqBQE8Wb/VvEJ2JOcVWx40haWHJjO4=
 github.com/paketo-buildpacks/packit v0.0.8 h1:bDixAQpv33yf91eYY/WXJtRwP3LGwwJjCiWUAHjmk3o=
 github.com/paketo-buildpacks/packit v0.0.8/go.mod h1:S2ud8PcMgCjnOjIYnlituwDFL12uQ9eWy9qjTHlM/IM=
 github.com/paketo-buildpacks/packit v0.0.10 h1:W29he2huZn6UcSWO6nMgBUQlLBUi4pCrQS+VXcCfYBQ=
