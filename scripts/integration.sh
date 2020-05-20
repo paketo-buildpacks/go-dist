@@ -27,7 +27,8 @@ function main() {
 
 function tools::install() {
     util::tools::pack::install \
-        --directory "${BUILDPACKDIR}/.bin"
+        --directory "${BUILDPACKDIR}/.bin" \
+        --version "latest"
 
     if [[ -f "${BUILDPACKDIR}/.packit" ]]; then
         util::tools::jam::install \
