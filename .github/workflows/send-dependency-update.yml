@@ -1,7 +1,7 @@
 # This workflow triggers on a published release event.
 # Requires the following secrets:
 # - LANGUAGE_FAMILY_REPO -> the full name of the repo to send the dispatch to (eg. paketo-buildpacks/nodejs)
-# - GITHUB_TOKEN -> a token with permissions to send the dispatch to the language family repo
+# - PAKETO_BOT_GITHUB_TOKEN -> a token with permissions to send the dispatch to the language family repo
 
 name: Send Dependency Update Dispatch
 
@@ -27,7 +27,7 @@ jobs:
       uses: paketo-buildpacks/github-config/actions/dispatch@master
       with:
         repos: ${{ secrets.LANGUAGE_FAMILY_REPO }}
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
         event: dependency-update
         payload: |
           {
