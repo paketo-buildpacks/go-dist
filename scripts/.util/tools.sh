@@ -20,7 +20,7 @@ function util::tools::path::export() {
 }
 
 function util::tools::jam::install () {
-  echo "-> Installing v0.0.7 jam..."
+  echo "-> Installing v0.0.10 jam..."
 
   local dir
   while [[ "${#}" != 0 ]]; do
@@ -55,7 +55,7 @@ function util::tools::jam::install () {
 
   if [[ ! -f "${dir}/jam" ]]; then
     local version
-    version="v0.0.7"
+    version="v0.0.10"
 
     util::print::title "Installing jam ${version}"
     curl "https://github.com/paketo-buildpacks/packit/releases/download/${version}/jam-${os}" \
