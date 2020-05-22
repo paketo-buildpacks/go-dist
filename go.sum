@@ -133,6 +133,8 @@ github.com/paketo-buildpacks/packit v0.0.8 h1:bDixAQpv33yf91eYY/WXJtRwP3LGwwJjCi
 github.com/paketo-buildpacks/packit v0.0.8/go.mod h1:S2ud8PcMgCjnOjIYnlituwDFL12uQ9eWy9qjTHlM/IM=
 github.com/paketo-buildpacks/packit v0.0.10 h1:W29he2huZn6UcSWO6nMgBUQlLBUi4pCrQS+VXcCfYBQ=
 github.com/paketo-buildpacks/packit v0.0.10/go.mod h1:S2ud8PcMgCjnOjIYnlituwDFL12uQ9eWy9qjTHlM/IM=
+github.com/paketo-buildpacks/packit v0.0.12 h1:GuGXq52bnLYxM7zzFPhp8rZOID+7d4zwlqM6zeoBaZc=
+github.com/paketo-buildpacks/packit v0.0.12/go.mod h1:b40wtWWAcgB47+vYGDD9KKhzOtBjI8KPqGxwGvV+XNs=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
