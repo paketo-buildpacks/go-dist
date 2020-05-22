@@ -67,7 +67,7 @@ jobs:
         RELEASE_BODY="${RELEASE_BODY//$'\r'/'%0D'}"
         echo "::set-output name=release_body::$RELEASE_BODY"
     - name: Create Release
-      uses: paketo-buildpacks/github-config/actions/release/create@create-release
+      uses: paketo-buildpacks/github-config/actions/release/create@master
       with:
         repo: ${{ github.repository }}
         token: ${{ secrets.PAKETO_BOT_GITHUB_TOKEN }}
