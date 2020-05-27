@@ -129,10 +129,13 @@ api = "0.2"
     version_line = "1.13.x"
 
 [[stacks]]
-  id = "org.cloudfoundry.stacks.cflinuxfs3"
+  id = "io.buildpacks.stacks.bionic"
 
 [[stacks]]
-  id = "io.buildpacks.stacks.bionic"
+  id = "io.paketo.stacks.tiny"
+
+[[stacks]]
+  id = "org.cloudfoundry.stacks.cflinuxfs3"
 
 [[stacks]]
   id = "org.cloudfoundry.stacks.tiny"
