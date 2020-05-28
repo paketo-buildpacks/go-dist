@@ -3,7 +3,6 @@ api = "0.2"
 [buildpack]
   id = "paketo-buildpacks/go-compiler"
   name = "Go Compiler Buildpack"
-  version = "{{ .Version }}"
   homepage = "https://github.com/paketo-buildpacks/go-compiler"
 
 [metadata]
