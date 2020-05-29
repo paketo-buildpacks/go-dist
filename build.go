@@ -72,11 +72,9 @@ func Build(entries EntryResolver, dependencies DependencyManager, planRefinery P
 		goLayer.Launch = entry.Metadata["launch"] == true
 
 		logs.Subprocess("Installing Go %s", dependency.Version)
-		duration, err := clock.Measure(
-			func() error {
+		duration, err := clock.Measure(func() error {
 				return dependencies.Install(dependency, context.CNBPath, goLayer.Path)
-			},
-		)
+		})
 		if err != nil {
 			return packit.BuildResult{}, err
 		}
