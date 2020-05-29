@@ -12,6 +12,7 @@ import (
 	main "github.com/paketo-buildpacks/go-compiler"
 	"github.com/paketo-buildpacks/go-compiler/fakes"
 	"github.com/paketo-buildpacks/packit"
+	"github.com/paketo-buildpacks/packit/chronos"
 	"github.com/paketo-buildpacks/packit/postal"
 	"github.com/sclevine/spec"
 
@@ -42,7 +43,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(err).NotTo(HaveOccurred())
 
 		timestamp = time.Now()
-		clock := main.NewClock(func() time.Time {
+		clock := chronos.NewClock(func() time.Time {
 			return timestamp
 		})
 

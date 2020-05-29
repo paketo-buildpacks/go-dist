@@ -12,7 +12,6 @@ func TestUnit(t *testing.T) {
 	suite("Build", testBuild)
 	suite("BuildPlanRefinery", testBuildPlanRefinery)
 	suite("BuildpackYAMLParser", testBuildpackYAMLParser)
-	suite("Clock", testClock)
 	suite("Detect", testDetect)
 	suite("LogEmitter", testLogEmitter)
 	suite("PlanEntryResolver", testPlanEntryResolver)
