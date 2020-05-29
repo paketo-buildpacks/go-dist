@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/paketo-buildpacks/packit"
+	"github.com/paketo-buildpacks/packit/chronos"
 	"github.com/paketo-buildpacks/packit/postal"
 )
 
@@ -24,7 +25,7 @@ type PlanRefinery interface {
 	BillOfMaterials(postal.Dependency) packit.BuildpackPlanEntry
 }
 
-func Build(entries EntryResolver, dependencies DependencyManager, planRefinery PlanRefinery, clock Clock, logs LogEmitter) packit.BuildFunc {
+func Build(entries EntryResolver, dependencies DependencyManager, planRefinery PlanRefinery, clock chronos.Clock, logs LogEmitter) packit.BuildFunc {
 	return func(context packit.BuildContext) (packit.BuildResult, error) {
 		logs.Title(context.BuildpackInfo)
 
@@ -71,12 +72,15 @@ func Build(entries EntryResolver, dependencies DependencyManager, planRefinery P
 		goLayer.Launch = entry.Metadata["launch"] == true
 
 		logs.Subprocess("Installing Go %s", dependency.Version)
-		then := clock.Now()
-		err = dependencies.Install(dependency, context.CNBPath, goLayer.Path)
+		duration, err := clock.Measure(
+			func() error {
+				return dependencies.Install(dependency, context.CNBPath, goLayer.Path)
+			},
+		)
 		if err != nil {
 			return packit.BuildResult{}, err
 		}
-		logs.Action("Completed in %s", clock.Now().Sub(then).Round(time.Millisecond))
+		logs.Action("Completed in %s", duration.Round(time.Millisecond))
 
 		goLayer.Metadata = map[string]interface{}{
 			DependencySHAKey: dependency.SHA256,
