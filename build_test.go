@@ -1,4 +1,4 @@
-package main_test
+package gocompiler_test
 
 import (
 	"bytes"
@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	main "github.com/paketo-buildpacks/go-compiler"
+	gocompiler "github.com/paketo-buildpacks/go-compiler"
 	"github.com/paketo-buildpacks/go-compiler/fakes"
 	"github.com/paketo-buildpacks/packit"
 	"github.com/paketo-buildpacks/packit/chronos"
@@ -75,9 +75,9 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		}
 
 		buffer = bytes.NewBuffer(nil)
-		logEmitter := main.NewLogEmitter(buffer)
+		logEmitter := gocompiler.NewLogEmitter(buffer)
 
-		build = main.Build(entryResolver, dependencyManager, planRefinery, clock, logEmitter)
+		build = gocompiler.Build(entryResolver, dependencyManager, planRefinery, clock, logEmitter)
 	})
 
 	it.After(func() {

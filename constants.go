@@ -1,4 +1,4 @@
-package main
+package gocompiler
 
 const (
 	DependencySHAKey = "dependency-sha"
