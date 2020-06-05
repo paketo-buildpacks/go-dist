@@ -1,10 +1,10 @@
-package main_test
+package gocompiler_test
 
 import (
 	"errors"
 	"testing"
 
-	main "github.com/paketo-buildpacks/go-compiler"
+	gocompiler "github.com/paketo-buildpacks/go-compiler"
 	"github.com/paketo-buildpacks/go-compiler/fakes"
 	"github.com/paketo-buildpacks/packit"
 	"github.com/sclevine/spec"
@@ -24,7 +24,7 @@ func testDetect(t *testing.T, context spec.G, it spec.S) {
 	it.Before(func() {
 		buildpackYAMLParser = &fakes.VersionParser{}
 
-		detect = main.Detect(buildpackYAMLParser)
+		detect = gocompiler.Detect(buildpackYAMLParser)
 	})
 
 	it("returns a plan that provides go", func() {
@@ -62,7 +62,7 @@ func testDetect(t *testing.T, context spec.G, it spec.S) {
 						{
 							Name:    "go",
 							Version: "some-version",
-							Metadata: main.BuildPlanMetadata{
+							Metadata: gocompiler.BuildPlanMetadata{
 								VersionSource: "buildpack.yml",
 							},
 						},
