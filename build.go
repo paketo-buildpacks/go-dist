@@ -1,4 +1,4 @@
-package main
+package gocompiler
 
 import (
 	"path/filepath"
@@ -73,7 +73,7 @@ func Build(entries EntryResolver, dependencies DependencyManager, planRefinery P
 
 		logs.Subprocess("Installing Go %s", dependency.Version)
 		duration, err := clock.Measure(func() error {
-				return dependencies.Install(dependency, context.CNBPath, goLayer.Path)
+			return dependencies.Install(dependency, context.CNBPath, goLayer.Path)
 		})
 		if err != nil {
 			return packit.BuildResult{}, err

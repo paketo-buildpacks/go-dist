@@ -1,9 +1,9 @@
-package main_test
+package gocompiler_test
 
 import (
 	"testing"
 
-	main "github.com/paketo-buildpacks/go-compiler"
+	gocompiler "github.com/paketo-buildpacks/go-compiler"
 	"github.com/paketo-buildpacks/packit"
 	"github.com/paketo-buildpacks/packit/postal"
 	"github.com/sclevine/spec"
@@ -15,11 +15,11 @@ func testBuildPlanRefinery(t *testing.T, context spec.G, it spec.S) {
 	var (
 		Expect = NewWithT(t).Expect
 
-		refinery main.BuildPlanRefinery
+		refinery gocompiler.BuildPlanRefinery
 	)
 
 	it.Before(func() {
-		refinery = main.NewBuildPlanRefinery()
+		refinery = gocompiler.NewBuildPlanRefinery()
 	})
 
 	context("BillOfMaterials", func() {
