@@ -1,4 +1,4 @@
-package main
+package gocompiler
 
 import (
 	"github.com/paketo-buildpacks/packit"

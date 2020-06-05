@@ -1,4 +1,4 @@
-package main_test
+package gocompiler_test
 
 import (
 	"testing"
