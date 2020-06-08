@@ -67,7 +67,7 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 
 			content, err := ioutil.ReadAll(response.Body)
 			Expect(err).NotTo(HaveOccurred())
-			Expect(string(content)).To(ContainSubstring("go1.13"))
+			Expect(string(content)).To(ContainSubstring("go1.14"))
 
 			buildpackVersion, err := GetGitVersion()
 			Expect(err).ToNot(HaveOccurred())
@@ -78,10 +78,10 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 				"    Candidate version sources (in priority order):",
 				"      <unknown> -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.13\.\d+`),
+				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.14\.\d+`),
 				"",
 				"  Executing build process",
-				MatchRegexp(`    Installing Go 1\.13\.\d+`),
+				MatchRegexp(`    Installing Go 1\.14\.\d+`),
 				MatchRegexp(`      Completed in \d+\.\d+`),
 			))
 		})
