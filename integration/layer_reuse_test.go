@@ -90,11 +90,11 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				"    Candidate version sources (in priority order):",
 				"      <unknown> -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.13\.\d+`),
+				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.14\.\d+`),
 				"",
 				"  Executing build process",
-				MatchRegexp(`    Installing Go 1\.13\.\d+`),
-				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
+				MatchRegexp(`    Installing Go 1\.14\.\d+`),
+				MatchRegexp(`      Completed in \d+\.\d+`),
 			))
 
 			firstContainer, err = docker.Container.Run.WithCommand("go run main.go").Execute(firstImage.ID)
@@ -123,7 +123,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				"    Candidate version sources (in priority order):",
 				"      <unknown> -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.13\.\d+`),
+				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.14\.\d+`),
 				"",
 				"  Reusing cached layer /layers/paketo-buildpacks_go-compiler/go",
 			))
@@ -141,7 +141,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			content, err := ioutil.ReadAll(response.Body)
 			Expect(err).NotTo(HaveOccurred())
-			Expect(content).To(ContainSubstring("go1.13"))
+			Expect(content).To(ContainSubstring("go1.14"))
 
 			Expect(secondImage.Buildpacks[0].Layers["go"].Metadata["built_at"]).To(Equal(firstImage.Buildpacks[0].Layers["go"].Metadata["built_at"]))
 		})
