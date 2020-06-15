@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"path/filepath"
 	"testing"
 
@@ -32,7 +33,9 @@ func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
 		var (
 			image     occam.Image
 			container occam.Container
-			name      string
+
+			name   string
+			source string
 		)
 
 		it.Before(func() {
@@ -45,15 +48,19 @@ func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
 			Expect(docker.Container.Remove.Execute(container.ID)).To(Succeed())
 			Expect(docker.Image.Remove.Execute(image.ID)).To(Succeed())
 			Expect(docker.Volume.Remove.Execute(occam.CacheVolumeNames(name))).To(Succeed())
+			Expect(os.RemoveAll(source)).To(Succeed())
 		})
 
 		it("builds with the settings in buildpack.yml", func() {
 			var err error
+			source, err = occam.Source(filepath.Join("testdata", "buildpack_yaml_app"))
+			Expect(err).NotTo(HaveOccurred())
+
 			var logs fmt.Stringer
 			image, logs, err = pack.WithNoColor().Build.
 				WithNoPull().
 				WithBuildpacks(buildpack, buildPlanBuildpack).
-				Execute(name, filepath.Join("testdata", "buildpack_yaml_app"))
+				Execute(name, source)
 			Expect(err).ToNot(HaveOccurred(), logs.String)
 
 			container, err = docker.Container.Run.WithCommand("go run main.go").Execute(image.ID)
@@ -83,7 +90,7 @@ func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
 				"",
 				"  Executing build process",
 				MatchRegexp(`    Installing Go 1\.14\.\d+`),
-				MatchRegexp(`      Completed in \d+\.\d+`),
+				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 			))
 		})
 	})
