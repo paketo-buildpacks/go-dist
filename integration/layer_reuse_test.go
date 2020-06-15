@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"path/filepath"
 	"testing"
 
@@ -24,7 +25,9 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 		imageIDs     map[string]struct{}
 		containerIDs map[string]struct{}
-		name         string
+
+		name   string
+		source string
 	)
 
 	it.Before(func() {
@@ -36,7 +39,6 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 		pack = occam.NewPack()
 		imageIDs = map[string]struct{}{}
 		containerIDs = map[string]struct{}{}
-
 	})
 
 	it.After(func() {
@@ -49,6 +51,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 		}
 
 		Expect(docker.Volume.Remove.Execute(occam.CacheVolumeNames(name))).To(Succeed())
+		Expect(os.RemoveAll(source)).To(Succeed())
 	})
 
 	context("when an app is rebuilt and does not change", func() {
@@ -63,10 +66,13 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				secondContainer occam.Container
 			)
 
+			source, err = occam.Source(filepath.Join("testdata", "default_app"))
+			Expect(err).NotTo(HaveOccurred())
+
 			firstImage, logs, err = pack.WithNoColor().Build.
 				WithNoPull().
 				WithBuildpacks(buildpack, buildPlanBuildpack).
-				Execute(name, filepath.Join("testdata", "default_app"))
+				Execute(name, source)
 			Expect(err).NotTo(HaveOccurred())
 
 			imageIDs[firstImage.ID] = struct{}{}
@@ -102,7 +108,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 			secondImage, logs, err = pack.WithNoColor().Build.
 				WithNoPull().
 				WithBuildpacks(buildpack, buildPlanBuildpack).
-				Execute(name, filepath.Join("testdata", "default_app"))
+				Execute(name, source)
 			Expect(err).NotTo(HaveOccurred())
 
 			imageIDs[secondImage.ID] = struct{}{}
@@ -153,10 +159,13 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				secondContainer occam.Container
 			)
 
+			source, err = occam.Source(filepath.Join("testdata", "buildpack_yaml_app"))
+			Expect(err).NotTo(HaveOccurred())
+
 			firstImage, logs, err = pack.WithNoColor().Build.
 				WithNoPull().
 				WithBuildpacks(buildpack, buildPlanBuildpack).
-				Execute(name, filepath.Join("testdata", "buildpack_yaml_app"))
+				Execute(name, source)
 			Expect(err).NotTo(HaveOccurred())
 
 			imageIDs[firstImage.ID] = struct{}{}
@@ -179,7 +188,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				"",
 				"  Executing build process",
 				MatchRegexp(`    Installing Go 1\.14\.\d+`),
-				MatchRegexp(`      Completed in \d+\.\d+`),
+				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 			))
 
 			firstContainer, err = docker.Container.Run.WithCommand("go run main.go").Execute(firstImage.ID)
@@ -189,11 +198,17 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			Eventually(firstContainer).Should(BeAvailable())
 
+			err = ioutil.WriteFile(filepath.Join(source, "buildpack.yml"), []byte(`---
+go:
+  version: 1.13.*
+`), 0644)
+			Expect(err).NotTo(HaveOccurred())
+
 			// Second pack build
 			secondImage, logs, err = pack.WithNoColor().Build.
 				WithNoPull().
 				WithBuildpacks(buildpack, buildPlanBuildpack).
-				Execute(name, filepath.Join("testdata", "different_version_buildpack_yaml_app"))
+				Execute(name, source)
 			Expect(err).NotTo(HaveOccurred())
 
 			imageIDs[secondImage.ID] = struct{}{}
@@ -213,7 +228,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				"",
 				"  Executing build process",
 				MatchRegexp(`    Installing Go 1\.13\.\d+`),
-				MatchRegexp(`      Completed in \d+\.\d+`),
+				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 			))
 
 			secondContainer, err = docker.Container.Run.WithCommand("go run main.go").Execute(secondImage.ID)
