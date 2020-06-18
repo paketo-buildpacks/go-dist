@@ -1,10 +1,10 @@
 api = "0.2"
 
 [buildpack]
-  id = "paketo-buildpacks/go-compiler"
-  name = "Go Compiler Buildpack"
+  id = "paketo-buildpacks/go-dist"
+  name = "Go Distribution Buildpack"
   version = ""
-  homepage = "https://github.com/paketo-buildpacks/go-compiler"
+  homepage = "https://github.com/paketo-buildpacks/go-dist"
 
 [metadata]
   include_files = ["bin/run", "bin/build", "bin/detect", "buildpack.toml", "go.mod", "go.sum"]

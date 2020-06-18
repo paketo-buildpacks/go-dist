@@ -80,7 +80,7 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 			Expect(err).ToNot(HaveOccurred())
 
 			Expect(logs).To(ContainLines(
-				fmt.Sprintf("Go Compiler Buildpack %s", buildpackVersion),
+				fmt.Sprintf("Go Distribution Buildpack %s", buildpackVersion),
 				"  Resolving Go version",
 				"    Candidate version sources (in priority order):",
 				"      <unknown> -> \"\"",
@@ -89,7 +89,7 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 				"",
 				"  Executing build process",
 				MatchRegexp(`    Installing Go 1\.14\.\d+`),
-				MatchRegexp(`      Completed in \d+\.\d+`),
+				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 			))
 		})
 	})

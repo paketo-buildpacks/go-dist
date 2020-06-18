@@ -1,4 +1,4 @@
-module github.com/paketo-buildpacks/go-compiler
+module github.com/paketo-buildpacks/go-dist
 
 go 1.14
 

@@ -1,4 +1,4 @@
-package gocompiler_test
+package godist_test
 
 import (
 	"bytes"
@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	gocompiler "github.com/paketo-buildpacks/go-compiler"
-	"github.com/paketo-buildpacks/go-compiler/fakes"
+	godist "github.com/paketo-buildpacks/go-dist"
+	"github.com/paketo-buildpacks/go-dist/fakes"
 	"github.com/paketo-buildpacks/packit"
 	"github.com/paketo-buildpacks/packit/chronos"
 	"github.com/paketo-buildpacks/packit/postal"
@@ -75,9 +75,9 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		}
 
 		buffer = bytes.NewBuffer(nil)
-		logEmitter := gocompiler.NewLogEmitter(buffer)
+		logEmitter := godist.NewLogEmitter(buffer)
 
-		build = gocompiler.Build(entryResolver, dependencyManager, planRefinery, clock, logEmitter)
+		build = godist.Build(entryResolver, dependencyManager, planRefinery, clock, logEmitter)
 	})
 
 	it.After(func() {

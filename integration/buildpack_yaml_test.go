@@ -80,7 +80,7 @@ func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
 			Expect(err).ToNot(HaveOccurred())
 
 			Expect(logs).To(ContainLines(
-				fmt.Sprintf("Go Compiler Buildpack %s", buildpackVersion),
+				fmt.Sprintf("Go Distribution Buildpack %s", buildpackVersion),
 				"  Resolving Go version",
 				"    Candidate version sources (in priority order):",
 				"      buildpack.yml -> \"1.14.*\"",
