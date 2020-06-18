@@ -1,11 +1,11 @@
-package gocompiler_test
+package godist_test
 
 import (
 	"bytes"
 	"testing"
 	"time"
 
-	gocompiler "github.com/paketo-buildpacks/go-compiler"
+	godist "github.com/paketo-buildpacks/go-dist"
 	"github.com/paketo-buildpacks/packit"
 	"github.com/paketo-buildpacks/packit/postal"
 	"github.com/sclevine/spec"
@@ -18,12 +18,12 @@ func testLogEmitter(t *testing.T, context spec.G, it spec.S) {
 		Expect = NewWithT(t).Expect
 
 		buffer  *bytes.Buffer
-		emitter gocompiler.LogEmitter
+		emitter godist.LogEmitter
 	)
 
 	it.Before(func() {
 		buffer = bytes.NewBuffer(nil)
-		emitter = gocompiler.NewLogEmitter(buffer)
+		emitter = godist.NewLogEmitter(buffer)
 	})
 
 	context("Title", func() {

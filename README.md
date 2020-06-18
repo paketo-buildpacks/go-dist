@@ -1,6 +1,6 @@
-# Go Compiler Cloud Native Buildpack
+# Go Distribution Cloud Native Buildpack
 
-The Go Compiler CNB provides the Go binary distribution that can be used to
+The Go Distribution CNB provides the Go binary distribution that can be used to
 execute [Go tooling](https://golang.org/cmd/go/). The buildpack installs the Go
 binary distribution onto the `$PATH` which makes it available for subsequent
 buildpacks. These buildpacks can then use that distribution to run Go tooling
@@ -11,7 +11,7 @@ CNB](https://github.com/paketo-buildpacks/dep).
 
 ## Integration
 
-The Go Compiler CNB provides Go as a dependency. Downstream buildpacks, like
+The Go Distribution CNB provides Go as a dependency. Downstream buildpacks, like
 [Go Mod](https://github.com/paketo-buildpacks/go-mod) or
 [Dep](https://github.com/paketo-buildpacks/dep), can require the go dependency
 by generating a [Build Plan

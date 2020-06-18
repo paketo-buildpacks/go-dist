@@ -1,4 +1,4 @@
-package gocompiler_test
+package godist_test
 
 import (
 	"testing"
@@ -8,7 +8,7 @@ import (
 )
 
 func TestUnit(t *testing.T) {
-	suite := spec.New("go-compiler", spec.Report(report.Terminal{}), spec.Parallel())
+	suite := spec.New("go-dist", spec.Report(report.Terminal{}), spec.Parallel())
 	suite("Build", testBuild)
 	suite("BuildPlanRefinery", testBuildPlanRefinery)
 	suite("BuildpackYAMLParser", testBuildpackYAMLParser)

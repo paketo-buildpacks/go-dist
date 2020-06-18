@@ -1,4 +1,4 @@
-package gocompiler
+package godist
 
 import (
 	"github.com/paketo-buildpacks/packit"

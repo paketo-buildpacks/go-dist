@@ -78,14 +78,14 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 			imageIDs[firstImage.ID] = struct{}{}
 
 			Expect(firstImage.Buildpacks).To(HaveLen(2))
-			Expect(firstImage.Buildpacks[0].Key).To(Equal("paketo-buildpacks/go-compiler"))
+			Expect(firstImage.Buildpacks[0].Key).To(Equal("paketo-buildpacks/go-dist"))
 			Expect(firstImage.Buildpacks[0].Layers).To(HaveKey("go"))
 
 			buildpackVersion, err := GetGitVersion()
 			Expect(err).ToNot(HaveOccurred())
 
 			Expect(logs).To(ContainLines(
-				fmt.Sprintf("Go Compiler Buildpack %s", buildpackVersion),
+				fmt.Sprintf("Go Distribution Buildpack %s", buildpackVersion),
 				"  Resolving Go version",
 				"    Candidate version sources (in priority order):",
 				"      <unknown> -> \"\"",
@@ -114,18 +114,18 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 			imageIDs[secondImage.ID] = struct{}{}
 
 			Expect(secondImage.Buildpacks).To(HaveLen(2))
-			Expect(secondImage.Buildpacks[0].Key).To(Equal("paketo-buildpacks/go-compiler"))
+			Expect(secondImage.Buildpacks[0].Key).To(Equal("paketo-buildpacks/go-dist"))
 			Expect(secondImage.Buildpacks[0].Layers).To(HaveKey("go"))
 
 			Expect(logs).To(ContainLines(
-				fmt.Sprintf("Go Compiler Buildpack %s", buildpackVersion),
+				fmt.Sprintf("Go Distribution Buildpack %s", buildpackVersion),
 				"  Resolving Go version",
 				"    Candidate version sources (in priority order):",
 				"      <unknown> -> \"\"",
 				"",
 				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.14\.\d+`),
 				"",
-				"  Reusing cached layer /layers/paketo-buildpacks_go-compiler/go",
+				"  Reusing cached layer /layers/paketo-buildpacks_go-dist/go",
 			))
 
 			secondContainer, err = docker.Container.Run.WithCommand("go run main.go").Execute(secondImage.ID)
@@ -171,14 +171,14 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 			imageIDs[firstImage.ID] = struct{}{}
 
 			Expect(firstImage.Buildpacks).To(HaveLen(2))
-			Expect(firstImage.Buildpacks[0].Key).To(Equal("paketo-buildpacks/go-compiler"))
+			Expect(firstImage.Buildpacks[0].Key).To(Equal("paketo-buildpacks/go-dist"))
 			Expect(firstImage.Buildpacks[0].Layers).To(HaveKey("go"))
 
 			buildpackVersion, err := GetGitVersion()
 			Expect(err).ToNot(HaveOccurred())
 
 			Expect(logs).To(ContainLines(
-				fmt.Sprintf("Go Compiler Buildpack %s", buildpackVersion),
+				fmt.Sprintf("Go Distribution Buildpack %s", buildpackVersion),
 				"  Resolving Go version",
 				"    Candidate version sources (in priority order):",
 				"      buildpack.yml -> \"1.14.*\"",
@@ -214,11 +214,11 @@ go:
 			imageIDs[secondImage.ID] = struct{}{}
 
 			Expect(secondImage.Buildpacks).To(HaveLen(2))
-			Expect(secondImage.Buildpacks[0].Key).To(Equal("paketo-buildpacks/go-compiler"))
+			Expect(secondImage.Buildpacks[0].Key).To(Equal("paketo-buildpacks/go-dist"))
 			Expect(secondImage.Buildpacks[0].Layers).To(HaveKey("go"))
 
 			Expect(logs).To(ContainLines(
-				fmt.Sprintf("Go Compiler Buildpack %s", buildpackVersion),
+				fmt.Sprintf("Go Distribution Buildpack %s", buildpackVersion),
 				"  Resolving Go version",
 				"    Candidate version sources (in priority order):",
 				"      buildpack.yml -> \"1.13.*\"",

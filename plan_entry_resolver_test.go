@@ -1,9 +1,9 @@
-package gocompiler_test
+package godist_test
 
 import (
 	"testing"
 
-	gocompiler "github.com/paketo-buildpacks/go-compiler"
+	godist "github.com/paketo-buildpacks/go-dist"
 	"github.com/paketo-buildpacks/packit"
 	"github.com/sclevine/spec"
 
@@ -14,11 +14,11 @@ func testPlanEntryResolver(t *testing.T, context spec.G, it spec.S) {
 	var (
 		Expect = NewWithT(t).Expect
 
-		resolver gocompiler.PlanEntryResolver
+		resolver godist.PlanEntryResolver
 	)
 
 	it.Before(func() {
-		resolver = gocompiler.NewPlanEntryResolver()
+		resolver = godist.NewPlanEntryResolver()
 	})
 
 	context("Resolve", func() {

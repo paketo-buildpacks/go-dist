@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	gocompiler "github.com/paketo-buildpacks/go-compiler"
+	godist "github.com/paketo-buildpacks/go-dist"
 	"github.com/paketo-buildpacks/packit"
 	"github.com/paketo-buildpacks/packit/cargo"
 	"github.com/paketo-buildpacks/packit/chronos"
@@ -11,14 +11,14 @@ import (
 )
 
 func main() {
-	buildpackYAMLParser := gocompiler.NewBuildpackYAMLParser()
-	entryResolver := gocompiler.NewPlanEntryResolver()
+	buildpackYAMLParser := godist.NewBuildpackYAMLParser()
+	entryResolver := godist.NewPlanEntryResolver()
 	dependencyManager := postal.NewService(cargo.NewTransport())
-	planRefinery := gocompiler.NewBuildPlanRefinery()
-	logEmitter := gocompiler.NewLogEmitter(os.Stdout)
+	planRefinery := godist.NewBuildPlanRefinery()
+	logEmitter := godist.NewLogEmitter(os.Stdout)
 
 	packit.Run(
-		gocompiler.Detect(buildpackYAMLParser),
-		gocompiler.Build(entryResolver, dependencyManager, planRefinery, chronos.DefaultClock, logEmitter),
+		godist.Detect(buildpackYAMLParser),
+		godist.Build(entryResolver, dependencyManager, planRefinery, chronos.DefaultClock, logEmitter),
 	)
 }
