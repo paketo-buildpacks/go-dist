@@ -66,7 +66,7 @@ func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
 			container, err = docker.Container.Run.WithCommand("go run main.go").Execute(image.ID)
 			Expect(err).NotTo(HaveOccurred())
 
-			Eventually(container).Should(BeAvailable(), ContainerLogs(container.ID))
+			Eventually(container).Should(BeAvailable())
 
 			response, err := http.Get(fmt.Sprintf("http://localhost:%s", container.HostPort()))
 			Expect(err).NotTo(HaveOccurred())
