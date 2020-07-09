@@ -30,12 +30,11 @@ func TestIntegration(t *testing.T) {
 	Expect := NewWithT(t).Expect
 
 	var config struct {
-		BuildPlan string `json:"build-plan"`
+		BuildPlan string `json:"buildplan"`
 	}
 
 	file, err := os.Open("../integration.json")
 	Expect(err).NotTo(HaveOccurred())
-
 	defer file.Close()
 
 	Expect(json.NewDecoder(file).Decode(&config)).To(Succeed())
@@ -48,13 +47,19 @@ func TestIntegration(t *testing.T) {
 	version, err := GetGitVersion()
 	Expect(err).NotTo(HaveOccurred())
 
-	buildpack, err = buildpackStore.Get.WithVersion(version).Execute(root)
+	buildpack, err = buildpackStore.Get.
+		WithVersion(version).
+		Execute(root)
 	Expect(err).NotTo(HaveOccurred())
 
-	offlineBuildpack, err = buildpackStore.Get.WithOfflineDependencies().WithVersion(version).Execute(root)
+	offlineBuildpack, err = buildpackStore.Get.
+	  WithOfflineDependencies().
+		WithVersion(version).
+		Execute(root)
 	Expect(err).NotTo(HaveOccurred())
 
-	buildPlanBuildpack, err = buildpackStore.Get.Execute(config.BuildPlan)
+	buildPlanBuildpack, err = buildpackStore.Get.
+		Execute(config.BuildPlan)
 	Expect(err).NotTo(HaveOccurred())
 
 	SetDefaultEventuallyTimeout(10 * time.Second)
