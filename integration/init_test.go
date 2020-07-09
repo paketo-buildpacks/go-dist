@@ -2,12 +2,14 @@ package integration_test
 
 import (
 	"bytes"
-	"fmt"
+	"encoding/json"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 	"time"
 
-	"github.com/cloudfoundry/dagger"
+	"github.com/paketo-buildpacks/occam"
 	"github.com/paketo-buildpacks/packit/pexec"
 	"github.com/sclevine/spec"
 	"github.com/sclevine/spec/report"
@@ -17,34 +19,43 @@ import (
 
 var (
 	buildpack          string
-	offlineBuildpack   string
 	buildPlanBuildpack string
+	offlineBuildpack   string
+	root							 string
 )
 
 func TestIntegration(t *testing.T) {
+	var err error
+
 	Expect := NewWithT(t).Expect
 
-	root, err := dagger.FindBPRoot()
+	var config struct {
+		BuildPlan string `json:"build-plan"`
+	}
+
+	file, err := os.Open("../integration.json")
+	Expect(err).NotTo(HaveOccurred())
+
+	defer file.Close()
+
+	Expect(json.NewDecoder(file).Decode(&config)).To(Succeed())
+
+	root, err = filepath.Abs("./..")
 	Expect(err).ToNot(HaveOccurred())
 
-	buildpack, err = dagger.PackageBuildpack(root)
+	buildpackStore := occam.NewBuildpackStore()
+
+	version, err := GetGitVersion()
 	Expect(err).NotTo(HaveOccurred())
 
-	offlineBuildpack, _, err = dagger.PackageCachedBuildpack(root)
+	buildpack, err = buildpackStore.Get.WithVersion(version).Execute(root)
 	Expect(err).NotTo(HaveOccurred())
 
-	buildPlanBuildpack, err = dagger.GetLatestCommunityBuildpack("ForestEckhardt", "build-plan")
+	offlineBuildpack, err = buildpackStore.Get.WithOfflineDependencies().WithVersion(version).Execute(root)
 	Expect(err).NotTo(HaveOccurred())
 
-	// HACK: we need to fix dagger and the package.sh scripts so that this isn't required
-	buildpack = fmt.Sprintf("%s.tgz", buildpack)
-	offlineBuildpack = fmt.Sprintf("%s.tgz", offlineBuildpack)
-
-	defer func() {
-		Expect(dagger.DeleteBuildpack(buildpack)).To(Succeed())
-		Expect(dagger.DeleteBuildpack(offlineBuildpack)).To(Succeed())
-		Expect(dagger.DeleteBuildpack(buildPlanBuildpack)).To(Succeed())
-	}()
+	buildPlanBuildpack, err = buildpackStore.Get.Execute(config.BuildPlan)
+	Expect(err).NotTo(HaveOccurred())
 
 	SetDefaultEventuallyTimeout(10 * time.Second)
 
