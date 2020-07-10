@@ -32,6 +32,8 @@ github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1/go.mod h1:Q3SI9o4m/ZMn
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/cloudfoundry/dagger v0.0.0-20200424213418-5178da286b3e h1:yC48aozjClNyd4eRc9WXTCzEch+b56V2hQRcUOYc8RI=
 github.com/cloudfoundry/dagger v0.0.0-20200424213418-5178da286b3e/go.mod h1:jHZhi/TND4V1mqFK9UY8lyEqOuAshF+VIr9HoAOYLtQ=
+github.com/cloudfoundry/dagger v0.0.0-20200710140748-bed4cf02eaf9 h1:O6377UWMbYy+H3fxbYCk/rzMEA5rCjPeAD+LgFFi/Tw=
+github.com/cloudfoundry/dagger v0.0.0-20200710140748-bed4cf02eaf9/go.mod h1:MhA7zPGxHma9MW92HvpS3B47sS73dtCmpbwbeiKz4Co=
 github.com/cloudfoundry/libcfbuildpack v1.91.23 h1:RCorc4zL0D4+mG2z/qOueFyYGz1j3rM+e3Vbb37KPLg=
 github.com/cloudfoundry/libcfbuildpack v1.91.23/go.mod h1:h95FwHvbelcd0cSOhLC8SGEZXLwCMYh1dZo2kCr7lsA=
 github.com/cloudfoundry/packit v0.0.4/go.mod h1:9xu1MT6SrenSB4oFOXtruMapQ+vdfGXLzBZDnPjhYrM=
@@ -145,6 +147,8 @@ github.com/paketo-buildpacks/packit v0.1.0 h1:4kmSfE9+ZuudfbCaT58vX0DtLNPU4QXmV9
 github.com/paketo-buildpacks/packit v0.1.0/go.mod h1:b40wtWWAcgB47+vYGDD9KKhzOtBjI8KPqGxwGvV+XNs=
 github.com/paketo-buildpacks/packit v0.2.0 h1:l4sFKYlmKENRNMAKATt437+Ar9WD+bM42ZckKW59rMY=
 github.com/paketo-buildpacks/packit v0.2.0/go.mod h1:b40wtWWAcgB47+vYGDD9KKhzOtBjI8KPqGxwGvV+XNs=
+github.com/paketo-buildpacks/packit v0.2.1 h1:MWvvGkj83clltK0kqF1+wHjcfWmGTRe254h8s3PZyF4=
+github.com/paketo-buildpacks/packit v0.2.1/go.mod h1:b40wtWWAcgB47+vYGDD9KKhzOtBjI8KPqGxwGvV+XNs=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
@@ -204,6 +208,8 @@ golang.org/x/net v0.0.0-20200520004742-59133d7f0dd7 h1:AeiKBIuRw3UomYXSbLy0Mc2dD
 golang.org/x/net v0.0.0-20200520004742-59133d7f0dd7/go.mod h1:qpuaurCH72eLCgpAm/N6yyVIVM9cpaDIP3A8BGJEC5A=
 golang.org/x/net v0.0.0-20200625001655-4c5254603344 h1:vGXIOMxbNfDTk/aXCmfdLgkrSV+Z2tcbze+pEc3v5W4=
 golang.org/x/net v0.0.0-20200625001655-4c5254603344/go.mod h1:/O7V0waA8r7cgGh81Ro3o1hOxt32SMVPicZroKQ2sZA=
+golang.org/x/net v0.0.0-20200707034311-ab3426394381 h1:VXak5I6aEWmAXeQjA+QSZzlgNrpq9mjcfDemuexIKsU=
+golang.org/x/net v0.0.0-20200707034311-ab3426394381/go.mod h1:/O7V0waA8r7cgGh81Ro3o1hOxt32SMVPicZroKQ2sZA=
 golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be/go.mod h1:N/0e6XlmueqKjAGxoOufVs8QHGRruUQn6yWY3a++T0U=
 golang.org/x/oauth2 v0.0.0-20190226205417-e64efc72b421/go.mod h1:gOpvHmFTYa4IltrdGE7lF6nIHvwfUNPOp7c8zoXwtLw=
 golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45/go.mod h1:gOpvHmFTYa4IltrdGE7lF6nIHvwfUNPOp7c8zoXwtLw=
@@ -283,6 +289,8 @@ google.golang.org/appengine v1.5.0/go.mod h1:xpcJRLb0r/rnEns0DIKYYv+WjYCduHsrkT7
 google.golang.org/appengine v1.6.1/go.mod h1:i06prIuMbXzDqacNJfV5OdTW448YApPu5ww/cMBSeb0=
 google.golang.org/appengine v1.6.5 h1:tycE03LOZYQNhDpS27tcQdAzLCVMaj7QT2SXxebnpCM=
 google.golang.org/appengine v1.6.5/go.mod h1:8WjMMxjGQR8xUklV/ARdw2HLXBOI7O7uCIDZVag1xfc=
+google.golang.org/appengine v1.6.6 h1:lMO5rYAqUxkmaj76jAkRUvt5JZgFymx/+Q5Mzfivuhc=
+google.golang.org/appengine v1.6.6/go.mod h1:8WjMMxjGQR8xUklV/ARdw2HLXBOI7O7uCIDZVag1xfc=
 google.golang.org/genproto v0.0.0-20180817151627-c66870c02cf8/go.mod h1:JiN7NxoALGmiZfu7CAH4rXhgtRTLTxftemlI0sWmxmc=
 google.golang.org/genproto v0.0.0-20190307195333-5fe7a883aa19/go.mod h1:VzzqZJRnGkLBvHegQrXjBqPurQTc5/KpmUdxsrq26oE=
 google.golang.org/genproto v0.0.0-20190418145605-e7d98fc518a7/go.mod h1:VzzqZJRnGkLBvHegQrXjBqPurQTc5/KpmUdxsrq26oE=
