@@ -76,11 +76,8 @@ func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
 			Expect(err).NotTo(HaveOccurred())
 			Expect(string(content)).To(ContainSubstring("go1.14"))
 
-			buildpackVersion, err := GetGitVersion()
-			Expect(err).ToNot(HaveOccurred())
-
 			Expect(logs).To(ContainLines(
-				fmt.Sprintf("Go Distribution Buildpack %s", buildpackVersion),
+				MatchRegexp(fmt.Sprintf(`%s \d+\.\d+\.\d+`, buildpackInfo.Buildpack.Name)),
 				"  Resolving Go version",
 				"    Candidate version sources (in priority order):",
 				"      buildpack.yml -> \"1.14.*\"",

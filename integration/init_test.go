@@ -1,16 +1,14 @@
 package integration_test
 
 import (
-	"bytes"
 	"encoding/json"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 	"time"
 
+	"github.com/BurntSushi/toml"
 	"github.com/paketo-buildpacks/occam"
-	"github.com/paketo-buildpacks/packit/pexec"
 	"github.com/sclevine/spec"
 	"github.com/sclevine/spec/report"
 
@@ -21,7 +19,14 @@ var (
 	buildpack          string
 	buildPlanBuildpack string
 	offlineBuildpack   string
-	root							 string
+	root               string
+
+	buildpackInfo struct {
+		Buildpack struct {
+			ID   string
+			Name string
+		}
+	}
 )
 
 func TestIntegration(t *testing.T) {
@@ -39,22 +44,25 @@ func TestIntegration(t *testing.T) {
 
 	Expect(json.NewDecoder(file).Decode(&config)).To(Succeed())
 
+	file, err = os.Open("../buildpack.toml")
+	Expect(err).NotTo(HaveOccurred())
+
+	_, err = toml.DecodeReader(file, &buildpackInfo)
+	Expect(err).NotTo(HaveOccurred())
+
 	root, err = filepath.Abs("./..")
 	Expect(err).ToNot(HaveOccurred())
 
 	buildpackStore := occam.NewBuildpackStore()
 
-	version, err := GetGitVersion()
-	Expect(err).NotTo(HaveOccurred())
-
 	buildpack, err = buildpackStore.Get.
-		WithVersion(version).
+		WithVersion("1.2.3").
 		Execute(root)
 	Expect(err).NotTo(HaveOccurred())
 
 	offlineBuildpack, err = buildpackStore.Get.
-	  WithOfflineDependencies().
-		WithVersion(version).
+		WithOfflineDependencies().
+		WithVersion("1.2.3").
 		Execute(root)
 	Expect(err).NotTo(HaveOccurred())
 
@@ -70,28 +78,4 @@ func TestIntegration(t *testing.T) {
 	suite("LayerReuse", testLayerReuse)
 	suite("Offline", testOffline)
 	suite.Run(t)
-}
-
-func GetGitVersion() (string, error) {
-	gitExec := pexec.NewExecutable("git")
-	revListOut := bytes.NewBuffer(nil)
-
-	err := gitExec.Execute(pexec.Execution{
-		Args:   []string{"rev-list", "--tags", "--max-count=1"},
-		Stdout: revListOut,
-	})
-	if err != nil {
-		return "", err
-	}
-
-	stdout := bytes.NewBuffer(nil)
-	err = gitExec.Execute(pexec.Execution{
-		Args:   []string{"describe", "--tags", strings.TrimSpace(revListOut.String())},
-		Stdout: stdout,
-	})
-	if err != nil {
-		return "", err
-	}
-
-	return strings.TrimSpace(strings.TrimPrefix(stdout.String(), "v")), nil
 }
