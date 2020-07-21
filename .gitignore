@@ -1,4 +1,5 @@
 .bin
+/build
 /bin/
 *.tgz
 go-cnb_*
