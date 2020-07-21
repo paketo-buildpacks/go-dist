@@ -79,6 +79,7 @@ func Build(entries EntryResolver, dependencies DependencyManager, planRefinery P
 			return packit.BuildResult{}, err
 		}
 		logs.Action("Completed in %s", duration.Round(time.Millisecond))
+		logs.Break()
 
 		goLayer.Metadata = map[string]interface{}{
 			DependencySHAKey: dependency.SHA256,
