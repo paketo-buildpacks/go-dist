@@ -42,6 +42,12 @@ file that looks like the following:
     # their build phase. If you are writing a buildpack that needs to run Go
     # during its build process, this flag should be set to true.
     build = true
+
+    # Setting the launch flag to true will ensure that the Go
+    # dependency is available on the $PATH for the running application. If you are
+    # writing an application that needs to run Go at runtime, this flag should
+    # be set to true.
+    launch = true
 ```
 
 ## Usage
