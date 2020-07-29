@@ -42,6 +42,9 @@ func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
 			var err error
 			name, err = occam.RandomName()
 			Expect(err).NotTo(HaveOccurred())
+
+			source, err = occam.Source(filepath.Join("testdata", "buildpack_yaml_app"))
+			Expect(err).NotTo(HaveOccurred())
 		})
 
 		it.After(func() {
@@ -52,11 +55,11 @@ func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
 		})
 
 		it("builds with the settings in buildpack.yml", func() {
-			var err error
-			source, err = occam.Source(filepath.Join("testdata", "buildpack_yaml_app"))
-			Expect(err).NotTo(HaveOccurred())
+			var (
+				logs fmt.Stringer
+				err  error
+			)
 
-			var logs fmt.Stringer
 			image, logs, err = pack.WithNoColor().Build.
 				WithNoPull().
 				WithBuildpacks(buildpack, buildPlanBuildpack).
