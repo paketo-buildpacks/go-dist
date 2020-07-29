@@ -26,16 +26,9 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 		imageIDs     map[string]struct{}
 		containerIDs map[string]struct{}
-
-		name   string
-		source string
 	)
 
 	it.Before(func() {
-		var err error
-		name, err = occam.RandomName()
-		Expect(err).NotTo(HaveOccurred())
-
 		docker = occam.NewDocker()
 		pack = occam.NewPack()
 		imageIDs = map[string]struct{}{}
@@ -51,26 +44,30 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 			Expect(docker.Image.Remove.Execute(id)).To(Succeed())
 		}
 
-		Expect(docker.Volume.Remove.Execute(occam.CacheVolumeNames(name))).To(Succeed())
-		Expect(os.RemoveAll(source)).To(Succeed())
 	})
 
 	context("when an app is rebuilt and does not change", func() {
-		it("reuses a layer from a previous build", func() {
-			var (
-				err         error
-				logs        fmt.Stringer
-				firstImage  occam.Image
-				secondImage occam.Image
+		var (
+			name   string
+			source string
+		)
 
-				firstContainer  occam.Container
-				secondContainer occam.Container
-			)
+		it.Before(func() {
+			var err error
+			name, err = occam.RandomName()
+			Expect(err).NotTo(HaveOccurred())
 
 			source, err = occam.Source(filepath.Join("testdata", "default_app"))
 			Expect(err).NotTo(HaveOccurred())
+		})
 
-			firstImage, logs, err = pack.WithNoColor().Build.
+		it.After(func() {
+			Expect(docker.Volume.Remove.Execute(occam.CacheVolumeNames(name))).To(Succeed())
+			Expect(os.RemoveAll(source)).To(Succeed())
+		})
+
+		it("reuses a layer from a previous build", func() {
+			firstImage, logs, err := pack.WithNoColor().Build.
 				WithNoPull().
 				WithBuildpacks(buildpack, buildPlanBuildpack).
 				Execute(name, source)
@@ -95,7 +92,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				MatchRegexp(`      Completed in \d+\.\d+`),
 			))
 
-			firstContainer, err = docker.Container.Run.WithCommand("go run main.go").Execute(firstImage.ID)
+			firstContainer, err := docker.Container.Run.WithCommand("go run main.go").Execute(firstImage.ID)
 			Expect(err).NotTo(HaveOccurred())
 
 			containerIDs[firstContainer.ID] = struct{}{}
@@ -103,7 +100,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 			Eventually(firstContainer).Should(BeAvailable())
 
 			// Second pack build
-			secondImage, logs, err = pack.WithNoColor().Build.
+			secondImage, logs, err := pack.WithNoColor().Build.
 				WithNoPull().
 				WithBuildpacks(buildpack, buildPlanBuildpack).
 				Execute(name, source)
@@ -126,7 +123,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				fmt.Sprintf("  Reusing cached layer /layers/%s/go", strings.ReplaceAll(buildpackInfo.Buildpack.ID, "/", "_")),
 			))
 
-			secondContainer, err = docker.Container.Run.WithCommand("go run main.go").Execute(secondImage.ID)
+			secondContainer, err := docker.Container.Run.WithCommand("go run main.go").Execute(secondImage.ID)
 			Expect(err).NotTo(HaveOccurred())
 
 			containerIDs[secondContainer.ID] = struct{}{}
@@ -146,21 +143,27 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 	})
 
 	context("when an app is rebuilt and there is a change", func() {
-		it("rebuilds the layer", func() {
-			var (
-				err         error
-				logs        fmt.Stringer
-				firstImage  occam.Image
-				secondImage occam.Image
+		var (
+			name   string
+			source string
+		)
 
-				firstContainer  occam.Container
-				secondContainer occam.Container
-			)
+		it.Before(func() {
+			var err error
+			name, err = occam.RandomName()
+			Expect(err).NotTo(HaveOccurred())
 
 			source, err = occam.Source(filepath.Join("testdata", "buildpack_yaml_app"))
 			Expect(err).NotTo(HaveOccurred())
+		})
 
-			firstImage, logs, err = pack.WithNoColor().Build.
+		it.After(func() {
+			Expect(docker.Volume.Remove.Execute(occam.CacheVolumeNames(name))).To(Succeed())
+			Expect(os.RemoveAll(source)).To(Succeed())
+		})
+
+		it("rebuilds the layer", func() {
+			firstImage, logs, err := pack.WithNoColor().Build.
 				WithNoPull().
 				WithBuildpacks(buildpack, buildPlanBuildpack).
 				Execute(name, source)
@@ -186,7 +189,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 			))
 
-			firstContainer, err = docker.Container.Run.WithCommand("go run main.go").Execute(firstImage.ID)
+			firstContainer, err := docker.Container.Run.WithCommand("go run main.go").Execute(firstImage.ID)
 			Expect(err).NotTo(HaveOccurred())
 
 			containerIDs[firstContainer.ID] = struct{}{}
@@ -200,7 +203,7 @@ go:
 			Expect(err).NotTo(HaveOccurred())
 
 			// Second pack build
-			secondImage, logs, err = pack.WithNoColor().Build.
+			secondImage, logs, err := pack.WithNoColor().Build.
 				WithNoPull().
 				WithBuildpacks(buildpack, buildPlanBuildpack).
 				Execute(name, source)
@@ -226,7 +229,7 @@ go:
 				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 			))
 
-			secondContainer, err = docker.Container.Run.WithCommand("go run main.go").Execute(secondImage.ID)
+			secondContainer, err := docker.Container.Run.WithCommand("go run main.go").Execute(secondImage.ID)
 			Expect(err).NotTo(HaveOccurred())
 
 			containerIDs[secondContainer.ID] = struct{}{}
