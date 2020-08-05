@@ -223,6 +223,13 @@ go:
 				"      <unknown>     -> \"\"",
 				"",
 				MatchRegexp(`    Selected Go version \(using buildpack.yml\): 1\.13\.\d+`),
+
+				// NOTE: these deprecation notices are not directly pertinent to the
+				// success of this test and can be removed when the golang version is
+				// bumped to 1.15
+				MatchRegexp(`      Version 1.13.\d+ of Go will be deprecated after 2020-09-03.`),
+				MatchRegexp(`      Migrate your application to a supported version of Go before this time.`),
+
 				"",
 				"  Executing build process",
 				MatchRegexp(`    Installing Go 1\.13\.\d+`),
