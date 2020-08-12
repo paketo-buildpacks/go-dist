@@ -44,19 +44,22 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/* || true
+    - name: Reset Draft Release
+      id: reset
+      uses: paketo-buildpacks/github-config/actions/release/reset-draft@main
+      with:
+        repo: ${{ github.repository }}
+        token: ${{ github.token }}
     - name: Tag
       id: tag
       uses: paketo-buildpacks/github-config/actions/tag@main
+      with:
+        current_version: ${{ steps.reset.outputs.current_version }}
     - name: Package
       run: ./scripts/package.sh --version "${{ steps.tag.outputs.tag }}"
     - name: Create Release Notes
       id: create-release-notes
       uses: paketo-buildpacks/github-config/actions/release/notes@main
-    - name: Reset Draft Release
-      uses: paketo-buildpacks/github-config/actions/release/reset-draft@main
-      with:
-        repo: ${{ github.repository }}
-        token: ${{ github.token }}
     - name: Create Release
       uses: paketo-buildpacks/github-config/actions/release/create@main
       with:
