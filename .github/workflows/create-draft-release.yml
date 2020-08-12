@@ -1,4 +1,4 @@
-name: Create Release
+name: Create Draft Release
 
 on:
   push:
@@ -52,6 +52,11 @@ jobs:
     - name: Create Release Notes
       id: create-release-notes
       uses: paketo-buildpacks/github-config/actions/release/notes@main
+    - name: Reset Draft Release
+      uses: paketo-buildpacks/github-config/actions/release/reset-draft@main
+      with:
+        repo: ${{ github.repository }}
+        token: ${{ github.token }}
     - name: Create Release
       uses: paketo-buildpacks/github-config/actions/release/create@main
       with:
@@ -61,7 +66,7 @@ jobs:
         target_commitish: ${{ github.sha }}
         name: v${{ steps.tag.outputs.tag }}
         body: ${{ steps.create-release-notes.outputs.release_body }}
-        draft: false
+        draft: true
         assets: |
           [
             {
