@@ -2,7 +2,7 @@ api = "0.2"
 
 [buildpack]
   id = "paketo-buildpacks/go-dist"
-  name = "Go Distribution Buildpack"
+  name = "Paketo Go Distribution Buildpack"
   homepage = "https://github.com/paketo-buildpacks/go-dist"
 
 [metadata]
