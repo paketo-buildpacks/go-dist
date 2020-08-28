@@ -60,10 +60,10 @@ func testDetect(t *testing.T, context spec.G, it spec.S) {
 					},
 					Requires: []packit.BuildPlanRequirement{
 						{
-							Name:    "go",
-							Version: "some-version",
+							Name: "go",
 							Metadata: godist.BuildPlanMetadata{
 								VersionSource: "buildpack.yml",
+								Version:       "some-version",
 							},
 						},
 					},
