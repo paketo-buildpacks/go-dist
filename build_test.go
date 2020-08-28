@@ -141,7 +141,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 
 		Expect(dependencyManager.ResolveCall.Receives.Path).To(Equal(filepath.Join(cnbDir, "buildpack.toml")))
 		Expect(dependencyManager.ResolveCall.Receives.Id).To(Equal("go"))
-		Expect(dependencyManager.ResolveCall.Receives.Version).To(Equal(""))
+		Expect(dependencyManager.ResolveCall.Receives.Version).To(Equal("default"))
 		Expect(dependencyManager.ResolveCall.Receives.Stack).To(Equal("some-stack"))
 
 		Expect(dependencyManager.InstallCall.Receives.Dependency).To(Equal(postal.Dependency{

@@ -42,7 +42,12 @@ func (l LogEmitter) Candidates(entries []packit.BuildpackPlanEntry) {
 			maxLen = len(versionSource)
 		}
 
-		sources = append(sources, [2]string{versionSource, entry.Version})
+		version, ok := entry.Metadata["version"].(string)
+		if !ok {
+			version = ""
+		}
+
+		sources = append(sources, [2]string{versionSource, version})
 	}
 
 	for _, source := range sources {

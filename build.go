@@ -34,7 +34,12 @@ func Build(entries EntryResolver, dependencies DependencyManager, planRefinery P
 
 		logs.Candidates(context.Plan.Entries)
 
-		dependency, err := dependencies.Resolve(filepath.Join(context.CNBPath, "buildpack.toml"), entry.Name, entry.Version, context.Stack)
+		version, ok := entry.Metadata["version"].(string)
+		if !ok {
+			version = "default"
+		}
+
+		dependency, err := dependencies.Resolve(filepath.Join(context.CNBPath, "buildpack.toml"), entry.Name, version, context.Stack)
 		if err != nil {
 			return packit.BuildResult{}, err
 		}

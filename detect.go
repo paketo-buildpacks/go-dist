@@ -14,6 +14,7 @@ type VersionParser interface {
 type BuildPlanMetadata struct {
 	VersionSource string `toml:"version-source"`
 	Build         bool   `toml:"build"`
+	Version       string `toml:"version"`
 }
 
 func Detect(buildpackYAMLParser VersionParser) packit.DetectFunc {
@@ -26,10 +27,10 @@ func Detect(buildpackYAMLParser VersionParser) packit.DetectFunc {
 
 		if version != "" {
 			requirements = append(requirements, packit.BuildPlanRequirement{
-				Name:    GoDependency,
-				Version: version,
+				Name: GoDependency,
 				Metadata: BuildPlanMetadata{
 					VersionSource: "buildpack.yml",
+					Version:       version,
 				},
 			})
 		}
