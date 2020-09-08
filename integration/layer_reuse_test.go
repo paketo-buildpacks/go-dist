@@ -179,13 +179,13 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				MatchRegexp(fmt.Sprintf(`%s \d+\.\d+\.\d+`, buildpackInfo.Buildpack.Name)),
 				"  Resolving Go version",
 				"    Candidate version sources (in priority order):",
-				"      buildpack.yml -> \"1.14.*\"",
+				"      buildpack.yml -> \"1.15.*\"",
 				"      <unknown>     -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using buildpack.yml\): 1\.14\.\d+`),
+				MatchRegexp(`    Selected Go version \(using buildpack.yml\): 1\.15\.\d+`),
 				"",
 				"  Executing build process",
-				MatchRegexp(`    Installing Go 1\.14\.\d+`),
+				MatchRegexp(`    Installing Go 1\.15\.\d+`),
 				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 			))
 
@@ -198,7 +198,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			err = ioutil.WriteFile(filepath.Join(source, "buildpack.yml"), []byte(`---
 go:
-  version: 1.13.*
+  version: 1.14.*
 `), 0644)
 			Expect(err).NotTo(HaveOccurred())
 
@@ -219,20 +219,13 @@ go:
 				MatchRegexp(fmt.Sprintf(`%s \d+\.\d+\.\d+`, buildpackInfo.Buildpack.Name)),
 				"  Resolving Go version",
 				"    Candidate version sources (in priority order):",
-				"      buildpack.yml -> \"1.13.*\"",
+				"      buildpack.yml -> \"1.14.*\"",
 				"      <unknown>     -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using buildpack.yml\): 1\.13\.\d+`),
-
-				// NOTE: these deprecation notices are not directly pertinent to the
-				// success of this test and can be removed when the golang version is
-				// bumped to 1.15
-				MatchRegexp(`      Version 1.13.\d+ of Go will be deprecated after 2020-09-03.`),
-				MatchRegexp(`      Migrate your application to a supported version of Go before this time.`),
-
+				MatchRegexp(`    Selected Go version \(using buildpack.yml\): 1\.14\.\d+`),
 				"",
 				"  Executing build process",
-				MatchRegexp(`    Installing Go 1\.13\.\d+`),
+				MatchRegexp(`    Installing Go 1\.14\.\d+`),
 				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 			))
 
@@ -249,7 +242,7 @@ go:
 
 			content, err := ioutil.ReadAll(response.Body)
 			Expect(err).NotTo(HaveOccurred())
-			Expect(content).To(ContainSubstring("go1.13"))
+			Expect(content).To(ContainSubstring("go1.14"))
 
 			Expect(secondImage.Buildpacks[0].Layers["go"].Metadata["built_at"]).NotTo(Equal(firstImage.Buildpacks[0].Layers["go"].Metadata["built_at"]))
 		})
