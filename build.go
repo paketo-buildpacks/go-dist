@@ -32,8 +32,6 @@ func Build(entries EntryResolver, dependencies DependencyManager, planRefinery P
 		logs.Process("Resolving Go version")
 		entry := entries.Resolve(context.Plan.Entries)
 
-		logs.Candidates(context.Plan.Entries)
-
 		version, ok := entry.Metadata["version"].(string)
 		if !ok {
 			version = "default"

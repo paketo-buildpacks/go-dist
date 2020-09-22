@@ -11,11 +11,11 @@ import (
 )
 
 func main() {
+	logEmitter := godist.NewLogEmitter(os.Stdout)
 	buildpackYAMLParser := godist.NewBuildpackYAMLParser()
-	entryResolver := godist.NewPlanEntryResolver()
+	entryResolver := godist.NewPlanEntryResolver(logEmitter)
 	dependencyManager := postal.NewService(cargo.NewTransport())
 	planRefinery := godist.NewBuildPlanRefinery()
-	logEmitter := godist.NewLogEmitter(os.Stdout)
 
 	packit.Run(
 		godist.Detect(buildpackYAMLParser),

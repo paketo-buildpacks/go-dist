@@ -6,15 +6,20 @@ import (
 	"github.com/paketo-buildpacks/packit"
 )
 
-type PlanEntryResolver struct{}
+type PlanEntryResolver struct {
+	logger LogEmitter
+}
 
-func NewPlanEntryResolver() PlanEntryResolver {
-	return PlanEntryResolver{}
+func NewPlanEntryResolver(logger LogEmitter) PlanEntryResolver {
+	return PlanEntryResolver{
+		logger: logger,
+	}
 }
 
 func (r PlanEntryResolver) Resolve(entries []packit.BuildpackPlanEntry) packit.BuildpackPlanEntry {
 	priorities := map[string]int{
-		"buildpack.yml": 1,
+		"buildpack.yml": 2,
+		"go.mod":        1,
 		"":              -1,
 	}
 
@@ -37,6 +42,8 @@ func (r PlanEntryResolver) Resolve(entries []packit.BuildpackPlanEntry) packit.B
 			}
 		}
 	}
+
+	r.logger.Candidates(entries)
 
 	return entry
 }
