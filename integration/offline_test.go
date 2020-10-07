@@ -79,7 +79,7 @@ func testOffline(t *testing.T, context spec.G, it spec.S) {
 
 			content, err := ioutil.ReadAll(response.Body)
 			Expect(err).NotTo(HaveOccurred())
-			Expect(string(content)).To(ContainSubstring("go1.14"))
+			Expect(string(content)).To(ContainSubstring("go1.15"))
 		})
 	})
 }

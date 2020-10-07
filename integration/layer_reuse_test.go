@@ -85,10 +85,10 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				"    Candidate version sources (in priority order):",
 				"      <unknown> -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.14\.\d+`),
+				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.15\.\d+`),
 				"",
 				"  Executing build process",
-				MatchRegexp(`    Installing Go 1\.14\.\d+`),
+				MatchRegexp(`    Installing Go 1\.15\.\d+`),
 				MatchRegexp(`      Completed in \d+\.\d+`),
 			))
 
@@ -118,7 +118,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				"    Candidate version sources (in priority order):",
 				"      <unknown> -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.14\.\d+`),
+				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.15\.\d+`),
 				"",
 				fmt.Sprintf("  Reusing cached layer /layers/%s/go", strings.ReplaceAll(buildpackInfo.Buildpack.ID, "/", "_")),
 			))
@@ -136,7 +136,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			content, err := ioutil.ReadAll(response.Body)
 			Expect(err).NotTo(HaveOccurred())
-			Expect(content).To(ContainSubstring("go1.14"))
+			Expect(content).To(ContainSubstring("go1.15"))
 
 			Expect(secondImage.Buildpacks[0].Layers["go"].Metadata["built_at"]).To(Equal(firstImage.Buildpacks[0].Layers["go"].Metadata["built_at"]))
 		})
@@ -179,13 +179,13 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				MatchRegexp(fmt.Sprintf(`%s \d+\.\d+\.\d+`, buildpackInfo.Buildpack.Name)),
 				"  Resolving Go version",
 				"    Candidate version sources (in priority order):",
-				"      buildpack.yml -> \"1.15.*\"",
+				"      buildpack.yml -> \"1.14.*\"",
 				"      <unknown>     -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using buildpack.yml\): 1\.15\.\d+`),
+				MatchRegexp(`    Selected Go version \(using buildpack.yml\): 1\.14\.\d+`),
 				"",
 				"  Executing build process",
-				MatchRegexp(`    Installing Go 1\.15\.\d+`),
+				MatchRegexp(`    Installing Go 1\.14\.\d+`),
 				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 			))
 
@@ -198,7 +198,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			err = ioutil.WriteFile(filepath.Join(source, "buildpack.yml"), []byte(`---
 go:
-  version: 1.14.*
+  version: 1.15.*
 `), 0644)
 			Expect(err).NotTo(HaveOccurred())
 
@@ -219,13 +219,13 @@ go:
 				MatchRegexp(fmt.Sprintf(`%s \d+\.\d+\.\d+`, buildpackInfo.Buildpack.Name)),
 				"  Resolving Go version",
 				"    Candidate version sources (in priority order):",
-				"      buildpack.yml -> \"1.14.*\"",
+				"      buildpack.yml -> \"1.15.*\"",
 				"      <unknown>     -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using buildpack.yml\): 1\.14\.\d+`),
+				MatchRegexp(`    Selected Go version \(using buildpack.yml\): 1\.15\.\d+`),
 				"",
 				"  Executing build process",
-				MatchRegexp(`    Installing Go 1\.14\.\d+`),
+				MatchRegexp(`    Installing Go 1\.15\.\d+`),
 				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 			))
 
@@ -242,7 +242,7 @@ go:
 
 			content, err := ioutil.ReadAll(response.Body)
 			Expect(err).NotTo(HaveOccurred())
-			Expect(content).To(ContainSubstring("go1.14"))
+			Expect(content).To(ContainSubstring("go1.15"))
 
 			Expect(secondImage.Buildpacks[0].Layers["go"].Metadata["built_at"]).NotTo(Equal(firstImage.Buildpacks[0].Layers["go"].Metadata["built_at"]))
 		})
