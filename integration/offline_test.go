@@ -61,7 +61,7 @@ func testOffline(t *testing.T, context spec.G, it spec.S) {
 			)
 
 			image, logs, err = pack.WithNoColor().Build.
-				WithNoPull().
+				WithPullPolicy("never").
 				WithBuildpacks(offlineBuildpack, buildPlanBuildpack).
 				WithNetwork("none").
 				Execute(name, source)
