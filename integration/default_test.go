@@ -62,7 +62,7 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 			)
 
 			image, logs, err = pack.WithNoColor().Build.
-				WithNoPull().
+				WithPullPolicy("never").
 				WithBuildpacks(buildpack, buildPlanBuildpack).
 				Execute(name, source)
 			Expect(err).ToNot(HaveOccurred(), logs.String)

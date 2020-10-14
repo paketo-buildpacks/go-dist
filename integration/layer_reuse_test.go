@@ -68,7 +68,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 		it("reuses a layer from a previous build", func() {
 			firstImage, logs, err := pack.WithNoColor().Build.
-				WithNoPull().
+				WithPullPolicy("never").
 				WithBuildpacks(buildpack, buildPlanBuildpack).
 				Execute(name, source)
 			Expect(err).NotTo(HaveOccurred())
@@ -101,7 +101,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			// Second pack build
 			secondImage, logs, err := pack.WithNoColor().Build.
-				WithNoPull().
+				WithPullPolicy("never").
 				WithBuildpacks(buildpack, buildPlanBuildpack).
 				Execute(name, source)
 			Expect(err).NotTo(HaveOccurred())
@@ -164,7 +164,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 		it("rebuilds the layer", func() {
 			firstImage, logs, err := pack.WithNoColor().Build.
-				WithNoPull().
+				WithPullPolicy("never").
 				WithBuildpacks(buildpack, buildPlanBuildpack).
 				Execute(name, source)
 			Expect(err).NotTo(HaveOccurred())
@@ -204,7 +204,7 @@ go:
 
 			// Second pack build
 			secondImage, logs, err := pack.WithNoColor().Build.
-				WithNoPull().
+				WithPullPolicy("never").
 				WithBuildpacks(buildpack, buildPlanBuildpack).
 				Execute(name, source)
 			Expect(err).NotTo(HaveOccurred())
