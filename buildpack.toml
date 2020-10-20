@@ -6,8 +6,8 @@ api = "0.4"
   homepage = "https://github.com/paketo-buildpacks/go-dist"
 
 [metadata]
-  include_files = ["bin/run", "bin/build", "bin/detect", "buildpack.toml", "go.mod", "go.sum"]
-  pre_package = "./scripts/build.sh"
+  include-files = ["bin/run", "bin/build", "bin/detect", "buildpack.toml", "go.mod", "go.sum"]
+  pre-package = "./scripts/build.sh"
   [metadata.default-versions]
     go = "1.15.*"
 
