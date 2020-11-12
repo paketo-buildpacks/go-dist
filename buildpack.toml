@@ -37,23 +37,23 @@ api = "0.4"
     deprecation_date = "2021-08-11T00:00:00Z"
     id = "go"
     name = "Go"
-    sha256 = "dd49c88e48eba4dfb33854aa4dfd205897f73998e015ee6bd0188f5d13c3ecfc"
-    source = "https://dl.google.com/go/go1.15.3.src.tar.gz"
-    source_sha256 = "896a602570e54c8cdfc2c1348abd4ffd1016758d0bd086ccd9787dbfc9b64888"
-    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "org.cloudfoundry.stacks.cflinuxfs3"]
-    uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go_1.15.3_linux_x64_cflinuxfs3_dd49c88e.tgz"
-    version = "1.15.3"
-
-  [[metadata.dependencies]]
-    deprecation_date = "2021-08-11T00:00:00Z"
-    id = "go"
-    name = "Go"
     sha256 = "3236396b95396f1cd00cea369fb7fdf6245c04904f4147ea4eaaf86b1445285b"
     source = "https://dl.google.com/go/go1.15.4.src.tar.gz"
     source_sha256 = "063da6a9a4186b8118a0e584532c8c94e65582e2cd951ed078bfd595d27d2367"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "org.cloudfoundry.stacks.cflinuxfs3"]
     uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go_1.15.4_linux_x64_cflinuxfs3_3236396b.tgz"
     version = "1.15.4"
+
+  [[metadata.dependencies]]
+    deprecation_date = "2021-08-11T00:00:00Z"
+    id = "go"
+    name = "Go"
+    sha256 = "fd04494f7a2dd478b0d31cb949aae7f154749cae1242581b1574f7e590b3b7e6"
+    source = "https://dl.google.com/go/go1.15.5.src.tar.gz"
+    source_sha256 = "c1076b90cf94b73ebed62a81d802cd84d43d02dea8c07abdc922c57a071c84f1"
+    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "org.cloudfoundry.stacks.cflinuxfs3"]
+    uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go_1.15.5_linux_x64_cflinuxfs3_fd04494f.tgz"
+    version = "1.15.5"
 
 [[stacks]]
   id = "io.buildpacks.stacks.bionic"
