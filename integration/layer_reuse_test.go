@@ -92,7 +92,12 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				MatchRegexp(`      Completed in \d+\.\d+`),
 			))
 
-			firstContainer, err := docker.Container.Run.WithCommand("go run main.go").Execute(firstImage.ID)
+			firstContainer, err := docker.Container.Run.
+				WithCommand("go run main.go").
+				WithEnv(map[string]string{"PORT": "8080"}).
+				WithPublish("8080").
+				WithPublishAll().
+				Execute(firstImage.ID)
 			Expect(err).NotTo(HaveOccurred())
 
 			containerIDs[firstContainer.ID] = struct{}{}
@@ -123,14 +128,19 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				fmt.Sprintf("  Reusing cached layer /layers/%s/go", strings.ReplaceAll(buildpackInfo.Buildpack.ID, "/", "_")),
 			))
 
-			secondContainer, err := docker.Container.Run.WithCommand("go run main.go").Execute(secondImage.ID)
+			secondContainer, err := docker.Container.Run.
+				WithCommand("go run main.go").
+				WithEnv(map[string]string{"PORT": "8080"}).
+				WithPublish("8080").
+				WithPublishAll().
+				Execute(secondImage.ID)
 			Expect(err).NotTo(HaveOccurred())
 
 			containerIDs[secondContainer.ID] = struct{}{}
 
 			Eventually(secondContainer).Should(BeAvailable())
 
-			response, err := http.Get(fmt.Sprintf("http://localhost:%s", secondContainer.HostPort()))
+			response, err := http.Get(fmt.Sprintf("http://localhost:%s", secondContainer.HostPort("8080")))
 			Expect(err).NotTo(HaveOccurred())
 			Expect(response.StatusCode).To(Equal(http.StatusOK))
 
@@ -189,7 +199,12 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 			))
 
-			firstContainer, err := docker.Container.Run.WithCommand("go run main.go").Execute(firstImage.ID)
+			firstContainer, err := docker.Container.Run.
+				WithCommand("go run main.go").
+				WithEnv(map[string]string{"PORT": "8080"}).
+				WithPublish("8080").
+				WithPublishAll().
+				Execute(firstImage.ID)
 			Expect(err).NotTo(HaveOccurred())
 
 			containerIDs[firstContainer.ID] = struct{}{}
@@ -229,14 +244,19 @@ go:
 				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 			))
 
-			secondContainer, err := docker.Container.Run.WithCommand("go run main.go").Execute(secondImage.ID)
+			secondContainer, err := docker.Container.Run.
+				WithCommand("go run main.go").
+				WithEnv(map[string]string{"PORT": "8080"}).
+				WithPublish("8080").
+				WithPublishAll().
+				Execute(secondImage.ID)
 			Expect(err).NotTo(HaveOccurred())
 
 			containerIDs[secondContainer.ID] = struct{}{}
 
 			Eventually(secondContainer).Should(BeAvailable())
 
-			response, err := http.Get(fmt.Sprintf("http://localhost:%s", secondContainer.HostPort()))
+			response, err := http.Get(fmt.Sprintf("http://localhost:%s", secondContainer.HostPort("8080")))
 			Expect(err).NotTo(HaveOccurred())
 			Expect(response.StatusCode).To(Equal(http.StatusOK))
 
