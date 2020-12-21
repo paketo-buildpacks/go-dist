@@ -33,9 +33,9 @@ func testBuildPlanRefinery(t *testing.T, context spec.G, it spec.S) {
 				Version: "some-version",
 			})
 			Expect(entry).To(Equal(packit.BuildpackPlanEntry{
-				Name:    "some-id",
-				Version: "some-version",
+				Name: "some-id",
 				Metadata: map[string]interface{}{
+					"version":  "some-version",
 					"licenses": []string{},
 					"name":     "some-name",
 					"sha256":   "some-sha",

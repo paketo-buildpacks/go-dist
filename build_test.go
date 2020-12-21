@@ -64,13 +64,13 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 
 		planRefinery = &fakes.PlanRefinery{}
 		planRefinery.BillOfMaterialsCall.Returns.BuildpackPlanEntry = packit.BuildpackPlanEntry{
-			Name:    "go",
-			Version: "go-dependency-version",
+			Name: "go",
 			Metadata: map[string]interface{}{
-				"name":   "go-dependency-name",
-				"sha256": "go-dependency-sha",
-				"stacks": []string{"some-stack"},
-				"uri":    "go-dependency-uri",
+				"version": "go-dependency-version",
+				"name":    "go-dependency-name",
+				"sha256":  "go-dependency-sha",
+				"stacks":  []string{"some-stack"},
+				"uri":     "go-dependency-uri",
 			},
 		}
 
@@ -106,13 +106,13 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			Plan: packit.BuildpackPlan{
 				Entries: []packit.BuildpackPlanEntry{
 					{
-						Name:    "go",
-						Version: "go-dependency-version",
+						Name: "go",
 						Metadata: map[string]interface{}{
-							"name":   "go-dependency-name",
-							"sha256": "go-dependency-sha",
-							"stacks": []string{"some-stack"},
-							"uri":    "go-dependency-uri",
+							"version": "go-dependency-version",
+							"name":    "go-dependency-name",
+							"sha256":  "go-dependency-sha",
+							"stacks":  []string{"some-stack"},
+							"uri":     "go-dependency-uri",
 						},
 					},
 				},
@@ -206,13 +206,13 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 				Plan: packit.BuildpackPlan{
 					Entries: []packit.BuildpackPlanEntry{
 						{
-							Name:    "go",
-							Version: "go-dependency-version",
+							Name: "go",
 							Metadata: map[string]interface{}{
-								"name":   "go-dependency-name",
-								"sha256": "go-dependency-sha",
-								"stacks": []string{"some-stack"},
-								"uri":    "go-dependency-uri",
+								"version": "go-dependency-version",
+								"name":    "go-dependency-name",
+								"sha256":  "go-dependency-sha",
+								"stacks":  []string{"some-stack"},
+								"uri":     "go-dependency-uri",
 							},
 						},
 					},

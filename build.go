@@ -65,7 +65,7 @@ func Build(entries EntryResolver, dependencies DependencyManager, planRefinery P
 
 		logs.Process("Executing build process")
 
-		err = goLayer.Reset()
+		goLayer, err = goLayer.Reset()
 		if err != nil {
 			return packit.BuildResult{}, err
 		}
