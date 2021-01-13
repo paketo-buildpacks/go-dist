@@ -20,7 +20,7 @@ There are several reasons for making this switch.
 ## Implementation
 The proposed environment variables for Go Dist are as follow:
 
-#### BP_MRI_VERSION
+#### BP_GO_VERSION
 ```shell
 $BP_GO_VERSION="1.14.1"
 ```
