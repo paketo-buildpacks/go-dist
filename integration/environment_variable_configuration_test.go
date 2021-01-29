@@ -15,7 +15,7 @@ import (
 	. "github.com/paketo-buildpacks/occam/matchers"
 )
 
-func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
+func testEnvironmentVariableConfiguration(t *testing.T, context spec.G, it spec.S) {
 	var (
 		Expect     = NewWithT(t).Expect
 		Eventually = NewWithT(t).Eventually
@@ -43,7 +43,7 @@ func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
 			name, err = occam.RandomName()
 			Expect(err).NotTo(HaveOccurred())
 
-			source, err = occam.Source(filepath.Join("testdata", "buildpack_yaml_app"))
+			source, err = occam.Source(filepath.Join("testdata", "default_app"))
 			Expect(err).NotTo(HaveOccurred())
 		})
 
@@ -54,7 +54,7 @@ func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
 			Expect(os.RemoveAll(source)).To(Succeed())
 		})
 
-		it("builds with the settings in buildpack.yml", func() {
+		it("builds with the version from BP_GO_VERSION", func() {
 			var (
 				logs fmt.Stringer
 				err  error
@@ -63,6 +63,7 @@ func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
 			image, logs, err = pack.WithNoColor().Build.
 				WithPullPolicy("never").
 				WithBuildpacks(buildpack, buildPlanBuildpack).
+				WithEnv(map[string]string{"BP_GO_VERSION": "1.15.*"}).
 				Execute(name, source)
 			Expect(err).ToNot(HaveOccurred(), logs.String)
 
@@ -88,13 +89,10 @@ func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
 				MatchRegexp(fmt.Sprintf(`%s \d+\.\d+\.\d+`, buildpackInfo.Buildpack.Name)),
 				"  Resolving Go version",
 				"    Candidate version sources (in priority order):",
-				"      buildpack.yml -> \"1.15.*\"",
+				"      BP_GO_VERSION -> \"1.15.*\"",
 				"      <unknown>     -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using buildpack\.yml\): 1\.15\.\d+`),
-				"",
-				"    WARNING: Setting the Go Dist version through buildpack.yml will be deprecated soon in Go Dist Buildpack v1.0.0.",
-				"    Please specify the version through the $BP_GO_VERSION environment variable instead. See README.md for more information.",
+				MatchRegexp(`    Selected Go version \(using BP_GO_VERSION\): 1\.15\.\d+`),
 				"",
 				"  Executing build process",
 				MatchRegexp(`    Installing Go 1\.15\.\d+`),

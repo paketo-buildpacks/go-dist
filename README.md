@@ -61,11 +61,26 @@ $ ./scripts/package.sh
 This builds the buildpack's Go source using `GOOS=linux` by default. You can
 supply another value as the first argument to `package.sh`.
 
-## `buildpack.yml` Configurations
+## Go Build Configuration
 
+Specifying the `Go Dist` configuration through `buildpack.yml` configuration
+will be deprecated in Go Build Buildpack v1.0.0.
+
+To migrate from using `buildpack.yml` please set the following environment
+variables at build time either directly (ex. `pack build my-app --env
+BP_ENVIRONMENT_VARIABLE=some-value`) or through a [`project.toml`
+file](https://github.com/buildpacks/spec/blob/main/extensions/project-descriptor.md)
+
+### `BP_GO_VERSION`
+The `BP_GO_VERSION` variable allows you to specify the version of Go that is
+installed.
+
+```shell
+BP_GO_VERSION=1.14.1
+```
+
+This will replace the following structure in `buildpack.yml`:
 ```yaml
 go:
-  # this allows you to specify a version constaint for the Go dependency
-  # any valid semver constaints (e.g. 1.* and 1.14.*) are also acceptable
   version: 1.14.1
 ```

@@ -18,6 +18,7 @@ func NewPlanEntryResolver(logger LogEmitter) PlanEntryResolver {
 
 func (r PlanEntryResolver) Resolve(entries []packit.BuildpackPlanEntry) packit.BuildpackPlanEntry {
 	priorities := map[string]int{
+		"BP_GO_VERSION": 3,
 		"buildpack.yml": 2,
 		"go.mod":        1,
 		"":              -1,

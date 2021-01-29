@@ -163,7 +163,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 			name, err = occam.RandomName()
 			Expect(err).NotTo(HaveOccurred())
 
-			source, err = occam.Source(filepath.Join("testdata", "buildpack_yaml_app"))
+			source, err = occam.Source(filepath.Join("testdata", "default_app"))
 			Expect(err).NotTo(HaveOccurred())
 		})
 
@@ -176,6 +176,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 			firstImage, _, err := pack.WithNoColor().Build.
 				WithPullPolicy("never").
 				WithBuildpacks(buildpack, buildPlanBuildpack).
+				WithEnv(map[string]string{"BP_GO_VERSION": "1.14.*"}).
 				Execute(name, source)
 			Expect(err).NotTo(HaveOccurred())
 
@@ -197,16 +198,11 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			Eventually(firstContainer).Should(BeAvailable())
 
-			err = ioutil.WriteFile(filepath.Join(source, "buildpack.yml"), []byte(`---
-go:
-  version: 1.14.*
-`), 0644)
-			Expect(err).NotTo(HaveOccurred())
-
 			// Second pack build
 			secondImage, _, err := pack.WithNoColor().Build.
 				WithPullPolicy("never").
 				WithBuildpacks(buildpack, buildPlanBuildpack).
+				WithEnv(map[string]string{"BP_GO_VERSION": "1.15.*"}).
 				Execute(name, source)
 			Expect(err).NotTo(HaveOccurred())
 

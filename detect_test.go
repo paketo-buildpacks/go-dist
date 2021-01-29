@@ -2,6 +2,7 @@ package godist_test
 
 import (
 	"errors"
+	"os"
 	"testing"
 
 	godist "github.com/paketo-buildpacks/go-dist"
@@ -42,6 +43,41 @@ func testDetect(t *testing.T, context spec.G, it spec.S) {
 
 		Expect(buildpackYAMLParser.ParseVersionCall.Receives.Path).To(Equal("/working-dir/buildpack.yml"))
 	})
+
+	context("when the BP_GO_VERSION is set", func() {
+		it.Before(func() {
+			Expect(os.Setenv("BP_GO_VERSION", "some-version")).To(Succeed())
+		})
+
+		it.After(func() {
+			Expect(os.Unsetenv("BP_GO_VERSION")).To(Succeed())
+		})
+
+		it("returns a plan that requires that version of go", func() {
+			result, err := detect(packit.DetectContext{
+				WorkingDir: "/working-dir",
+			})
+			Expect(err).NotTo(HaveOccurred())
+			Expect(result).To(Equal(packit.DetectResult{
+				Plan: packit.BuildPlan{
+					Provides: []packit.BuildPlanProvision{
+						{Name: "go"},
+					},
+					Requires: []packit.BuildPlanRequirement{
+						{
+							Name: "go",
+							Metadata: godist.BuildPlanMetadata{
+								VersionSource: "BP_GO_VERSION",
+								Version:       "some-version",
+							},
+						},
+					},
+				},
+			}))
+
+			Expect(buildpackYAMLParser.ParseVersionCall.Receives.Path).To(Equal("/working-dir/buildpack.yml"))
+		})
+	}, spec.Sequential())
 
 	context("when the buildpack.yml contains a version", func() {
 		it.Before(func() {
