@@ -75,6 +75,7 @@ func TestIntegration(t *testing.T) {
 	suite := spec.New("Integration", spec.Report(report.Terminal{}), spec.Parallel())
 	suite("BuildpackYAML", testBuildpackYAML)
 	suite("Default", testDefault)
+	suite("EnvironmentVariableConfiguration", testEnvironmentVariableConfiguration)
 	suite("LayerReuse", testLayerReuse)
 	suite("Offline", testOffline)
 	suite.Run(t)

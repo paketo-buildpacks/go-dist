@@ -1,6 +1,7 @@
 package godist
 
 import (
+	"os"
 	"path/filepath"
 
 	"github.com/paketo-buildpacks/packit"
@@ -20,6 +21,17 @@ type BuildPlanMetadata struct {
 func Detect(buildpackYAMLParser VersionParser) packit.DetectFunc {
 	return func(context packit.DetectContext) (packit.DetectResult, error) {
 		var requirements []packit.BuildPlanRequirement
+
+		if version, ok := os.LookupEnv("BP_GO_VERSION"); ok {
+			requirements = append(requirements, packit.BuildPlanRequirement{
+				Name: GoDependency,
+				Metadata: BuildPlanMetadata{
+					VersionSource: "BP_GO_VERSION",
+					Version:       version,
+				},
+			})
+		}
+
 		version, err := buildpackYAMLParser.ParseVersion(filepath.Join(context.WorkingDir, "buildpack.yml"))
 		if err != nil {
 			return packit.DetectResult{}, err

@@ -237,6 +237,83 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		})
 	})
 
+	context("when the plan entry selected has buildpack.yml as its source", func() {
+		it.Before(func() {
+			entryResolver.ResolveCall.Returns.BuildpackPlanEntry = packit.BuildpackPlanEntry{
+				Name: "go",
+				Metadata: map[string]interface{}{
+					"version-source": "buildpack.yml",
+				},
+			}
+		})
+
+		it("prints a warning message", func() {
+			result, err := build(packit.BuildContext{
+				BuildpackInfo: packit.BuildpackInfo{
+					Name:    "Some Buildpack",
+					Version: "some-version",
+				},
+				CNBPath: cnbDir,
+				Plan: packit.BuildpackPlan{
+					Entries: []packit.BuildpackPlanEntry{
+						{
+							Name: "go",
+							Metadata: map[string]interface{}{
+								"build":  true,
+								"launch": true,
+							},
+						},
+					},
+				},
+				Layers: packit.Layers{Path: layersDir},
+				Stack:  "some-stack",
+			})
+			Expect(err).NotTo(HaveOccurred())
+
+			Expect(result).To(Equal(packit.BuildResult{
+				Plan: packit.BuildpackPlan{
+					Entries: []packit.BuildpackPlanEntry{
+						{
+							Name: "go",
+							Metadata: map[string]interface{}{
+								"version": "go-dependency-version",
+								"name":    "go-dependency-name",
+								"sha256":  "go-dependency-sha",
+								"stacks":  []string{"some-stack"},
+								"uri":     "go-dependency-uri",
+							},
+						},
+					},
+				},
+				Layers: []packit.Layer{
+					{
+						Name:      "go",
+						Path:      filepath.Join(layersDir, "go"),
+						SharedEnv: packit.Environment{},
+						BuildEnv:  packit.Environment{},
+						LaunchEnv: packit.Environment{},
+						Build:     false,
+						Launch:    false,
+						Cache:     false,
+						Metadata: map[string]interface{}{
+							"dependency-sha": "go-dependency-sha",
+							"built_at":       timestamp.Format(time.RFC3339Nano),
+						},
+					},
+				},
+			}))
+
+			Expect(buffer.String()).To(ContainSubstring("Some Buildpack some-version"))
+			Expect(buffer.String()).To(ContainSubstring("Resolving Go version"))
+			Expect(buffer.String()).To(ContainSubstring("Selected go-dependency-name version (using buildpack.yml): go-dependency-version"))
+			Expect(buffer.String()).To(ContainSubstring("WARNING: Setting the Go Dist version through buildpack.yml will be deprecated soon in Go Dist Buildpack v1.0.0."))
+			Expect(buffer.String()).To(ContainSubstring("Please specify the version through the $BP_GO_VERSION environment variable instead. See README.md for more information."))
+			Expect(buffer.String()).To(ContainSubstring("Executing build process"))
+			Expect(buffer.String()).To(ContainSubstring("Installing Go go-dependency-version"))
+			Expect(buffer.String()).To(ContainSubstring("Completed in"))
+		})
+	})
+
 	context("failure cases", func() {
 		context("when the dependency cannot be resolved", func() {
 			it.Before(func() {
