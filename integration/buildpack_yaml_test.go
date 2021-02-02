@@ -82,19 +82,19 @@ func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
 
 			content, err := ioutil.ReadAll(response.Body)
 			Expect(err).NotTo(HaveOccurred())
-			Expect(string(content)).To(ContainSubstring("go1.14"))
+			Expect(string(content)).To(ContainSubstring("go1.15"))
 
 			Expect(logs).To(ContainLines(
 				MatchRegexp(fmt.Sprintf(`%s \d+\.\d+\.\d+`, buildpackInfo.Buildpack.Name)),
 				"  Resolving Go version",
 				"    Candidate version sources (in priority order):",
-				"      buildpack.yml -> \"1.14.*\"",
+				"      buildpack.yml -> \"1.15.*\"",
 				"      <unknown>     -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using buildpack\.yml\): 1\.14\.\d+`),
+				MatchRegexp(`    Selected Go version \(using buildpack\.yml\): 1\.15\.\d+`),
 				"",
 				"  Executing build process",
-				MatchRegexp(`    Installing Go 1\.14\.\d+`),
+				MatchRegexp(`    Installing Go 1\.15\.\d+`),
 				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 			))
 		})
