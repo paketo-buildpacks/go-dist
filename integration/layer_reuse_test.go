@@ -230,7 +230,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			content, err := ioutil.ReadAll(response.Body)
 			Expect(err).NotTo(HaveOccurred())
-			Expect(content).To(ContainSubstring("go1.14"))
+			Expect(content).To(ContainSubstring("go1.15"))
 
 			Expect(secondImage.Buildpacks[0].Layers["go"].Metadata["built_at"]).NotTo(Equal(firstImage.Buildpacks[0].Layers["go"].Metadata["built_at"]))
 		})
