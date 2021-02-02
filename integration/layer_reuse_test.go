@@ -173,7 +173,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 		})
 
 		it("rebuilds the layer", func() {
-			firstImage, logs, err := pack.WithNoColor().Build.
+			firstImage, _, err := pack.WithNoColor().Build.
 				WithPullPolicy("never").
 				WithBuildpacks(buildpack, buildPlanBuildpack).
 				Execute(name, source)
@@ -184,20 +184,6 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 			Expect(firstImage.Buildpacks).To(HaveLen(2))
 			Expect(firstImage.Buildpacks[0].Key).To(Equal(buildpackInfo.Buildpack.ID))
 			Expect(firstImage.Buildpacks[0].Layers).To(HaveKey("go"))
-
-			Expect(logs).To(ContainLines(
-				MatchRegexp(fmt.Sprintf(`%s \d+\.\d+\.\d+`, buildpackInfo.Buildpack.Name)),
-				"  Resolving Go version",
-				"    Candidate version sources (in priority order):",
-				"      buildpack.yml -> \"1.14.*\"",
-				"      <unknown>     -> \"\"",
-				"",
-				MatchRegexp(`    Selected Go version \(using buildpack.yml\): 1\.14\.\d+`),
-				"",
-				"  Executing build process",
-				MatchRegexp(`    Installing Go 1\.14\.\d+`),
-				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
-			))
 
 			firstContainer, err := docker.Container.Run.
 				WithCommand("go run main.go").
@@ -213,12 +199,12 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			err = ioutil.WriteFile(filepath.Join(source, "buildpack.yml"), []byte(`---
 go:
-  version: 1.15.*
+  version: 1.14.*
 `), 0644)
 			Expect(err).NotTo(HaveOccurred())
 
 			// Second pack build
-			secondImage, logs, err := pack.WithNoColor().Build.
+			secondImage, _, err := pack.WithNoColor().Build.
 				WithPullPolicy("never").
 				WithBuildpacks(buildpack, buildPlanBuildpack).
 				Execute(name, source)
@@ -229,20 +215,6 @@ go:
 			Expect(secondImage.Buildpacks).To(HaveLen(2))
 			Expect(secondImage.Buildpacks[0].Key).To(Equal(buildpackInfo.Buildpack.ID))
 			Expect(secondImage.Buildpacks[0].Layers).To(HaveKey("go"))
-
-			Expect(logs).To(ContainLines(
-				MatchRegexp(fmt.Sprintf(`%s \d+\.\d+\.\d+`, buildpackInfo.Buildpack.Name)),
-				"  Resolving Go version",
-				"    Candidate version sources (in priority order):",
-				"      buildpack.yml -> \"1.15.*\"",
-				"      <unknown>     -> \"\"",
-				"",
-				MatchRegexp(`    Selected Go version \(using buildpack.yml\): 1\.15\.\d+`),
-				"",
-				"  Executing build process",
-				MatchRegexp(`    Installing Go 1\.15\.\d+`),
-				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
-			))
 
 			secondContainer, err := docker.Container.Run.
 				WithCommand("go run main.go").
@@ -262,7 +234,7 @@ go:
 
 			content, err := ioutil.ReadAll(response.Body)
 			Expect(err).NotTo(HaveOccurred())
-			Expect(content).To(ContainSubstring("go1.15"))
+			Expect(content).To(ContainSubstring("go1.14"))
 
 			Expect(secondImage.Buildpacks[0].Layers["go"].Metadata["built_at"]).NotTo(Equal(firstImage.Buildpacks[0].Layers["go"].Metadata["built_at"]))
 		})
