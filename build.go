@@ -7,11 +7,13 @@ import (
 	"github.com/paketo-buildpacks/packit"
 	"github.com/paketo-buildpacks/packit/chronos"
 	"github.com/paketo-buildpacks/packit/postal"
+	"github.com/paketo-buildpacks/packit/scribe"
 )
 
 //go:generate faux --interface EntryResolver --output fakes/entry_resolver.go
 type EntryResolver interface {
-	Resolve([]packit.BuildpackPlanEntry) packit.BuildpackPlanEntry
+	Resolve(name string, entries []packit.BuildpackPlanEntry, priorites []interface{}) (packit.BuildpackPlanEntry, []packit.BuildpackPlanEntry)
+	MergeLayerTypes(name string, entries []packit.BuildpackPlanEntry) (launch bool, build bool)
 }
 
 //go:generate faux --interface DependencyManager --output fakes/dependency_manager.go
@@ -25,12 +27,13 @@ type PlanRefinery interface {
 	BillOfMaterials(postal.Dependency) packit.BuildpackPlanEntry
 }
 
-func Build(entries EntryResolver, dependencies DependencyManager, planRefinery PlanRefinery, clock chronos.Clock, logs LogEmitter) packit.BuildFunc {
+func Build(entryResolver EntryResolver, dependencies DependencyManager, planRefinery PlanRefinery, clock chronos.Clock, logs scribe.Emitter) packit.BuildFunc {
 	return func(context packit.BuildContext) (packit.BuildResult, error) {
-		logs.Title(context.BuildpackInfo)
+		logs.Title("%s %s", context.BuildpackInfo.Name, context.BuildpackInfo.Version)
 
 		logs.Process("Resolving Go version")
-		entry := entries.Resolve(context.Plan.Entries)
+		entry, entries := entryResolver.Resolve(GoDependency, context.Plan.Entries, Priorities)
+		logs.Candidates(entries)
 
 		version, ok := entry.Metadata["version"].(string)
 		if !ok {
@@ -77,9 +80,8 @@ func Build(entries EntryResolver, dependencies DependencyManager, planRefinery P
 			return packit.BuildResult{}, err
 		}
 
-		goLayer.Build = entry.Metadata["build"] == true
-		goLayer.Cache = entry.Metadata["build"] == true
-		goLayer.Launch = entry.Metadata["launch"] == true
+		goLayer.Launch, goLayer.Build = entryResolver.MergeLayerTypes(GoDependency, context.Plan.Entries)
+		goLayer.Cache = goLayer.Build
 
 		logs.Subprocess("Installing Go %s", dependency.Version)
 		duration, err := clock.Measure(func() error {

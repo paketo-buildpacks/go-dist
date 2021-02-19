@@ -14,6 +14,7 @@ import (
 	"github.com/paketo-buildpacks/packit"
 	"github.com/paketo-buildpacks/packit/chronos"
 	"github.com/paketo-buildpacks/packit/postal"
+	"github.com/paketo-buildpacks/packit/scribe"
 	"github.com/sclevine/spec"
 
 	. "github.com/onsi/gomega"
@@ -75,7 +76,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		}
 
 		buffer = bytes.NewBuffer(nil)
-		logEmitter := godist.NewLogEmitter(buffer)
+		logEmitter := scribe.NewEmitter(buffer)
 
 		build = godist.Build(entryResolver, dependencyManager, planRefinery, clock, logEmitter)
 	})
@@ -135,7 +136,13 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			},
 		}))
 
-		Expect(entryResolver.ResolveCall.Receives.BuildpackPlanEntrySlice).To(Equal([]packit.BuildpackPlanEntry{
+		Expect(entryResolver.ResolveCall.Receives.Name).To(Equal("go"))
+		Expect(entryResolver.ResolveCall.Receives.Entries).To(Equal([]packit.BuildpackPlanEntry{
+			{Name: "go"},
+		}))
+
+		Expect(entryResolver.MergeLayerTypesCall.Receives.Name).To(Equal("go"))
+		Expect(entryResolver.MergeLayerTypesCall.Receives.Entries).To(Equal([]packit.BuildpackPlanEntry{
 			{Name: "go"},
 		}))
 
@@ -174,13 +181,8 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 
 	context("when the plan entry requires the dependency during the build and launch phases", func() {
 		it.Before(func() {
-			entryResolver.ResolveCall.Returns.BuildpackPlanEntry = packit.BuildpackPlanEntry{
-				Name: "go",
-				Metadata: map[string]interface{}{
-					"build":  true,
-					"launch": true,
-				},
-			}
+			entryResolver.MergeLayerTypesCall.Returns.Launch = true
+			entryResolver.MergeLayerTypesCall.Returns.Build = true
 		})
 
 		it("makes the layer available in those phases", func() {
