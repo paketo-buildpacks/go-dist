@@ -2,8 +2,6 @@ package integration_test
 
 import (
 	"fmt"
-	"io/ioutil"
-	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
@@ -138,15 +136,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			containerIDs[secondContainer.ID] = struct{}{}
 
-			Eventually(secondContainer).Should(BeAvailable())
-
-			response, err := http.Get(fmt.Sprintf("http://localhost:%s", secondContainer.HostPort("8080")))
-			Expect(err).NotTo(HaveOccurred())
-			Expect(response.StatusCode).To(Equal(http.StatusOK))
-
-			content, err := ioutil.ReadAll(response.Body)
-			Expect(err).NotTo(HaveOccurred())
-			Expect(content).To(ContainSubstring("go1.15"))
+			Eventually(secondContainer).Should(Serve(ContainSubstring("go1.15")).OnPort(8080))
 
 			Expect(secondImage.Buildpacks[0].Layers["go"].Metadata["built_at"]).To(Equal(firstImage.Buildpacks[0].Layers["go"].Metadata["built_at"]))
 		})
@@ -222,15 +212,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			containerIDs[secondContainer.ID] = struct{}{}
 
-			Eventually(secondContainer).Should(BeAvailable())
-
-			response, err := http.Get(fmt.Sprintf("http://localhost:%s", secondContainer.HostPort("8080")))
-			Expect(err).NotTo(HaveOccurred())
-			Expect(response.StatusCode).To(Equal(http.StatusOK))
-
-			content, err := ioutil.ReadAll(response.Body)
-			Expect(err).NotTo(HaveOccurred())
-			Expect(content).To(ContainSubstring("go1.15"))
+			Eventually(secondContainer).Should(Serve(ContainSubstring("go1.15")).OnPort(8080))
 
 			Expect(secondImage.Buildpacks[0].Layers["go"].Metadata["built_at"]).NotTo(Equal(firstImage.Buildpacks[0].Layers["go"].Metadata["built_at"]))
 		})
