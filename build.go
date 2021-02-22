@@ -4,6 +4,7 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/Masterminds/semver"
 	"github.com/paketo-buildpacks/packit"
 	"github.com/paketo-buildpacks/packit/chronos"
 	"github.com/paketo-buildpacks/packit/postal"
@@ -50,7 +51,8 @@ func Build(entryResolver EntryResolver, dependencies DependencyManager, planRefi
 
 		source, _ := entry.Metadata["version-source"].(string)
 		if source == "buildpack.yml" {
-			logs.Subprocess("WARNING: Setting the Go Dist version through buildpack.yml will be deprecated soon in Go Dist Buildpack v1.0.0.")
+			nextMajorVersion := semver.MustParse(context.BuildpackInfo.Version).IncMajor()
+			logs.Subprocess("WARNING: Setting the Go Dist version through buildpack.yml will be deprecated soon in Go Dist Buildpack v%s.", nextMajorVersion.String())
 			logs.Subprocess("Please specify the version through the $BP_GO_VERSION environment variable instead. See README.md for more information.")
 			logs.Break()
 		}

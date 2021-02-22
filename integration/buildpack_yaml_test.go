@@ -83,7 +83,7 @@ func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
 				"",
 				MatchRegexp(`    Selected Go version \(using buildpack\.yml\): 1\.15\.\d+`),
 				"",
-				"    WARNING: Setting the Go Dist version through buildpack.yml will be deprecated soon in Go Dist Buildpack v1.0.0.",
+				"    WARNING: Setting the Go Dist version through buildpack.yml will be deprecated soon in Go Dist Buildpack v2.0.0.",
 				"    Please specify the version through the $BP_GO_VERSION environment variable instead. See README.md for more information.",
 				"",
 				"  Executing build process",

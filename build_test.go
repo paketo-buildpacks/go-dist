@@ -253,7 +253,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			result, err := build(packit.BuildContext{
 				BuildpackInfo: packit.BuildpackInfo{
 					Name:    "Some Buildpack",
-					Version: "some-version",
+					Version: "1.2.3",
 				},
 				CNBPath: cnbDir,
 				Plan: packit.BuildpackPlan{
@@ -305,10 +305,10 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 				},
 			}))
 
-			Expect(buffer.String()).To(ContainSubstring("Some Buildpack some-version"))
+			Expect(buffer.String()).To(ContainSubstring("Some Buildpack 1.2.3"))
 			Expect(buffer.String()).To(ContainSubstring("Resolving Go version"))
 			Expect(buffer.String()).To(ContainSubstring("Selected go-dependency-name version (using buildpack.yml): go-dependency-version"))
-			Expect(buffer.String()).To(ContainSubstring("WARNING: Setting the Go Dist version through buildpack.yml will be deprecated soon in Go Dist Buildpack v1.0.0."))
+			Expect(buffer.String()).To(ContainSubstring("WARNING: Setting the Go Dist version through buildpack.yml will be deprecated soon in Go Dist Buildpack v2.0.0."))
 			Expect(buffer.String()).To(ContainSubstring("Please specify the version through the $BP_GO_VERSION environment variable instead. See README.md for more information."))
 			Expect(buffer.String()).To(ContainSubstring("Executing build process"))
 			Expect(buffer.String()).To(ContainSubstring("Installing Go go-dependency-version"))
