@@ -120,14 +120,15 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			},
 			Layers: []packit.Layer{
 				{
-					Name:      "go",
-					Path:      filepath.Join(layersDir, "go"),
-					SharedEnv: packit.Environment{},
-					BuildEnv:  packit.Environment{},
-					LaunchEnv: packit.Environment{},
-					Build:     false,
-					Launch:    false,
-					Cache:     false,
+					Name:             "go",
+					Path:             filepath.Join(layersDir, "go"),
+					SharedEnv:        packit.Environment{},
+					BuildEnv:         packit.Environment{},
+					LaunchEnv:        packit.Environment{},
+					ProcessLaunchEnv: map[string]packit.Environment{},
+					Build:            false,
+					Launch:           false,
+					Cache:            false,
 					Metadata: map[string]interface{}{
 						"dependency-sha": "go-dependency-sha",
 						"built_at":       timestamp.Format(time.RFC3339Nano),
@@ -221,14 +222,15 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 				},
 				Layers: []packit.Layer{
 					{
-						Name:      "go",
-						Path:      filepath.Join(layersDir, "go"),
-						SharedEnv: packit.Environment{},
-						BuildEnv:  packit.Environment{},
-						LaunchEnv: packit.Environment{},
-						Build:     true,
-						Launch:    true,
-						Cache:     true,
+						Name:             "go",
+						Path:             filepath.Join(layersDir, "go"),
+						SharedEnv:        packit.Environment{},
+						BuildEnv:         packit.Environment{},
+						LaunchEnv:        packit.Environment{},
+						ProcessLaunchEnv: map[string]packit.Environment{},
+						Build:            true,
+						Launch:           true,
+						Cache:            true,
 						Metadata: map[string]interface{}{
 							"dependency-sha": "go-dependency-sha",
 							"built_at":       timestamp.Format(time.RFC3339Nano),
@@ -289,14 +291,15 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 				},
 				Layers: []packit.Layer{
 					{
-						Name:      "go",
-						Path:      filepath.Join(layersDir, "go"),
-						SharedEnv: packit.Environment{},
-						BuildEnv:  packit.Environment{},
-						LaunchEnv: packit.Environment{},
-						Build:     false,
-						Launch:    false,
-						Cache:     false,
+						Name:             "go",
+						Path:             filepath.Join(layersDir, "go"),
+						SharedEnv:        packit.Environment{},
+						BuildEnv:         packit.Environment{},
+						LaunchEnv:        packit.Environment{},
+						ProcessLaunchEnv: map[string]packit.Environment{},
+						Build:            false,
+						Launch:           false,
+						Cache:            false,
 						Metadata: map[string]interface{}{
 							"dependency-sha": "go-dependency-sha",
 							"built_at":       timestamp.Format(time.RFC3339Nano),
@@ -361,7 +364,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		context("when the go layer cannot be reset", func() {
 			it.Before(func() {
 				Expect(os.MkdirAll(filepath.Join(layersDir, "go", "something"), os.ModePerm)).To(Succeed())
-				Expect(os.Chmod(filepath.Join(layersDir, "go"), 0000)).To(Succeed())
+				Expect(os.Chmod(filepath.Join(layersDir, "go"), 0500)).To(Succeed())
 			})
 
 			it.After(func() {
