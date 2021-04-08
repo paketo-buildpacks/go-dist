@@ -3,7 +3,6 @@ package godist_test
 import (
 	"bytes"
 	"errors"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -29,7 +28,6 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		timestamp         time.Time
 		entryResolver     *fakes.EntryResolver
 		dependencyManager *fakes.DependencyManager
-		planRefinery      *fakes.PlanRefinery
 		buffer            *bytes.Buffer
 
 		build packit.BuildFunc
@@ -37,10 +35,10 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 
 	it.Before(func() {
 		var err error
-		layersDir, err = ioutil.TempDir("", "layers")
+		layersDir, err = os.MkdirTemp("", "layers")
 		Expect(err).NotTo(HaveOccurred())
 
-		cnbDir, err = ioutil.TempDir("", "cnb")
+		cnbDir, err = os.MkdirTemp("", "cnb")
 		Expect(err).NotTo(HaveOccurred())
 
 		timestamp = time.Now()
@@ -63,22 +61,23 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			Version: "go-dependency-version",
 		}
 
-		planRefinery = &fakes.PlanRefinery{}
-		planRefinery.BillOfMaterialsCall.Returns.BuildpackPlanEntry = packit.BuildpackPlanEntry{
-			Name: "go",
-			Metadata: map[string]interface{}{
-				"version": "go-dependency-version",
-				"name":    "go-dependency-name",
-				"sha256":  "go-dependency-sha",
-				"stacks":  []string{"some-stack"},
-				"uri":     "go-dependency-uri",
+		dependencyManager.GenerateBillOfMaterialsCall.Returns.BOMEntrySlice = []packit.BOMEntry{
+			{
+				Name: "go",
+				Metadata: map[string]interface{}{
+					"version": "go-dependency-version",
+					"name":    "go-dependency-name",
+					"sha256":  "go-dependency-sha",
+					"stacks":  []string{"some-stack"},
+					"uri":     "go-dependency-uri",
+				},
 			},
 		}
 
 		buffer = bytes.NewBuffer(nil)
-		logEmitter := scribe.NewEmitter(buffer)
+		logEmitter := godist.NewGoLogger(scribe.NewEmitter(buffer))
 
-		build = godist.Build(entryResolver, dependencyManager, planRefinery, clock, logEmitter)
+		build = godist.Build(entryResolver, dependencyManager, clock, logEmitter)
 	})
 
 	it.After(func() {
@@ -98,26 +97,13 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 					{Name: "go"},
 				},
 			},
-			Layers: packit.Layers{Path: layersDir},
-			Stack:  "some-stack",
+			Platform: packit.Platform{Path: "platform"},
+			Layers:   packit.Layers{Path: layersDir},
+			Stack:    "some-stack",
 		})
 		Expect(err).NotTo(HaveOccurred())
 
 		Expect(result).To(Equal(packit.BuildResult{
-			Plan: packit.BuildpackPlan{
-				Entries: []packit.BuildpackPlanEntry{
-					{
-						Name: "go",
-						Metadata: map[string]interface{}{
-							"version": "go-dependency-version",
-							"name":    "go-dependency-name",
-							"sha256":  "go-dependency-sha",
-							"stacks":  []string{"some-stack"},
-							"uri":     "go-dependency-uri",
-						},
-					},
-				},
-			},
 			Layers: []packit.Layer{
 				{
 					Name:             "go",
@@ -152,7 +138,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(dependencyManager.ResolveCall.Receives.Version).To(Equal("default"))
 		Expect(dependencyManager.ResolveCall.Receives.Stack).To(Equal("some-stack"))
 
-		Expect(dependencyManager.InstallCall.Receives.Dependency).To(Equal(postal.Dependency{
+		Expect(dependencyManager.DeliverCall.Receives.Dependency).To(Equal(postal.Dependency{
 			ID:      "go",
 			Name:    "go-dependency-name",
 			SHA256:  "go-dependency-sha",
@@ -160,16 +146,19 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			URI:     "go-dependency-uri",
 			Version: "go-dependency-version",
 		}))
-		Expect(dependencyManager.InstallCall.Receives.CnbPath).To(Equal(cnbDir))
-		Expect(dependencyManager.InstallCall.Receives.LayerPath).To(Equal(filepath.Join(layersDir, "go")))
+		Expect(dependencyManager.DeliverCall.Receives.CnbPath).To(Equal(cnbDir))
+		Expect(dependencyManager.DeliverCall.Receives.LayerPath).To(Equal(filepath.Join(layersDir, "go")))
+		Expect(dependencyManager.DeliverCall.Receives.PlatformPath).To(Equal("platform"))
 
-		Expect(planRefinery.BillOfMaterialsCall.Receives.Dependency).To(Equal(postal.Dependency{
-			ID:      "go",
-			Name:    "go-dependency-name",
-			SHA256:  "go-dependency-sha",
-			Stacks:  []string{"some-stack"},
-			URI:     "go-dependency-uri",
-			Version: "go-dependency-version",
+		Expect(dependencyManager.GenerateBillOfMaterialsCall.Receives.Dependencies).To(Equal([]postal.Dependency{
+			{
+				ID:      "go",
+				Name:    "go-dependency-name",
+				SHA256:  "go-dependency-sha",
+				Stacks:  []string{"some-stack"},
+				URI:     "go-dependency-uri",
+				Version: "go-dependency-version",
+			},
 		}))
 
 		Expect(buffer.String()).To(ContainSubstring("Some Buildpack some-version"))
@@ -206,20 +195,6 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			Expect(err).NotTo(HaveOccurred())
 
 			Expect(result).To(Equal(packit.BuildResult{
-				Plan: packit.BuildpackPlan{
-					Entries: []packit.BuildpackPlanEntry{
-						{
-							Name: "go",
-							Metadata: map[string]interface{}{
-								"version": "go-dependency-version",
-								"name":    "go-dependency-name",
-								"sha256":  "go-dependency-sha",
-								"stacks":  []string{"some-stack"},
-								"uri":     "go-dependency-uri",
-							},
-						},
-					},
-				},
 				Layers: []packit.Layer{
 					{
 						Name:             "go",
@@ -234,6 +209,34 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 						Metadata: map[string]interface{}{
 							"dependency-sha": "go-dependency-sha",
 							"built_at":       timestamp.Format(time.RFC3339Nano),
+						},
+					},
+				},
+				Build: packit.BuildMetadata{
+					BOM: []packit.BOMEntry{
+						{
+							Name: "go",
+							Metadata: map[string]interface{}{
+								"version": "go-dependency-version",
+								"name":    "go-dependency-name",
+								"sha256":  "go-dependency-sha",
+								"stacks":  []string{"some-stack"},
+								"uri":     "go-dependency-uri",
+							},
+						},
+					},
+				},
+				Launch: packit.LaunchMetadata{
+					BOM: []packit.BOMEntry{
+						{
+							Name: "go",
+							Metadata: map[string]interface{}{
+								"version": "go-dependency-version",
+								"name":    "go-dependency-name",
+								"sha256":  "go-dependency-sha",
+								"stacks":  []string{"some-stack"},
+								"uri":     "go-dependency-uri",
+							},
 						},
 					},
 				},
@@ -275,20 +278,6 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			Expect(err).NotTo(HaveOccurred())
 
 			Expect(result).To(Equal(packit.BuildResult{
-				Plan: packit.BuildpackPlan{
-					Entries: []packit.BuildpackPlanEntry{
-						{
-							Name: "go",
-							Metadata: map[string]interface{}{
-								"version": "go-dependency-version",
-								"name":    "go-dependency-name",
-								"sha256":  "go-dependency-sha",
-								"stacks":  []string{"some-stack"},
-								"uri":     "go-dependency-uri",
-							},
-						},
-					},
-				},
 				Layers: []packit.Layer{
 					{
 						Name:             "go",
@@ -342,7 +331,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 
 		context("when the go layer cannot be retrieved", func() {
 			it.Before(func() {
-				err := ioutil.WriteFile(filepath.Join(layersDir, "go.toml"), nil, 0000)
+				err := os.WriteFile(filepath.Join(layersDir, "go.toml"), nil, 0000)
 				Expect(err).NotTo(HaveOccurred())
 			})
 
@@ -388,7 +377,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 
 		context("when the dependency cannot be installed", func() {
 			it.Before(func() {
-				dependencyManager.InstallCall.Returns.Error = errors.New("failed to install dependency")
+				dependencyManager.DeliverCall.Returns.Error = errors.New("failed to deliver dependency")
 			})
 
 			it("returns an error", func() {
@@ -402,7 +391,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 					Layers: packit.Layers{Path: layersDir},
 					Stack:  "some-stack",
 				})
-				Expect(err).To(MatchError("failed to install dependency"))
+				Expect(err).To(MatchError("failed to deliver dependency"))
 			})
 		})
 	})
