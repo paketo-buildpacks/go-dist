@@ -13,14 +13,13 @@ import (
 )
 
 func main() {
-	logEmitter := scribe.NewEmitter(os.Stdout)
+	logEmitter := godist.NewGoLogger(scribe.NewEmitter(os.Stdout))
 	buildpackYAMLParser := godist.NewBuildpackYAMLParser()
 	entryResolver := draft.NewPlanner()
 	dependencyManager := postal.NewService(cargo.NewTransport())
-	planRefinery := godist.NewBuildPlanRefinery()
 
 	packit.Run(
 		godist.Detect(buildpackYAMLParser),
-		godist.Build(entryResolver, dependencyManager, planRefinery, chronos.DefaultClock, logEmitter),
+		godist.Build(entryResolver, dependencyManager, chronos.DefaultClock, logEmitter),
 	)
 }

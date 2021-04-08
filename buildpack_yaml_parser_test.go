@@ -1,7 +1,6 @@
 package godist_test
 
 import (
-	"io/ioutil"
 	"os"
 	"testing"
 
@@ -26,7 +25,7 @@ func testBuildpackYAMLParser(t *testing.T, context spec.G, it spec.S) {
 		var path string
 
 		it.Before(func() {
-			file, err := ioutil.TempFile("", "buildpack.yml")
+			file, err := os.CreateTemp("", "buildpack.yml")
 			Expect(err).NotTo(HaveOccurred())
 
 			_, err = file.WriteString(`---
@@ -77,7 +76,7 @@ go:
 
 			context("when the buildpack.yml file is malformed", func() {
 				it.Before(func() {
-					Expect(ioutil.WriteFile(path, []byte("%%%"), 0644)).To(Succeed())
+					Expect(os.WriteFile(path, []byte("%%%"), 0644)).To(Succeed())
 				})
 
 				it("returns an error", func() {
