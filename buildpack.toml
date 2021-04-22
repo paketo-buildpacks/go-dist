@@ -9,7 +9,7 @@ api = "0.5"
   include-files = ["bin/run", "bin/build", "bin/detect", "buildpack.toml", "go.mod", "go.sum"]
   pre-package = "./scripts/build.sh"
   [metadata.default-versions]
-    go = "1.15.*"
+    go = "1.16.*"
 
   [[metadata.dependencies]]
     deprecation_date = "2021-02-25T00:00:00Z"
