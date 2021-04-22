@@ -83,10 +83,10 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				"    Candidate version sources (in priority order):",
 				"      <unknown> -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.15\.\d+`),
+				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.16\.\d+`),
 				"",
 				"  Executing build process",
-				MatchRegexp(`    Installing Go 1\.15\.\d+`),
+				MatchRegexp(`    Installing Go 1\.16\.\d+`),
 				MatchRegexp(`      Completed in \d+\.\d+`),
 			))
 
@@ -121,7 +121,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				"    Candidate version sources (in priority order):",
 				"      <unknown> -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.15\.\d+`),
+				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.16\.\d+`),
 				"",
 				fmt.Sprintf("  Reusing cached layer /layers/%s/go", strings.ReplaceAll(buildpackInfo.Buildpack.ID, "/", "_")),
 			))
@@ -136,7 +136,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			containerIDs[secondContainer.ID] = struct{}{}
 
-			Eventually(secondContainer).Should(Serve(ContainSubstring("go1.15")).OnPort(8080))
+			Eventually(secondContainer).Should(Serve(ContainSubstring("go1.16")).OnPort(8080))
 
 			Expect(secondImage.Buildpacks[0].Layers["go"].Metadata["built_at"]).To(Equal(firstImage.Buildpacks[0].Layers["go"].Metadata["built_at"]))
 		})
