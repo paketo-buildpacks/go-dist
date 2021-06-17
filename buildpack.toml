@@ -4,10 +4,10 @@ api = "0.5"
   homepage = "https://github.com/paketo-buildpacks/go-dist"
   id = "paketo-buildpacks/go-dist"
   name = "Paketo Go Distribution Buildpack"
-  
-[[buildpack.licenses]]
-type = "Apache-2.0"
-uri  = "https://github.com/paketo-buildpacks/go-dist/blob/main/LICENSE"
+
+  [[buildpack.licenses]]
+    type = "Apache-2.0"
+    uri = "https://github.com/paketo-buildpacks/go-dist/blob/main/LICENSE"
 
 [metadata]
   include-files = ["bin/run", "bin/build", "bin/detect", "buildpack.toml", "go.mod", "go.sum"]
