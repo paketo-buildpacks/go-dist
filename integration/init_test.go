@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/BurntSushi/toml"
+	"github.com/onsi/gomega/format"
 	"github.com/paketo-buildpacks/occam"
 	"github.com/sclevine/spec"
 	"github.com/sclevine/spec/report"
@@ -30,9 +31,9 @@ var (
 )
 
 func TestIntegration(t *testing.T) {
-	var err error
-
 	Expect := NewWithT(t).Expect
+
+	format.MaxLength = 0
 
 	var config struct {
 		BuildPlan string `json:"buildplan"`
