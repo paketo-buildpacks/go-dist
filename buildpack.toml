@@ -1,9 +1,9 @@
 api = "0.5"
 
 [buildpack]
+  homepage = "https://github.com/paketo-buildpacks/go-dist"
   id = "paketo-buildpacks/go-dist"
   name = "Paketo Go Distribution Buildpack"
-  homepage = "https://github.com/paketo-buildpacks/go-dist"
 
 [metadata]
   include-files = ["bin/run", "bin/build", "bin/detect", "buildpack.toml", "go.mod", "go.sum"]
