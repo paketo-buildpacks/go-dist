@@ -12,7 +12,6 @@ api = "0.5"
     go = "1.16.*"
 
   [[metadata.dependencies]]
-    deprecation_date = "2021-08-11T00:00:00Z"
     id = "go"
     name = "Go"
     sha256 = "31eefdc6e2dc842cfdc926796e23f6ff1e6b4de7ec1b6a0dceed580344ec612c"
@@ -23,7 +22,6 @@ api = "0.5"
     version = "1.15.12"
 
   [[metadata.dependencies]]
-    deprecation_date = "2021-08-11T00:00:00Z"
     id = "go"
     name = "Go"
     sha256 = "00ece517309ca6b7947ff289377f7688f6d324d780c595adee5e11478f437bef"
