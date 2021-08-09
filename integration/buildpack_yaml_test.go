@@ -72,22 +72,22 @@ func testBuildpackYAML(t *testing.T, context spec.G, it spec.S) {
 				Execute(image.ID)
 			Expect(err).NotTo(HaveOccurred())
 
-			Eventually(container).Should(Serve(ContainSubstring("go1.15")).OnPort(8080))
+			Eventually(container).Should(Serve(ContainSubstring("go1.16")).OnPort(8080))
 
 			Expect(logs).To(ContainLines(
 				MatchRegexp(fmt.Sprintf(`%s \d+\.\d+\.\d+`, buildpackInfo.Buildpack.Name)),
 				"  Resolving Go version",
 				"    Candidate version sources (in priority order):",
-				"      buildpack.yml -> \"1.15.*\"",
+				"      buildpack.yml -> \"1.16.*\"",
 				"      <unknown>     -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using buildpack\.yml\): 1\.15\.\d+`),
+				MatchRegexp(`    Selected Go version \(using buildpack\.yml\): 1\.16\.\d+`),
 				"",
 				"    WARNING: Setting the Go Dist version through buildpack.yml will be deprecated soon in Go Dist Buildpack v2.0.0.",
 				"    Please specify the version through the $BP_GO_VERSION environment variable instead. See README.md for more information.",
 				"",
 				"  Executing build process",
-				MatchRegexp(`    Installing Go 1\.15\.\d+`),
+				MatchRegexp(`    Installing Go 1\.16\.\d+`),
 				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 			))
 		})
