@@ -62,6 +62,21 @@ api = "0.5"
     uri = "https://buildpacks.cloudfoundry.org/dependencies/go/go_1.17_linux_x64_cflinuxfs3_668718ba.tgz"
     version = "1.17"
 
+  [[metadata.dependency-constraints]]
+    constraint = "1.15.*"
+    id = "go"
+    patches = 2
+
+  [[metadata.dependency-constraints]]
+    constraint = "1.16.*"
+    id = "go"
+    patches = 2
+
+  [[metadata.dependency-constraints]]
+    constraint = "1.17.*"
+    id = "go"
+    patches = 2
+
 [[stacks]]
   id = "io.buildpacks.stacks.bionic"
 
