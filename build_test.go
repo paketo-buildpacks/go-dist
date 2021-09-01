@@ -64,12 +64,13 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		dependencyManager.GenerateBillOfMaterialsCall.Returns.BOMEntrySlice = []packit.BOMEntry{
 			{
 				Name: "go",
-				Metadata: map[string]interface{}{
-					"version": "go-dependency-version",
-					"name":    "go-dependency-name",
-					"sha256":  "go-dependency-sha",
-					"stacks":  []string{"some-stack"},
-					"uri":     "go-dependency-uri",
+				Metadata: packit.BOMMetadata{
+					Version: "go-dependency-version",
+					Checksum: packit.BOMChecksum{
+						Algorithm: packit.SHA256,
+						Hash:      "go-dependency-sha",
+					},
+					URI: "go-dependency-uri",
 				},
 			},
 		}
@@ -216,12 +217,13 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 					BOM: []packit.BOMEntry{
 						{
 							Name: "go",
-							Metadata: map[string]interface{}{
-								"version": "go-dependency-version",
-								"name":    "go-dependency-name",
-								"sha256":  "go-dependency-sha",
-								"stacks":  []string{"some-stack"},
-								"uri":     "go-dependency-uri",
+							Metadata: packit.BOMMetadata{
+								Version: "go-dependency-version",
+								Checksum: packit.BOMChecksum{
+									Algorithm: packit.SHA256,
+									Hash:      "go-dependency-sha",
+								},
+								URI: "go-dependency-uri",
 							},
 						},
 					},
@@ -230,12 +232,13 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 					BOM: []packit.BOMEntry{
 						{
 							Name: "go",
-							Metadata: map[string]interface{}{
-								"version": "go-dependency-version",
-								"name":    "go-dependency-name",
-								"sha256":  "go-dependency-sha",
-								"stacks":  []string{"some-stack"},
-								"uri":     "go-dependency-uri",
+							Metadata: packit.BOMMetadata{
+								Version: "go-dependency-version",
+								Checksum: packit.BOMChecksum{
+									Algorithm: packit.SHA256,
+									Hash:      "go-dependency-sha",
+								},
+								URI: "go-dependency-uri",
 							},
 						},
 					},
