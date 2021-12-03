@@ -12,19 +12,6 @@ api = "0.6"
     go = "1.16.*"
 
   [[metadata.dependencies]]
-    cpe = "cpe:2.3:a:golang:go:1.16.9:*:*:*:*:*:*:*"
-    id = "go"
-    licenses = ["BSD-3-Clause"]
-    name = "Go"
-    purl = "pkg:generic/go@go1.16.9?checksum=0a1cc7fd7bd20448f71ebed64d846138850d5099b18cf5cc10a4fc45160d8c3d&download_url=https://dl.google.com/go/go1.16.9.src.tar.gz"
-    sha256 = "ca9ef23a5db944b116102b87c1ae9344b27e011dae7157d2f1e501abd39e9829"
-    source = "https://dl.google.com/go/go1.16.9.src.tar.gz"
-    source_sha256 = "0a1cc7fd7bd20448f71ebed64d846138850d5099b18cf5cc10a4fc45160d8c3d"
-    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny"]
-    uri = "https://deps.paketo.io/go/go_go1.16.9_linux_x64_bionic_ca9ef23a.tgz"
-    version = "1.16.9"
-
-  [[metadata.dependencies]]
     cpe = "cpe:2.3:a:golang:go:1.16.10:*:*:*:*:*:*:*"
     id = "go"
     licenses = ["BSD-3-Clause"]
@@ -38,17 +25,17 @@ api = "0.6"
     version = "1.16.10"
 
   [[metadata.dependencies]]
-    cpe = "cpe:2.3:a:golang:go:1.17.2:*:*:*:*:*:*:*"
+    cpe = "cpe:2.3:a:golang:go:1.16.11:*:*:*:*:*:*:*"
     id = "go"
     licenses = ["BSD-3-Clause"]
     name = "Go"
-    purl = "pkg:generic/go@go1.17.2?checksum=2255eb3e4e824dd7d5fcdc2e7f84534371c186312e546fb1086a34c17752f431&download_url=https://dl.google.com/go/go1.17.2.src.tar.gz"
-    sha256 = "05410d858a92b47c25f71fba8e13718a8492ea59d41558b1b4fd0ad8f71e19b2"
-    source = "https://dl.google.com/go/go1.17.2.src.tar.gz"
-    source_sha256 = "2255eb3e4e824dd7d5fcdc2e7f84534371c186312e546fb1086a34c17752f431"
+    purl = "pkg:generic/go@go1.16.11?checksum=58041edcd81463b4cf1bc28b86dc0c17f4d9568d63c5afc85367dd8fae7befe7&download_url=https://dl.google.com/go/go1.16.11.src.tar.gz"
+    sha256 = "ea6d01236d920f7b3a1137ef66dc0252977ca6db76bbc2e7f02a30186cb6b5e6"
+    source = "https://dl.google.com/go/go1.16.11.src.tar.gz"
+    source_sha256 = "58041edcd81463b4cf1bc28b86dc0c17f4d9568d63c5afc85367dd8fae7befe7"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny"]
-    uri = "https://deps.paketo.io/go/go_go1.17.2_linux_x64_bionic_05410d85.tgz"
-    version = "1.17.2"
+    uri = "https://deps.paketo.io/go/go_go1.16.11_linux_x64_bionic_ea6d0123.tgz"
+    version = "1.16.11"
 
   [[metadata.dependencies]]
     cpe = "cpe:2.3:a:golang:go:1.17.3:*:*:*:*:*:*:*"
@@ -62,6 +49,19 @@ api = "0.6"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny"]
     uri = "https://deps.paketo.io/go/go_go1.17.3_linux_x64_bionic_b4f2ff3f.tgz"
     version = "1.17.3"
+
+  [[metadata.dependencies]]
+    cpe = "cpe:2.3:a:golang:go:1.17.4:*:*:*:*:*:*:*"
+    id = "go"
+    licenses = ["BSD-3-Clause"]
+    name = "Go"
+    purl = "pkg:generic/go@go1.17.4?checksum=4bef3699381ef09e075628504187416565d710660fec65b057edf1ceb187fc4b&download_url=https://dl.google.com/go/go1.17.4.src.tar.gz"
+    sha256 = "7f7d53c1b5b1e3130e7f8be4392188ad3ddeaed05382d2304a28c043f589eaff"
+    source = "https://dl.google.com/go/go1.17.4.src.tar.gz"
+    source_sha256 = "4bef3699381ef09e075628504187416565d710660fec65b057edf1ceb187fc4b"
+    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny"]
+    uri = "https://deps.paketo.io/go/go_go1.17.4_linux_x64_bionic_7f7d53c1.tgz"
+    version = "1.17.4"
 
   [[metadata.dependency-constraints]]
     constraint = "1.16.*"
