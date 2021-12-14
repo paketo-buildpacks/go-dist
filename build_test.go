@@ -209,56 +209,6 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		})
 	})
 
-	context("when the plan entry selected has buildpack.yml as its source", func() {
-		it.Before(func() {
-			entryResolver.ResolveCall.Returns.BuildpackPlanEntry = packit.BuildpackPlanEntry{
-				Name: "go",
-				Metadata: map[string]interface{}{
-					"version-source": "buildpack.yml",
-				},
-			}
-		})
-
-		it("prints a warning message", func() {
-			result, err := build(packit.BuildContext{
-				BuildpackInfo: packit.BuildpackInfo{
-					Name:    "Some Buildpack",
-					Version: "1.2.3",
-				},
-				CNBPath: cnbDir,
-				Plan: packit.BuildpackPlan{
-					Entries: []packit.BuildpackPlanEntry{
-						{
-							Name: "go",
-							Metadata: map[string]interface{}{
-								"build":  true,
-								"launch": true,
-							},
-						},
-					},
-				},
-				Layers: packit.Layers{Path: layersDir},
-				Stack:  "some-stack",
-			})
-			Expect(err).NotTo(HaveOccurred())
-
-			Expect(result.Layers).To(HaveLen(1))
-			layer := result.Layers[0]
-
-			Expect(layer.Name).To(Equal("go"))
-			Expect(layer.Path).To(Equal(filepath.Join(layersDir, "go")))
-
-			Expect(buffer.String()).To(ContainSubstring("Some Buildpack 1.2.3"))
-			Expect(buffer.String()).To(ContainSubstring("Resolving Go version"))
-			Expect(buffer.String()).To(ContainSubstring("Selected go-dependency-name version (using buildpack.yml): go-dependency-version"))
-			Expect(buffer.String()).To(ContainSubstring("WARNING: Setting the Go Dist version through buildpack.yml will be deprecated soon in Go Dist Buildpack v2.0.0."))
-			Expect(buffer.String()).To(ContainSubstring("Please specify the version through the $BP_GO_VERSION environment variable instead. See README.md for more information."))
-			Expect(buffer.String()).To(ContainSubstring("Executing build process"))
-			Expect(buffer.String()).To(ContainSubstring("Installing Go go-dependency-version"))
-			Expect(buffer.String()).To(ContainSubstring("Completed in"))
-		})
-	})
-
 	context("failure cases", func() {
 		context("when the dependency cannot be resolved", func() {
 			it.Before(func() {

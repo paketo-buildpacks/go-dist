@@ -47,11 +47,6 @@ func Build(entryResolver EntryResolver, dependencyManager DependencyManager, sbo
 
 		logs.SelectedDependency(entry, dependency, clock.Now())
 
-		source, _ := entry.Metadata["version-source"].(string)
-		if source == "buildpack.yml" {
-			logs.WarnBuildpackYML(context.BuildpackInfo.Version)
-		}
-
 		goLayer, err := context.Layers.Get(GoLayerName)
 		if err != nil {
 			return packit.BuildResult{}, err
