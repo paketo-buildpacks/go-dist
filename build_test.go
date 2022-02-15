@@ -3,6 +3,7 @@ package godist_test
 import (
 	"bytes"
 	"errors"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -10,10 +11,11 @@ import (
 
 	godist "github.com/paketo-buildpacks/go-dist"
 	"github.com/paketo-buildpacks/go-dist/fakes"
-	"github.com/paketo-buildpacks/packit"
-	"github.com/paketo-buildpacks/packit/chronos"
-	"github.com/paketo-buildpacks/packit/postal"
-	"github.com/paketo-buildpacks/packit/scribe"
+	"github.com/paketo-buildpacks/packit/v2"
+	"github.com/paketo-buildpacks/packit/v2/chronos"
+	"github.com/paketo-buildpacks/packit/v2/postal"
+	"github.com/paketo-buildpacks/packit/v2/sbom"
+	"github.com/paketo-buildpacks/packit/v2/scribe"
 	"github.com/sclevine/spec"
 
 	. "github.com/onsi/gomega"
@@ -24,10 +26,12 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect = NewWithT(t).Expect
 
 		layersDir         string
+		workingDir        string
 		cnbDir            string
 		timestamp         time.Time
 		entryResolver     *fakes.EntryResolver
 		dependencyManager *fakes.DependencyManager
+		sbomGenerator     *fakes.SBOMGenerator
 		buffer            *bytes.Buffer
 
 		build packit.BuildFunc
@@ -39,6 +43,9 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(err).NotTo(HaveOccurred())
 
 		cnbDir, err = os.MkdirTemp("", "cnb")
+		Expect(err).NotTo(HaveOccurred())
+
+		workingDir, err = ioutil.TempDir("", "working-dir")
 		Expect(err).NotTo(HaveOccurred())
 
 		timestamp = time.Now()
@@ -61,38 +68,30 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			Version: "go-dependency-version",
 		}
 
-		dependencyManager.GenerateBillOfMaterialsCall.Returns.BOMEntrySlice = []packit.BOMEntry{
-			{
-				Name: "go",
-				Metadata: packit.BOMMetadata{
-					Version: "go-dependency-version",
-					Checksum: packit.BOMChecksum{
-						Algorithm: packit.SHA256,
-						Hash:      "go-dependency-sha",
-					},
-					URI: "go-dependency-uri",
-				},
-			},
-		}
+		sbomGenerator = &fakes.SBOMGenerator{}
+		sbomGenerator.GenerateFromDependencyCall.Returns.SBOM = sbom.SBOM{}
 
 		buffer = bytes.NewBuffer(nil)
 		logEmitter := godist.NewGoLogger(scribe.NewEmitter(buffer))
 
-		build = godist.Build(entryResolver, dependencyManager, clock, logEmitter)
+		build = godist.Build(entryResolver, dependencyManager, sbomGenerator, clock, logEmitter)
 	})
 
 	it.After(func() {
 		Expect(os.RemoveAll(layersDir)).To(Succeed())
 		Expect(os.RemoveAll(cnbDir)).To(Succeed())
+		Expect(os.RemoveAll(workingDir)).To(Succeed())
 	})
 
 	it("returns a result that installs go", func() {
 		result, err := build(packit.BuildContext{
 			BuildpackInfo: packit.BuildpackInfo{
-				Name:    "Some Buildpack",
-				Version: "some-version",
+				Name:        "Some Buildpack",
+				Version:     "some-version",
+				SBOMFormats: []string{sbom.CycloneDXFormat, sbom.SPDXFormat},
 			},
-			CNBPath: cnbDir,
+			WorkingDir: workingDir,
+			CNBPath:    cnbDir,
 			Plan: packit.BuildpackPlan{
 				Entries: []packit.BuildpackPlanEntry{
 					{Name: "go"},
@@ -104,25 +103,46 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		})
 		Expect(err).NotTo(HaveOccurred())
 
-		Expect(result).To(Equal(packit.BuildResult{
-			Layers: []packit.Layer{
-				{
-					Name:             "go",
-					Path:             filepath.Join(layersDir, "go"),
-					SharedEnv:        packit.Environment{},
-					BuildEnv:         packit.Environment{},
-					LaunchEnv:        packit.Environment{},
-					ProcessLaunchEnv: map[string]packit.Environment{},
-					Build:            false,
-					Launch:           false,
-					Cache:            false,
-					Metadata: map[string]interface{}{
-						"dependency-sha": "go-dependency-sha",
-						"built_at":       timestamp.Format(time.RFC3339Nano),
-					},
-				},
+		Expect(result.Layers).To(HaveLen(1))
+		layer := result.Layers[0]
+
+		Expect(layer.Name).To(Equal("go"))
+		Expect(layer.Path).To(Equal(filepath.Join(layersDir, "go")))
+		Expect(layer.Metadata).To(Equal(map[string]interface{}{
+			"dependency-sha": "go-dependency-sha",
+			"built_at":       timestamp.Format(time.RFC3339Nano),
+		}))
+
+		Expect(layer.SBOM.Formats()).To(Equal([]packit.SBOMFormat{
+			{
+				Extension: sbom.Format(sbom.CycloneDXFormat).Extension(),
+				Content:   sbom.NewFormattedReader(sbom.SBOM{}, sbom.CycloneDXFormat),
+			},
+			{
+				Extension: sbom.Format(sbom.SPDXFormat).Extension(),
+				Content:   sbom.NewFormattedReader(sbom.SBOM{}, sbom.SPDXFormat),
 			},
 		}))
+
+		// Expect(result).To(Equal(packit.BuildResult{
+		// 	Layers: []packit.Layer{
+		// 		{
+		// 			Name:             "go",
+		// 			Path:             filepath.Join(layersDir, "go"),
+		// 			SharedEnv:        packit.Environment{},
+		// 			BuildEnv:         packit.Environment{},
+		// 			LaunchEnv:        packit.Environment{},
+		// 			ProcessLaunchEnv: map[string]packit.Environment{},
+		// 			Build:            false,
+		// 			Launch:           false,
+		// 			Cache:            false,
+		// 			Metadata: map[string]interface{}{
+		// 				"dependency-sha": "go-dependency-sha",
+		// 				"built_at":       timestamp.Format(time.RFC3339Nano),
+		// 			},
+		// 		},
+		// 	},
+		// }))
 
 		Expect(entryResolver.ResolveCall.Receives.Name).To(Equal("go"))
 		Expect(entryResolver.ResolveCall.Receives.Entries).To(Equal([]packit.BuildpackPlanEntry{
@@ -151,16 +171,15 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(dependencyManager.DeliverCall.Receives.LayerPath).To(Equal(filepath.Join(layersDir, "go")))
 		Expect(dependencyManager.DeliverCall.Receives.PlatformPath).To(Equal("platform"))
 
-		Expect(dependencyManager.GenerateBillOfMaterialsCall.Receives.Dependencies).To(Equal([]postal.Dependency{
-			{
-				ID:      "go",
-				Name:    "go-dependency-name",
-				SHA256:  "go-dependency-sha",
-				Stacks:  []string{"some-stack"},
-				URI:     "go-dependency-uri",
-				Version: "go-dependency-version",
-			},
+		Expect(sbomGenerator.GenerateFromDependencyCall.Receives.Dependency).To(Equal(postal.Dependency{
+			ID:      "go",
+			Name:    "go-dependency-name",
+			SHA256:  "go-dependency-sha",
+			Stacks:  []string{"some-stack"},
+			URI:     "go-dependency-uri",
+			Version: "go-dependency-version",
 		}))
+		Expect(sbomGenerator.GenerateFromDependencyCall.Receives.Dir).To(Equal(workingDir))
 
 		Expect(buffer.String()).To(ContainSubstring("Some Buildpack some-version"))
 		Expect(buffer.String()).To(ContainSubstring("Resolving Go version"))
@@ -195,55 +214,18 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			})
 			Expect(err).NotTo(HaveOccurred())
 
-			Expect(result).To(Equal(packit.BuildResult{
-				Layers: []packit.Layer{
-					{
-						Name:             "go",
-						Path:             filepath.Join(layersDir, "go"),
-						SharedEnv:        packit.Environment{},
-						BuildEnv:         packit.Environment{},
-						LaunchEnv:        packit.Environment{},
-						ProcessLaunchEnv: map[string]packit.Environment{},
-						Build:            true,
-						Launch:           true,
-						Cache:            true,
-						Metadata: map[string]interface{}{
-							"dependency-sha": "go-dependency-sha",
-							"built_at":       timestamp.Format(time.RFC3339Nano),
-						},
-					},
-				},
-				Build: packit.BuildMetadata{
-					BOM: []packit.BOMEntry{
-						{
-							Name: "go",
-							Metadata: packit.BOMMetadata{
-								Version: "go-dependency-version",
-								Checksum: packit.BOMChecksum{
-									Algorithm: packit.SHA256,
-									Hash:      "go-dependency-sha",
-								},
-								URI: "go-dependency-uri",
-							},
-						},
-					},
-				},
-				Launch: packit.LaunchMetadata{
-					BOM: []packit.BOMEntry{
-						{
-							Name: "go",
-							Metadata: packit.BOMMetadata{
-								Version: "go-dependency-version",
-								Checksum: packit.BOMChecksum{
-									Algorithm: packit.SHA256,
-									Hash:      "go-dependency-sha",
-								},
-								URI: "go-dependency-uri",
-							},
-						},
-					},
-				},
+			Expect(result.Layers).To(HaveLen(1))
+			layer := result.Layers[0]
+
+			Expect(layer.Name).To(Equal("go"))
+			Expect(layer.Path).To(Equal(filepath.Join(layersDir, "go")))
+			Expect(layer.Metadata).To(Equal(map[string]interface{}{
+				"dependency-sha": "go-dependency-sha",
+				"built_at":       timestamp.Format(time.RFC3339Nano),
 			}))
+			Expect(layer.Build).To(BeTrue())
+			Expect(layer.Launch).To(BeTrue())
+			Expect(layer.Cache).To(BeTrue())
 		})
 	})
 
@@ -280,25 +262,11 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			})
 			Expect(err).NotTo(HaveOccurred())
 
-			Expect(result).To(Equal(packit.BuildResult{
-				Layers: []packit.Layer{
-					{
-						Name:             "go",
-						Path:             filepath.Join(layersDir, "go"),
-						SharedEnv:        packit.Environment{},
-						BuildEnv:         packit.Environment{},
-						LaunchEnv:        packit.Environment{},
-						ProcessLaunchEnv: map[string]packit.Environment{},
-						Build:            false,
-						Launch:           false,
-						Cache:            false,
-						Metadata: map[string]interface{}{
-							"dependency-sha": "go-dependency-sha",
-							"built_at":       timestamp.Format(time.RFC3339Nano),
-						},
-					},
-				},
-			}))
+			Expect(result.Layers).To(HaveLen(1))
+			layer := result.Layers[0]
+
+			Expect(layer.Name).To(Equal("go"))
+			Expect(layer.Path).To(Equal(filepath.Join(layersDir, "go")))
 
 			Expect(buffer.String()).To(ContainSubstring("Some Buildpack 1.2.3"))
 			Expect(buffer.String()).To(ContainSubstring("Resolving Go version"))
@@ -395,6 +363,43 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 					Stack:  "some-stack",
 				})
 				Expect(err).To(MatchError("failed to deliver dependency"))
+			})
+		})
+
+		context("when generating the SBOM returns an error", func() {
+			it("returns an error", func() {
+				_, err := build(packit.BuildContext{
+					BuildpackInfo: packit.BuildpackInfo{SBOMFormats: []string{"random-format"}},
+					CNBPath:       cnbDir,
+					Plan: packit.BuildpackPlan{
+						Entries: []packit.BuildpackPlanEntry{
+							{Name: "yarn"},
+						},
+					},
+					Layers: packit.Layers{Path: layersDir},
+					Stack:  "some-stack",
+				})
+				Expect(err).To(MatchError("\"random-format\" is not a supported SBOM format"))
+			})
+		})
+
+		context("when formatting the SBOM returns an error", func() {
+			it.Before(func() {
+				sbomGenerator.GenerateFromDependencyCall.Returns.Error = errors.New("failed to generate SBOM")
+			})
+
+			it("returns an error", func() {
+				_, err := build(packit.BuildContext{
+					CNBPath: cnbDir,
+					Plan: packit.BuildpackPlan{
+						Entries: []packit.BuildpackPlanEntry{
+							{Name: "yarn"},
+						},
+					},
+					Layers: packit.Layers{Path: layersDir},
+					Stack:  "some-stack",
+				})
+				Expect(err).To(MatchError(ContainSubstring("failed to generate SBOM")))
 			})
 		})
 	})
