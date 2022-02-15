@@ -2,7 +2,7 @@ package godist
 
 import (
 	"github.com/Masterminds/semver"
-	"github.com/paketo-buildpacks/packit/scribe"
+	"github.com/paketo-buildpacks/packit/v2/scribe"
 )
 
 type GoLogger struct {
