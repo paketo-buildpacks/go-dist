@@ -124,26 +124,6 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			},
 		}))
 
-		// Expect(result).To(Equal(packit.BuildResult{
-		// 	Layers: []packit.Layer{
-		// 		{
-		// 			Name:             "go",
-		// 			Path:             filepath.Join(layersDir, "go"),
-		// 			SharedEnv:        packit.Environment{},
-		// 			BuildEnv:         packit.Environment{},
-		// 			LaunchEnv:        packit.Environment{},
-		// 			ProcessLaunchEnv: map[string]packit.Environment{},
-		// 			Build:            false,
-		// 			Launch:           false,
-		// 			Cache:            false,
-		// 			Metadata: map[string]interface{}{
-		// 				"dependency-sha": "go-dependency-sha",
-		// 				"built_at":       timestamp.Format(time.RFC3339Nano),
-		// 			},
-		// 		},
-		// 	},
-		// }))
-
 		Expect(entryResolver.ResolveCall.Receives.Name).To(Equal("go"))
 		Expect(entryResolver.ResolveCall.Receives.Entries).To(Equal([]packit.BuildpackPlanEntry{
 			{Name: "go"},
@@ -367,23 +347,6 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		})
 
 		context("when generating the SBOM returns an error", func() {
-			it("returns an error", func() {
-				_, err := build(packit.BuildContext{
-					BuildpackInfo: packit.BuildpackInfo{SBOMFormats: []string{"random-format"}},
-					CNBPath:       cnbDir,
-					Plan: packit.BuildpackPlan{
-						Entries: []packit.BuildpackPlanEntry{
-							{Name: "yarn"},
-						},
-					},
-					Layers: packit.Layers{Path: layersDir},
-					Stack:  "some-stack",
-				})
-				Expect(err).To(MatchError("\"random-format\" is not a supported SBOM format"))
-			})
-		})
-
-		context("when formatting the SBOM returns an error", func() {
 			it.Before(func() {
 				sbomGenerator.GenerateFromDependencyCall.Returns.Error = errors.New("failed to generate SBOM")
 			})
@@ -393,13 +356,30 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 					CNBPath: cnbDir,
 					Plan: packit.BuildpackPlan{
 						Entries: []packit.BuildpackPlanEntry{
-							{Name: "yarn"},
+							{Name: "go"},
 						},
 					},
 					Layers: packit.Layers{Path: layersDir},
 					Stack:  "some-stack",
 				})
 				Expect(err).To(MatchError(ContainSubstring("failed to generate SBOM")))
+			})
+		})
+
+		context("when formatting the SBOM returns an error", func() {
+			it("returns an error", func() {
+				_, err := build(packit.BuildContext{
+					BuildpackInfo: packit.BuildpackInfo{SBOMFormats: []string{"random-format"}},
+					CNBPath:       cnbDir,
+					Plan: packit.BuildpackPlan{
+						Entries: []packit.BuildpackPlanEntry{
+							{Name: "go"},
+						},
+					},
+					Layers: packit.Layers{Path: layersDir},
+					Stack:  "some-stack",
+				})
+				Expect(err).To(MatchError("\"random-format\" is not a supported SBOM format"))
 			})
 		})
 	})
