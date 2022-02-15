@@ -13,6 +13,7 @@ import (
 	"github.com/paketo-buildpacks/go-dist/fakes"
 	"github.com/paketo-buildpacks/packit/v2"
 	"github.com/paketo-buildpacks/packit/v2/chronos"
+	"github.com/paketo-buildpacks/packit/v2/paketosbom"
 	"github.com/paketo-buildpacks/packit/v2/postal"
 	"github.com/paketo-buildpacks/packit/v2/sbom"
 	"github.com/paketo-buildpacks/packit/v2/scribe"
@@ -66,6 +67,20 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			Stacks:  []string{"some-stack"},
 			URI:     "go-dependency-uri",
 			Version: "go-dependency-version",
+		}
+
+		dependencyManager.GenerateBillOfMaterialsCall.Returns.BOMEntrySlice = []packit.BOMEntry{
+			{
+				Name: "go",
+				Metadata: paketosbom.BOMMetadata{
+					Version: "go-dependency-version",
+					Checksum: paketosbom.BOMChecksum{
+						Algorithm: paketosbom.SHA256,
+						Hash:      "go-dependency-sha",
+					},
+					URI: "go-dependency-uri",
+				},
+			},
 		}
 
 		sbomGenerator = &fakes.SBOMGenerator{}
@@ -151,6 +166,17 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(dependencyManager.DeliverCall.Receives.LayerPath).To(Equal(filepath.Join(layersDir, "go")))
 		Expect(dependencyManager.DeliverCall.Receives.PlatformPath).To(Equal("platform"))
 
+		Expect(dependencyManager.GenerateBillOfMaterialsCall.Receives.Dependencies).To(Equal([]postal.Dependency{
+			{
+				ID:      "go",
+				Name:    "go-dependency-name",
+				SHA256:  "go-dependency-sha",
+				Stacks:  []string{"some-stack"},
+				URI:     "go-dependency-uri",
+				Version: "go-dependency-version",
+			},
+		}))
+
 		Expect(sbomGenerator.GenerateFromDependencyCall.Receives.Dependency).To(Equal(postal.Dependency{
 			ID:      "go",
 			Name:    "go-dependency-name",
@@ -206,6 +232,30 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			Expect(layer.Build).To(BeTrue())
 			Expect(layer.Launch).To(BeTrue())
 			Expect(layer.Cache).To(BeTrue())
+
+			Expect(result.Build.BOM).To(HaveLen(1))
+			buildBOMEntry := result.Build.BOM[0]
+			Expect(buildBOMEntry.Name).To(Equal("go"))
+			Expect(buildBOMEntry.Metadata).To(Equal(paketosbom.BOMMetadata{
+				Version: "go-dependency-version",
+				Checksum: paketosbom.BOMChecksum{
+					Algorithm: paketosbom.SHA256,
+					Hash:      "go-dependency-sha",
+				},
+				URI: "go-dependency-uri",
+			}))
+
+			Expect(result.Launch.BOM).To(HaveLen(1))
+			launchBOMEntry := result.Launch.BOM[0]
+			Expect(launchBOMEntry.Name).To(Equal("go"))
+			Expect(launchBOMEntry.Metadata).To(Equal(paketosbom.BOMMetadata{
+				Version: "go-dependency-version",
+				Checksum: paketosbom.BOMChecksum{
+					Algorithm: paketosbom.SHA256,
+					Hash:      "go-dependency-sha",
+				},
+				URI: "go-dependency-uri",
+			}))
 		})
 	})
 

@@ -20,6 +20,7 @@ type EntryResolver interface {
 type DependencyManager interface {
 	Resolve(path, id, version, stack string) (postal.Dependency, error)
 	Deliver(dependency postal.Dependency, cnbPath, layerPath, platformPath string) error
+	GenerateBillOfMaterials(dependencies ...postal.Dependency) []packit.BOMEntry
 }
 
 //go:generate faux --interface SBOMGenerator --output fakes/sbom_generator.go
@@ -46,6 +47,7 @@ func Build(entryResolver EntryResolver, dependencyManager DependencyManager, sbo
 		}
 
 		logs.SelectedDependency(entry, dependency, clock.Now())
+		bom := dependencyManager.GenerateBillOfMaterials(dependency)
 
 		source, _ := entry.Metadata["version-source"].(string)
 		if source == "buildpack.yml" {
@@ -59,6 +61,16 @@ func Build(entryResolver EntryResolver, dependencyManager DependencyManager, sbo
 
 		launch, build := entryResolver.MergeLayerTypes(GoDependency, context.Plan.Entries)
 
+		var buildMetadata = packit.BuildMetadata{}
+		var launchMetadata = packit.LaunchMetadata{}
+		if build {
+			buildMetadata = packit.BuildMetadata{BOM: bom}
+		}
+
+		if launch {
+			launchMetadata = packit.LaunchMetadata{BOM: bom}
+		}
+
 		cachedSHA, ok := goLayer.Metadata[DependencySHAKey].(string)
 		if ok && cachedSHA == dependency.SHA256 {
 			logs.Process("Reusing cached layer %s", goLayer.Path)
@@ -68,6 +80,8 @@ func Build(entryResolver EntryResolver, dependencyManager DependencyManager, sbo
 
 			return packit.BuildResult{
 				Layers: []packit.Layer{goLayer},
+				Build:  buildMetadata,
+				Launch: launchMetadata,
 			}, nil
 		}
 
@@ -115,6 +129,8 @@ func Build(entryResolver EntryResolver, dependencyManager DependencyManager, sbo
 
 		return packit.BuildResult{
 			Layers: []packit.Layer{goLayer},
+			Build:  buildMetadata,
+			Launch: launchMetadata,
 		}, nil
 	}
 }
