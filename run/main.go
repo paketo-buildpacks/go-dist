@@ -4,12 +4,12 @@ import (
 	"os"
 
 	godist "github.com/paketo-buildpacks/go-dist"
-	"github.com/paketo-buildpacks/packit/v2/sbom"
 	"github.com/paketo-buildpacks/packit/v2"
 	"github.com/paketo-buildpacks/packit/v2/cargo"
 	"github.com/paketo-buildpacks/packit/v2/chronos"
 	"github.com/paketo-buildpacks/packit/v2/draft"
 	"github.com/paketo-buildpacks/packit/v2/postal"
+	"github.com/paketo-buildpacks/packit/v2/sbom"
 	"github.com/paketo-buildpacks/packit/v2/scribe"
 )
 
@@ -20,7 +20,7 @@ func (f Generator) GenerateFromDependency(dependency postal.Dependency, path str
 }
 
 func main() {
-	logEmitter := godist.NewGoLogger(scribe.NewEmitter(os.Stdout))
+	logEmitter := godist.NewGoLogger(scribe.NewEmitter(os.Stdout).WithLevel(os.Getenv("BP_LOG_LEVEL")))
 	buildpackYAMLParser := godist.NewBuildpackYAMLParser()
 	entryResolver := draft.NewPlanner()
 	dependencyManager := postal.NewService(cargo.NewTransport())

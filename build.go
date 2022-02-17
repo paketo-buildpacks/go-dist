@@ -104,7 +104,7 @@ func Build(entryResolver EntryResolver, dependencyManager DependencyManager, sbo
 		logs.Action("Completed in %s", duration.Round(time.Millisecond))
 		logs.Break()
 
-		logs.Process("Generating SBOM for directory %s", goLayer.Path)
+		logs.GeneratingSBOM(goLayer.Path)
 		var sbomContent sbom.SBOM
 		duration, err = clock.Measure(func() error {
 			sbomContent, err = sbomGenerator.GenerateFromDependency(dependency, context.WorkingDir)
@@ -117,6 +117,7 @@ func Build(entryResolver EntryResolver, dependencyManager DependencyManager, sbo
 		logs.Action("Completed in %s", duration.Round(time.Millisecond))
 		logs.Break()
 
+		logs.FormattingSBOM(context.BuildpackInfo.SBOMFormats...)
 		goLayer.SBOM, err = sbomContent.InFormats(context.BuildpackInfo.SBOMFormats...)
 		if err != nil {
 			return packit.BuildResult{}, err
