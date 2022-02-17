@@ -70,6 +70,9 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 			image, logs, err = pack.WithNoColor().Build.
 				WithPullPolicy("never").
 				WithBuildpacks(buildpack, buildPlanBuildpack).
+				WithEnv(map[string]string{
+					"BP_LOG_LEVEL": "DEBUG",
+				}).
 				WithSBOMOutputDir(sbomDir).
 				Execute(name, source)
 			Expect(err).ToNot(HaveOccurred(), logs.String)
@@ -96,6 +99,15 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 				"  Executing build process",
 				MatchRegexp(`    Installing Go 1\.16\.\d+`),
 				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
+				"",
+				fmt.Sprintf("  Generating SBOM for directory /layers/%s/go", strings.ReplaceAll(buildpackInfo.Buildpack.ID, "/", "_")),
+				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
+				"",
+				"  Writing SBOM in the following format(s):",
+				"    application/vnd.cyclonedx+json",
+				"    application/spdx+json",
+				"    application/vnd.syft+json",
+				"",
 			))
 
 			// check that legacy SBOM is included via metadata
