@@ -186,7 +186,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			URI:     "go-dependency-uri",
 			Version: "go-dependency-version",
 		}))
-		Expect(sbomGenerator.GenerateFromDependencyCall.Receives.Dir).To(Equal(workingDir))
+		Expect(sbomGenerator.GenerateFromDependencyCall.Receives.Dir).To(Equal(filepath.Join(layersDir, "go")))
 
 		Expect(buffer.String()).To(ContainSubstring("Some Buildpack some-version"))
 		Expect(buffer.String()).To(ContainSubstring("Resolving Go version"))
