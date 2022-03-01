@@ -4,7 +4,7 @@ api = "0.7"
   homepage = "https://github.com/paketo-buildpacks/go-dist"
   id = "paketo-buildpacks/go-dist"
   name = "Paketo Go Distribution Buildpack"
-  sbom-formats = ["application/vnd.cyclonedx+json","application/spdx+json","application/vnd.syft+json"]
+  sbom-formats = ["application/vnd.cyclonedx+json", "application/spdx+json", "application/vnd.syft+json"]
 
 [metadata]
   include-files = ["bin/run", "bin/build", "bin/detect", "buildpack.toml", "go.mod", "go.sum"]
