@@ -21,12 +21,11 @@ func (f Generator) GenerateFromDependency(dependency postal.Dependency, path str
 
 func main() {
 	logEmitter := godist.NewGoLogger(scribe.NewEmitter(os.Stdout).WithLevel(os.Getenv("BP_LOG_LEVEL")))
-	buildpackYAMLParser := godist.NewBuildpackYAMLParser()
 	entryResolver := draft.NewPlanner()
 	dependencyManager := postal.NewService(cargo.NewTransport())
 
 	packit.Run(
-		godist.Detect(buildpackYAMLParser),
+		godist.Detect(),
 		godist.Build(entryResolver, dependencyManager, Generator{}, chronos.DefaultClock, logEmitter),
 	)
 }

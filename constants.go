@@ -8,6 +8,5 @@ const (
 
 var Priorities = []interface{}{
 	"BP_GO_VERSION",
-	"buildpack.yml",
 	"go.mod",
 }

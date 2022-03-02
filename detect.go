@@ -2,15 +2,9 @@ package godist
 
 import (
 	"os"
-	"path/filepath"
 
 	"github.com/paketo-buildpacks/packit/v2"
 )
-
-//go:generate faux --interface VersionParser --output fakes/version_parser.go
-type VersionParser interface {
-	ParseVersion(path string) (version string, err error)
-}
 
 type BuildPlanMetadata struct {
 	VersionSource string `toml:"version-source"`
@@ -18,7 +12,7 @@ type BuildPlanMetadata struct {
 	Version       string `toml:"version"`
 }
 
-func Detect(buildpackYAMLParser VersionParser) packit.DetectFunc {
+func Detect() packit.DetectFunc {
 	return func(context packit.DetectContext) (packit.DetectResult, error) {
 		var requirements []packit.BuildPlanRequirement
 
@@ -27,21 +21,6 @@ func Detect(buildpackYAMLParser VersionParser) packit.DetectFunc {
 				Name: GoDependency,
 				Metadata: BuildPlanMetadata{
 					VersionSource: "BP_GO_VERSION",
-					Version:       version,
-				},
-			})
-		}
-
-		version, err := buildpackYAMLParser.ParseVersion(filepath.Join(context.WorkingDir, "buildpack.yml"))
-		if err != nil {
-			return packit.DetectResult{}, err
-		}
-
-		if version != "" {
-			requirements = append(requirements, packit.BuildPlanRequirement{
-				Name: GoDependency,
-				Metadata: BuildPlanMetadata{
-					VersionSource: "buildpack.yml",
 					Version:       version,
 				},
 			})
