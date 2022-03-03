@@ -88,9 +88,8 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		sbomGenerator.GenerateFromDependencyCall.Returns.SBOM = sbom.SBOM{}
 
 		buffer = bytes.NewBuffer(nil)
-		logEmitter := godist.NewGoLogger(scribe.NewEmitter(buffer))
 
-		build = godist.Build(entryResolver, dependencyManager, sbomGenerator, clock, logEmitter)
+		build = godist.Build(entryResolver, dependencyManager, sbomGenerator, clock, scribe.NewEmitter(buffer))
 	})
 
 	it.After(func() {
