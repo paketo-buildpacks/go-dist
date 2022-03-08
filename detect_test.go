@@ -2,6 +2,7 @@ package godist_test
 
 import (
 	"os"
+	"path/filepath"
 	"testing"
 
 	godist "github.com/paketo-buildpacks/go-dist"
@@ -69,5 +70,41 @@ func testDetect(t *testing.T, context spec.G, it spec.S) {
 			}))
 
 		})
-	}, spec.Sequential())
+	})
+
+	context("when there is a buildpack.yml", func() {
+		var workingDir string
+		it.Before(func() {
+			var err error
+			workingDir, err = os.MkdirTemp("", "working-dir")
+			Expect(err).NotTo(HaveOccurred())
+			Expect(os.WriteFile(filepath.Join(workingDir, "buildpack.yml"), nil, os.ModePerm))
+		})
+
+		it.After(func() {
+			Expect(os.RemoveAll(workingDir)).To(Succeed())
+		})
+
+		it("fails the build with a deprecation notice", func() {
+			_, err := detect(packit.DetectContext{
+				WorkingDir: workingDir,
+			})
+			Expect(err).To(MatchError("working directory contains deprecated 'buildpack.yml'; use environment variables for configuration"))
+		})
+
+		context("and its contents cannot be read", func() {
+			it.Before(func() {
+				Expect(os.Chmod(workingDir, 0000)).To(Succeed())
+			})
+			it.After(func() {
+				Expect(os.Chmod(workingDir, os.ModePerm)).To(Succeed())
+			})
+			it("returns an error", func() {
+				_, err := detect(packit.DetectContext{
+					WorkingDir: workingDir,
+				})
+				Expect(err).To(MatchError(ContainSubstring("permission denied")))
+			})
+		})
+	})
 }
