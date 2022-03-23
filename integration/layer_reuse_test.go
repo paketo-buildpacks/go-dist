@@ -138,7 +138,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			Eventually(secondContainer).Should(Serve(ContainSubstring("go1.17")).OnPort(8080))
 
-			Expect(secondImage.Buildpacks[0].Layers["go"].Metadata["built_at"]).To(Equal(firstImage.Buildpacks[0].Layers["go"].Metadata["built_at"]))
+			Expect(secondImage.Buildpacks[0].Layers["go"].SHA).To(Equal(firstImage.Buildpacks[0].Layers["go"].SHA))
 		})
 	})
 
@@ -214,7 +214,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			Eventually(secondContainer).Should(Serve(ContainSubstring("go1.18")).OnPort(8080))
 
-			Expect(secondImage.Buildpacks[0].Layers["go"].Metadata["built_at"]).NotTo(Equal(firstImage.Buildpacks[0].Layers["go"].Metadata["built_at"]))
+			Expect(secondImage.Buildpacks[0].Layers["go"].SHA).NotTo(Equal(firstImage.Buildpacks[0].Layers["go"].SHA))
 		})
 	})
 }

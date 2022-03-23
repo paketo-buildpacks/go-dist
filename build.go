@@ -121,7 +121,6 @@ func Build(entryResolver EntryResolver, dependencyManager DependencyManager, sbo
 
 		goLayer.Metadata = map[string]interface{}{
 			DependencySHAKey: dependency.SHA256,
-			"built_at":       clock.Now().Format(time.RFC3339Nano),
 		}
 
 		return packit.BuildResult{
