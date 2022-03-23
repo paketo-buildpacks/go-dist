@@ -6,7 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
-	"time"
 
 	godist "github.com/paketo-buildpacks/go-dist"
 	"github.com/paketo-buildpacks/go-dist/fakes"
@@ -30,7 +29,6 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		layersDir         string
 		workingDir        string
 		cnbDir            string
-		timestamp         time.Time
 		entryResolver     *fakes.EntryResolver
 		dependencyManager *fakes.DependencyManager
 		sbomGenerator     *fakes.SBOMGenerator
@@ -49,11 +47,6 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 
 		workingDir, err = os.MkdirTemp("", "working-dir")
 		Expect(err).NotTo(HaveOccurred())
-
-		timestamp = time.Now()
-		clock := chronos.NewClock(func() time.Time {
-			return timestamp
-		})
 
 		entryResolver = &fakes.EntryResolver{}
 		entryResolver.ResolveCall.Returns.BuildpackPlanEntry = packit.BuildpackPlanEntry{
@@ -89,7 +82,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 
 		buffer = bytes.NewBuffer(nil)
 
-		build = godist.Build(entryResolver, dependencyManager, sbomGenerator, clock, scribe.NewEmitter(buffer))
+		build = godist.Build(entryResolver, dependencyManager, sbomGenerator, chronos.DefaultClock, scribe.NewEmitter(buffer))
 	})
 
 	it.After(func() {
@@ -125,7 +118,6 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(layer.Path).To(Equal(filepath.Join(layersDir, "go")))
 		Expect(layer.Metadata).To(Equal(map[string]interface{}{
 			"dependency-sha": "go-dependency-sha",
-			"built_at":       timestamp.Format(time.RFC3339Nano),
 		}))
 
 		Expect(layer.SBOM.Formats()).To(Equal([]packit.SBOMFormat{
@@ -227,7 +219,6 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			Expect(layer.Path).To(Equal(filepath.Join(layersDir, "go")))
 			Expect(layer.Metadata).To(Equal(map[string]interface{}{
 				"dependency-sha": "go-dependency-sha",
-				"built_at":       timestamp.Format(time.RFC3339Nano),
 			}))
 			Expect(layer.Build).To(BeTrue())
 			Expect(layer.Launch).To(BeTrue())
