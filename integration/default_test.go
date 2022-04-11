@@ -100,7 +100,7 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 				MatchRegexp(`    Installing Go 1\.17\.\d+`),
 				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 				"",
-				fmt.Sprintf("  Generating SBOM for directory /layers/%s/go", strings.ReplaceAll(buildpackInfo.Buildpack.ID, "/", "_")),
+				fmt.Sprintf("  Generating SBOM for /layers/%s/go", strings.ReplaceAll(buildpackInfo.Buildpack.ID, "/", "_")),
 				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 				"",
 				"  Writing SBOM in the following format(s):",
