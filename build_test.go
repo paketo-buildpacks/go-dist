@@ -370,7 +370,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 					Layers: packit.Layers{Path: layersDir},
 					Stack:  "some-stack",
 				})
-				Expect(err).To(MatchError("\"random-format\" is not a supported SBOM format"))
+				Expect(err).To(MatchError("unsupported SBOM format: 'random-format'"))
 			})
 		})
 	})
