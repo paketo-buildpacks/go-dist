@@ -25,7 +25,7 @@ api = "0.7"
     sha256 = "f77b3f0ba95014581032c8ab2744b5caa6679d552deb4143a4e58766e70d3c54"
     source = "https://dl.google.com/go/go1.17.9.src.tar.gz"
     source_sha256 = "763ad4bafb80a9204458c5fa2b8e7327fa971aee454252c0e362c11236156813"
-    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny"]
+    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "io.buildpacks.stacks.jammy.tiny"]
     uri = "https://deps.paketo.io/go/go_go1.17.9_linux_x64_bionic_f77b3f0b.tgz"
     version = "1.17.9"
 
@@ -38,7 +38,7 @@ api = "0.7"
     sha256 = "1944f3b08f7af32190a38612bc67553864f8080c7dd8f1730e29722f353920ce"
     source = "https://dl.google.com/go/go1.17.10.src.tar.gz"
     source_sha256 = "299e55af30f15691b015d8dcf8ecae72412412569e5b2ece20361753a456f2f9"
-    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny"]
+    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "io.buildpacks.stacks.jammy.tiny"]
     uri = "https://deps.paketo.io/go/go_go1.17.10_linux_x64_bionic_1944f3b0.tgz"
     version = "1.17.10"
 
@@ -51,7 +51,7 @@ api = "0.7"
     sha256 = "dfb33a42151d0df94ab9afee7f53e4b1d955513c9675a1aad26df819d03d81dc"
     source = "https://dl.google.com/go/go1.18.1.src.tar.gz"
     source_sha256 = "efd43e0f1402e083b73a03d444b7b6576bb4c539ac46208b63a916b69aca4088"
-    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny"]
+    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "io.buildpacks.stacks.jammy.tiny"]
     uri = "https://deps.paketo.io/go/go_go1.18.1_linux_x64_bionic_dfb33a42.tgz"
     version = "1.18.1"
 
@@ -64,7 +64,7 @@ api = "0.7"
     sha256 = "9ea3461be24040a78dbeddd890f123f8f81745e971c2707a5bec33a374b15321"
     source = "https://dl.google.com/go/go1.18.2.src.tar.gz"
     source_sha256 = "2c44d03ea2c34092137ab919ba602f2c261a038d08eb468528a3f3a28e5667e2"
-    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny"]
+    stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "io.buildpacks.stacks.jammy.tiny"]
     uri = "https://deps.paketo.io/go/go_go1.18.2_linux_x64_bionic_9ea3461b.tgz"
     version = "1.18.2"
 
@@ -83,3 +83,6 @@ api = "0.7"
 
 [[stacks]]
   id = "io.paketo.stacks.tiny"
+
+[[stacks]]
+  id = "io.buildpacks.stacks.jammy.tiny"
