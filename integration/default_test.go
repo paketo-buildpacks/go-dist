@@ -30,10 +30,8 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 
 	context("when the buildpack is run with pack build", func() {
 		var (
-			image occam.Image
-
-			container1 occam.Container
-			container2 occam.Container
+			image     occam.Image
+			container occam.Container
 
 			name    string
 			source  string
@@ -54,10 +52,10 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 		})
 
 		it.After(func() {
-			Expect(docker.Container.Remove.Execute(container1.ID)).To(Succeed())
-			Expect(docker.Container.Remove.Execute(container2.ID)).To(Succeed())
+			Expect(docker.Container.Remove.Execute(container.ID)).To(Succeed())
 			Expect(docker.Image.Remove.Execute(image.ID)).To(Succeed())
 			Expect(docker.Volume.Remove.Execute(occam.CacheVolumeNames(name))).To(Succeed())
+
 			Expect(os.RemoveAll(source)).To(Succeed())
 			Expect(os.RemoveAll(sbomDir)).To(Succeed())
 		})
@@ -79,7 +77,7 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 			Expect(err).ToNot(HaveOccurred(), logs.String)
 
 			// Ensure go is installed correctly
-			container1, err = docker.Container.Run.
+			container, err = docker.Container.Run.
 				WithCommand("go run main.go").
 				WithEnv(map[string]string{"PORT": "8080"}).
 				WithPublish("8080").
@@ -87,7 +85,7 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 				Execute(image.ID)
 			Expect(err).NotTo(HaveOccurred())
 
-			Eventually(container1).Should(Serve(ContainSubstring("go1.17")).OnPort(8080))
+			Eventually(container).Should(Serve(ContainSubstring("go1.17")).OnPort(8080))
 
 			Expect(logs).To(ContainLines(
 				MatchRegexp(fmt.Sprintf(`%s \d+\.\d+\.\d+`, buildpackInfo.Buildpack.Name)),
@@ -111,17 +109,9 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 				"",
 			))
 
-			// check that legacy SBOM is included via metadata
-			container2, err = docker.Container.Run.
-				WithCommand("cat /layers/sbom/launch/sbom.legacy.json").
-				Execute(image.ID)
+			contents, err := os.ReadFile(filepath.Join(sbomDir, "sbom", "launch", "sbom.legacy.json"))
 			Expect(err).NotTo(HaveOccurred())
-
-			Eventually(func() string {
-				cLogs, err := docker.Container.Logs.Execute(container2.ID)
-				Expect(err).NotTo(HaveOccurred())
-				return cLogs.String()
-			}).Should(ContainSubstring(`"name":"Go"`))
+			Expect(string(contents)).To(ContainSubstring(`"name":"Go"`))
 
 			// check that all required SBOM files are present
 			Expect(filepath.Join(sbomDir, "sbom", "launch", strings.ReplaceAll(buildpackInfo.Buildpack.ID, "/", "_"), "go", "sbom.cdx.json")).To(BeARegularFile())
@@ -129,7 +119,7 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 			Expect(filepath.Join(sbomDir, "sbom", "launch", strings.ReplaceAll(buildpackInfo.Buildpack.ID, "/", "_"), "go", "sbom.syft.json")).To(BeARegularFile())
 
 			// check an SBOM file to make sure it has an entry for go
-			contents, err := os.ReadFile(filepath.Join(sbomDir, "sbom", "launch", strings.ReplaceAll(buildpackInfo.Buildpack.ID, "/", "_"), "go", "sbom.cdx.json"))
+			contents, err = os.ReadFile(filepath.Join(sbomDir, "sbom", "launch", strings.ReplaceAll(buildpackInfo.Buildpack.ID, "/", "_"), "go", "sbom.cdx.json"))
 			Expect(err).NotTo(HaveOccurred())
 			Expect(string(contents)).To(ContainSubstring(`"name": "Go"`))
 		})
