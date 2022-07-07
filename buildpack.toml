@@ -1,7 +1,7 @@
 api = "0.8"
 
 [buildpack]
-  description = "A buildpack for installing the approriate Go compiler distribution version"
+  description = "A buildpack for installing the appropriate Go compiler distribution version"
   homepage = "https://github.com/paketo-buildpacks/go-dist"
   id = "paketo-buildpacks/go-dist"
   keywords = ["go", "distribution", "compiler"]
