@@ -3,7 +3,7 @@ module github.com/paketo-buildpacks/go-dist
 go 1.18
 
 require (
-	github.com/BurntSushi/toml v1.1.0
+	github.com/BurntSushi/toml v1.2.0
 	github.com/onsi/gomega v1.20.0
 	github.com/paketo-buildpacks/occam v0.9.0
 	github.com/paketo-buildpacks/packit/v2 v2.3.1
