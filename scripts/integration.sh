@@ -72,10 +72,7 @@ function main() {
   local testout
   testout=$(mktemp)
   for builder in "${builderArray[@]}"; do
-    util::print::title "Setting default pack builder image..."
-    pack config default-builder "${builder}"
-    pack config trusted-builders add "${builder}"
-
+    builder::default "${builder}"
     tests::run "${builder}" "${testout}"
   done
 
@@ -136,18 +133,23 @@ function images::pull() {
   done
 }
 
+function builder::default() {
+    util::print::title "Setting default pack builder image..."
+    pack config default-builder "${1}"
+    pack config trusted-builders add "${1}"
+}
+
 function token::fetch() {
   GIT_TOKEN="$(util::git::token::fetch)"
   export GIT_TOKEN
 }
 
 function tests::run() {
-  util::print::title "Run Buildpack Runtime Integration Tests"
-  util::print::info "Using ${1} as builder..."
+  util::print::title "Run Buildpack Runtime Integration Tests against ${1}"
 
   pushd "${BUILDPACKDIR}" > /dev/null
     if GOMAXPROCS="${GOMAXPROCS:-4}" go test -count=1 -timeout 0 ./integration/... -v -run Integration | tee "${2}"; then
-      util::print::info "** GO Test Succeeded with ${1}**"
+      util::print::title "** GO Test Succeeded with ${1}**"
     else
       util::print::error "** GO Test Failed with ${1}**"
     fi
