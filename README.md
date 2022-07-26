@@ -22,7 +22,7 @@ file that looks like the following:
 [[requires]]
 
   # The name of the  dependency is "go". This value is considered
-  # part of the public API for the buildpack and will not change without a plan
+  # parc API for the buildpack and will not change without a plan
   # for deprecation.
   name = "go"
 
