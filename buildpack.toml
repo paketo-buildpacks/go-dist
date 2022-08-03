@@ -16,7 +16,7 @@ api = "0.7"
   include-files = ["bin/run", "bin/build", "bin/detect", "buildpack.toml"]
   pre-package = "./scripts/build.sh"
   [metadata.default-versions]
-    go = "1.17.*"
+    go = "1.18.*"
 
   [[metadata.dependencies]]
     cpe = "cpe:2.3:a:golang:go:1.18.4:*:*:*:*:*:*:*"
