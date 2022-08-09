@@ -121,7 +121,7 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 			// check an SBOM file to make sure it has an entry for go
 			contents, err = os.ReadFile(filepath.Join(sbomDir, "sbom", "launch", strings.ReplaceAll(buildpackInfo.Buildpack.ID, "/", "_"), "go", "sbom.cdx.json"))
 			Expect(err).NotTo(HaveOccurred())
-			Expect(string(contents)).To(ContainSubstring(`"name":"Go"`))
+			Expect(string(contents)).To(ContainSubstring(`"name": "Go"`))
 		})
 	})
 }
