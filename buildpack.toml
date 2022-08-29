@@ -24,11 +24,12 @@ api = "0.7"
     licenses = ["BSD-3-Clause"]
     name = "Go"
     purl = "pkg:generic/go@go1.18.4?checksum=4525aa6b0e3cecb57845f4060a7075aafc9ab752bb7b6b4cf8a212d43078e1e4&download_url=https://dl.google.com/go/go1.18.4.src.tar.gz"
-    sha256 = "3c364727980f71d7714b198f4c6360f9fce99889cef1b1681803ef3a1756356c"
+    sha256 = "c9b099b68d93f5c5c8a8844a89f8db07eaa58270e3a1e01804f17f4cf8df02f5"
     source = "https://dl.google.com/go/go1.18.4.src.tar.gz"
     source_sha256 = "4525aa6b0e3cecb57845f4060a7075aafc9ab752bb7b6b4cf8a212d43078e1e4"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "io.buildpacks.stacks.jammy", "io.buildpacks.stacks.jammy.tiny"]
-    uri = "https://deps.paketo.io/go/go_go1.18.4_linux_x64_bionic_3c364727.tgz"
+    strip-components = 1
+    uri = "https://go.dev/dl/go1.18.4.linux-amd64.tar.gz"
     version = "1.18.4"
 
   [[metadata.dependencies]]
@@ -37,11 +38,12 @@ api = "0.7"
     licenses = ["BSD-3-Clause"]
     name = "Go"
     purl = "pkg:generic/go@go1.18.5?checksum=9920d3306a1ac536cdd2c796d6cb3c54bc559c226fc3cc39c32f1e0bd7f50d2a&download_url=https://dl.google.com/go/go1.18.5.src.tar.gz"
-    sha256 = "f6f0e6be02c4987ea6bc8eb0e960514f2a97bc92ec61cde30b9d9622ed78fb11"
+    sha256 = "9e5de37f9c49942c601b191ac5fba404b868bfc21d446d6960acc12283d6e5f2"
     source = "https://dl.google.com/go/go1.18.5.src.tar.gz"
     source_sha256 = "9920d3306a1ac536cdd2c796d6cb3c54bc559c226fc3cc39c32f1e0bd7f50d2a"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "io.buildpacks.stacks.jammy", "io.buildpacks.stacks.jammy.tiny"]
-    uri = "https://deps.paketo.io/go/go_go1.18.5_linux_x64_bionic_f6f0e6be.tgz"
+    strip-components = 1
+    uri = "https://go.dev/dl/go1.18.5.linux-amd64.tar.gz"
     version = "1.18.5"
 
   [[metadata.dependencies]]
@@ -50,11 +52,12 @@ api = "0.7"
     licenses = ["BSD-3-Clause"]
     name = "Go"
     purl = "pkg:generic/go@go1.19?checksum=9419cc70dc5a2523f29a77053cafff658ed21ef3561d9b6b020280ebceab28b9&download_url=https://dl.google.com/go/go1.19.src.tar.gz"
-    sha256 = "d7363c6f044fa76bc466f8523371b29c085c9fcb7a8ca44875dcc6c234b3b262"
+    sha256 = "464b6b66591f6cf055bc5df90a9750bf5fbc9d038722bb84a9d56a2bea974be6"
     source = "https://dl.google.com/go/go1.19.src.tar.gz"
     source_sha256 = "9419cc70dc5a2523f29a77053cafff658ed21ef3561d9b6b020280ebceab28b9"
     stacks = ["io.buildpacks.stacks.bionic", "io.paketo.stacks.tiny", "io.buildpacks.stacks.jammy", "io.buildpacks.stacks.jammy.tiny"]
-    uri = "https://deps.paketo.io/go/go_go1.19_linux_x64_bionic_d7363c6f.tgz"
+    strip-components = 1
+    uri = "https://go.dev/dl/go1.19.linux-amd64.tar.gz"
     version = "1.19.0"
 
   [[metadata.dependency-constraints]]
