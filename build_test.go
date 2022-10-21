@@ -55,12 +55,12 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 
 		dependencyManager = &fakes.DependencyManager{}
 		dependencyManager.ResolveCall.Returns.Dependency = postal.Dependency{
-			ID:      "go",
-			Name:    "go-dependency-name",
-			SHA256:  "go-dependency-sha",
-			Stacks:  []string{"some-stack"},
-			URI:     "go-dependency-uri",
-			Version: "go-dependency-version",
+			ID:       "go",
+			Name:     "go-dependency-name",
+			Checksum: "sha256:go-dependency-sha",
+			Stacks:   []string{"some-stack"},
+			URI:      "go-dependency-uri",
+			Version:  "go-dependency-version",
 		}
 
 		dependencyManager.GenerateBillOfMaterialsCall.Returns.BOMEntrySlice = []packit.BOMEntry{
@@ -117,7 +117,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(layer.Name).To(Equal("go"))
 		Expect(layer.Path).To(Equal(filepath.Join(layersDir, "go")))
 		Expect(layer.Metadata).To(Equal(map[string]interface{}{
-			"dependency-sha": "go-dependency-sha",
+			"dependency-checksum": "sha256:go-dependency-sha",
 		}))
 
 		Expect(layer.SBOM.Formats()).To(Equal([]packit.SBOMFormat{
@@ -147,12 +147,12 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(dependencyManager.ResolveCall.Receives.Stack).To(Equal("some-stack"))
 
 		Expect(dependencyManager.DeliverCall.Receives.Dependency).To(Equal(postal.Dependency{
-			ID:      "go",
-			Name:    "go-dependency-name",
-			SHA256:  "go-dependency-sha",
-			Stacks:  []string{"some-stack"},
-			URI:     "go-dependency-uri",
-			Version: "go-dependency-version",
+			ID:       "go",
+			Name:     "go-dependency-name",
+			Checksum: "sha256:go-dependency-sha",
+			Stacks:   []string{"some-stack"},
+			URI:      "go-dependency-uri",
+			Version:  "go-dependency-version",
 		}))
 		Expect(dependencyManager.DeliverCall.Receives.CnbPath).To(Equal(cnbDir))
 		Expect(dependencyManager.DeliverCall.Receives.LayerPath).To(Equal(filepath.Join(layersDir, "go")))
@@ -160,22 +160,22 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 
 		Expect(dependencyManager.GenerateBillOfMaterialsCall.Receives.Dependencies).To(Equal([]postal.Dependency{
 			{
-				ID:      "go",
-				Name:    "go-dependency-name",
-				SHA256:  "go-dependency-sha",
-				Stacks:  []string{"some-stack"},
-				URI:     "go-dependency-uri",
-				Version: "go-dependency-version",
+				ID:       "go",
+				Name:     "go-dependency-name",
+				Checksum: "sha256:go-dependency-sha",
+				Stacks:   []string{"some-stack"},
+				URI:      "go-dependency-uri",
+				Version:  "go-dependency-version",
 			},
 		}))
 
 		Expect(sbomGenerator.GenerateFromDependencyCall.Receives.Dependency).To(Equal(postal.Dependency{
-			ID:      "go",
-			Name:    "go-dependency-name",
-			SHA256:  "go-dependency-sha",
-			Stacks:  []string{"some-stack"},
-			URI:     "go-dependency-uri",
-			Version: "go-dependency-version",
+			ID:       "go",
+			Name:     "go-dependency-name",
+			Checksum: "sha256:go-dependency-sha",
+			Stacks:   []string{"some-stack"},
+			URI:      "go-dependency-uri",
+			Version:  "go-dependency-version",
 		}))
 		Expect(sbomGenerator.GenerateFromDependencyCall.Receives.Dir).To(Equal(filepath.Join(layersDir, "go")))
 
@@ -218,7 +218,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			Expect(layer.Name).To(Equal("go"))
 			Expect(layer.Path).To(Equal(filepath.Join(layersDir, "go")))
 			Expect(layer.Metadata).To(Equal(map[string]interface{}{
-				"dependency-sha": "go-dependency-sha",
+				"dependency-checksum": "sha256:go-dependency-sha",
 			}))
 			Expect(layer.Build).To(BeTrue())
 			Expect(layer.Launch).To(BeTrue())
