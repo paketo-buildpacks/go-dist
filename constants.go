@@ -1,9 +1,8 @@
 package godist
 
 const (
-	DependencySHAKey = "dependency-sha"
-	GoDependency     = "go"
-	GoLayerName      = "go"
+	GoDependency = "go"
+	GoLayerName  = "go"
 )
 
 var Priorities = []interface{}{
