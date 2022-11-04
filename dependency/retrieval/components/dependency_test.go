@@ -147,7 +147,7 @@ func testDependency(t *testing.T, context spec.G, it spec.S) {
 					"io.buildpacks.stacks.jammy",
 					"io.buildpacks.stacks.jammy.tiny",
 				},
-				StripComponents: 0,
+				StripComponents: 1,
 				URI:             fmt.Sprintf("%s/archive", server.URL),
 				Version:         "1.19.0",
 			}))
