@@ -25,7 +25,7 @@ api = "0.7"
     licenses = ["BSD-3-Clause"]
     name = "Go"
     purl = "pkg:generic/go@go1.18.7?checksum=6c967efc22152ce3124fc35cdf50fc686870120c5fd2107234d05d450a6105d8&download_url=https://go.dev/dl/go1.18.7.linux-amd64.tar.gz"
-    source = "https://dl.google.com/go/go1.18.7.src.tar.gz"
+    source = "https://go.dev/dl/go1.18.7.src.tar.gz"
     source-checksum = "sha256:9467e33b819f71bebb21fb0ee1dd6794fd2244ae94907a984286712f9839a944"
     stacks = ["*"]
     strip-components = 1
@@ -53,7 +53,7 @@ api = "0.7"
     licenses = ["BSD-3-Clause"]
     name = "Go"
     purl = "pkg:generic/go@go1.19.2?checksum=5e8c5a74fe6470dd7e055a461acda8bb4050ead8c2df70f227e3ff7d8eb7eeb6&download_url=https://go.dev/dl/go1.19.2.linux-amd64.tar.gz"
-    source = "https://dl.google.com/go/go1.19.2.src.tar.gz"
+    source = "https://go.dev/dl/go1.19.2.src.tar.gz"
     source-checksum = "sha256:2ce930d70a931de660fdaf271d70192793b1b240272645bf0275779f6704df6b"
     stacks = ["*"]
     strip-components = 1

@@ -65,15 +65,10 @@ func ConvertReleaseToDependency(release Release) (cargo.ConfigMetadataDependency
 	}
 
 	return cargo.ConfigMetadataDependency{
-		ID:      "go",
-		Name:    "Go",
-		Version: release.SemVer.String(),
-		Stacks: []string{
-			"io.buildpacks.stacks.bionic",
-			"io.paketo.stacks.tiny",
-			"io.buildpacks.stacks.jammy",
-			"io.buildpacks.stacks.jammy.tiny",
-		},
+		ID:              "go",
+		Name:            "Go",
+		Version:         release.SemVer.String(),
+		Stacks:          []string{"*"},
 		URI:             archive.URL,
 		Checksum:        fmt.Sprintf("sha256:%s", archive.SHA256),
 		Source:          source.URL,
