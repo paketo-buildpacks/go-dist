@@ -2,7 +2,6 @@
   "builders": [
     "paketobuildpacks/builder:buildpackless-base",
     "paketobuildpacks/builder-jammy-buildpackless-base",
-    "index.docker.io/jericop/amazonlinux-builder:base"
   ],
   "buildplan": "github.com/paketo-community/build-plan"
 }
