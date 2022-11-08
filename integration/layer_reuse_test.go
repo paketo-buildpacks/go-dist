@@ -87,7 +87,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				"",
 				"  Executing build process",
 				MatchRegexp(`    Installing Go 1\.18\.\d+`),
-				MatchRegexp(`      Completed in \d+\.\d+`),
+				MatchRegexp(`      Completed in \d+(\.?\d+)*`),
 			))
 
 			firstContainer, err := docker.Container.Run.
