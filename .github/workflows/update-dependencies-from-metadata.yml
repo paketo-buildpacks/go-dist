@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Select Go Version
         id: select-go-version
-        run: echo "::set-output name=go-version::>=1.18.0"
+        run: echo "go-version=>=1.18.0" >> "$GITHUB_OUTPUT"
 
   retrieve:
     name: Retrieve New Versions and Generate Metadata
@@ -58,20 +58,14 @@ jobs:
           compilation=$(echo $content | jq -r 'map(select(.checksum == null and .uri == null))'?)
           complength=$(echo $compilation | jq -r '. | length')
 
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
+          delimiter="$(uuidgen)"
+          echo "metadata-filepath=${OUTPUT}" >> "$GITHUB_OUTPUT"
+          printf "metadata-json<<%s\n%s\n%s\n" "${delimiter}" "${content}" "${delimiter}" >> "$GITHUB_OUTPUT" # see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
+          echo "id=$id" >> "$GITHUB_OUTPUT"
+          echo "length=$length" >> "$GITHUB_OUTPUT"
+          printf "compilation-json<<%s\n%s\n%s\n" "${delimiter}" "${compilation}" "${delimiter}" >> "$GITHUB_OUTPUT" # see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
+          echo "compilation-length=$complength" >> "$GITHUB_OUTPUT"
 
-          compilation="${compilation//'%'/'%25'}"
-          compilation="${compilation//$'\n'/'%0A'}"
-          compilation="${compilation//$'\r'/'%0D'}"
-
-          echo "::set-output name=metadata-filepath::${OUTPUT}"
-          echo "::set-output name=metadata-json::$content"
-          echo "::set-output name=id::$id"
-          echo "::set-output name=length::$length"
-          echo "::set-output name=compilation-json::$compilation"
-          echo "::set-output name=compilation-length::$complength"
 
       - name: Upload `${{ steps.retrieve.outputs.metadata-filepath }}`
         uses: actions/upload-artifact@v3
@@ -97,7 +91,7 @@ jobs:
         run: |
           if test -d "dependency/actions/compile"; then
             echo "Compilation action provided"
-            echo "::set-output name=should-compile::true"
+            echo "should-compile=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Has Testing Action?
@@ -105,7 +99,7 @@ jobs:
         run: |
           if test -d "dependency/test"; then
             echo "Testing file provided"
-            echo "::set-output name=should-test::true"
+            echo "should-test=true" >> "$GITHUB_OUTPUT"
           fi
 
   test:
@@ -130,7 +124,7 @@ jobs:
       - name: Make Temporary Artifact Directory
         id: make-outputdir
         run: |
-          echo "::set-output name=outputdir::$(mktemp -d)"
+          echo "outputdir=$(mktemp -d)" >> "$GITHUB_OUTPUT"
 
       # Download the tarball for testing if:
       #   (1) dependency testing code is present in the buildpack directory
@@ -172,7 +166,7 @@ jobs:
       - name: Make Temporary Artifact Directory
         id: make-outputdir
         run: |
-          echo "::set-output name=outputdir::$(mktemp -d)"
+          echo "outputdir=$(mktemp -d)" >> "$GITHUB_OUTPUT"
 
       # Compile if all of the following conditions are met:
       #   (1) compilation Github Action presetn in the buildpack directory
@@ -232,8 +226,8 @@ jobs:
       - name: Get artifact file name
         id: get-file-names
         run: |
-          echo "::set-output name=artifact-file::$(basename ./*.tgz)"
-          echo "::set-output name=checksum-file::$(basename ./*.tgz.checksum)"
+          echo "artifact-file=$(basename ./*.tgz)" >> "$GITHUB_OUTPUT"
+          echo "checksum-file=$(basename ./*.tgz.checksum)" >> "$GITHUB_OUTPUT"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -252,7 +246,7 @@ jobs:
 
       - name: Get Checksum
         id: get-checksum
-        run: echo "::set-output name=checksum::$(cat ${{ steps.get-file-names.outputs.checksum-file }})"
+        run: echo "checksum=$(cat ${{ steps.get-file-names.outputs.checksum-file }})" >> "$GITHUB_OUTPUT"
 
       - name: Download metadata.json
         uses: actions/download-artifact@v3
@@ -301,7 +295,7 @@ jobs:
       - name: Make Temporary Artifact Directory
         id: make-outputdir
         run: |
-          echo "::set-output name=outputdir::$(mktemp -d)"
+          echo "outputdir=$(mktemp -d)" >> "$GITHUB_OUTPUT"
 
       - name: Download metadata.json
         uses: actions/download-artifact@v3
