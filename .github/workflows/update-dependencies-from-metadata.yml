@@ -320,6 +320,8 @@ jobs:
         with:
           message: "Updating buildpack.toml with new versions ${{ steps.update.outputs.new-versions }}"
           pathspec: "."
+          keyid: ${{ secrets.PAKETO_BOT_GPG_SIGNING_KEY_ID }}
+          key: ${{ secrets.PAKETO_BOT_GPG_SIGNING_KEY }}
 
       - name: Push Branch 'automation/dependencies/update-from-metadata'
         if: ${{ steps.commit.outputs.commit_sha != '' }}
