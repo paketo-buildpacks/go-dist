@@ -33,7 +33,7 @@ jobs:
       compilation-length: ${{ steps.retrieve.outputs.compilation-length }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Go '${{ needs.select-go-version.outputs.go-version }}'
         uses: actions/setup-go@v3
@@ -84,7 +84,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Has Compilation Action?
         id: compile-check
@@ -119,7 +119,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Make Temporary Artifact Directory
         id: make-outputdir
@@ -161,7 +161,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Make Temporary Artifact Directory
         id: make-outputdir
@@ -285,7 +285,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Checkout Branch
         uses: paketo-buildpacks/github-config/actions/pull-request/checkout-branch@main
