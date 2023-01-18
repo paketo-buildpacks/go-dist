@@ -14,8 +14,6 @@ require (
 	github.com/sclevine/spec v1.4.0
 )
 
-// pin to v0.6.0 because github.com/anchore/syft relies on abstractions in this version
-
 require (
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
 	github.com/CycloneDX/cyclonedx-go v0.7.1-0.20221222100750-41a1ac565cce // indirect
