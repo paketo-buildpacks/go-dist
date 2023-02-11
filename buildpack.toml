@@ -74,6 +74,22 @@ api = "0.7"
     uri = "https://go.dev/dl/go1.19.5.linux-amd64.tar.gz"
     version = "1.19.5"
 
+  [[metadata.dependencies]]
+    checksum = "sha256:5a9ebcc65c1cce56e0d2dc616aff4c4cedcfbda8cc6f0288cc08cda3b18dcbf1"
+    cpe = "cpe:2.3:a:golang:go:1.20:*:*:*:*:*:*:*"
+    purl = "pkg:generic/go@go1.20?checksum=5a9ebcc65c1cce56e0d2dc616aff4c4cedcfbda8cc6f0288cc08cda3b18dcbf1&download_url=https://go.dev/dl/go1.20.linux-amd64.tar.gz"
+    id = "go"
+    licenses = [ "BSD-3-Clause" ]
+    name = "Go"
+    source = "https://go.dev/dl/go1.20.src.tar.gz"
+    source-checksum = "sha256:3a29ff0421beaf6329292b8a46311c9fbf06c800077ceddef5fb7f8d5b1ace33"
+    stacks = [ "*" ]
+    strip-components = 1
+    uri = "https://go.dev/dl/go1.20.linux-amd64.tar.gz"
+    version = "1.20.0"
+    target = ""
+
+
   [[metadata.dependency-constraints]]
     constraint = "1.18.*"
     id = "go"
@@ -81,6 +97,11 @@ api = "0.7"
 
   [[metadata.dependency-constraints]]
     constraint = "1.19.*"
+    id = "go"
+    patches = 2
+
+  [[metadata.dependency-constraints]]
+    constraint = "1.20.*"
     id = "go"
     patches = 2
 
