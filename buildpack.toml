@@ -87,7 +87,6 @@ api = "0.7"
     strip-components = 1
     uri = "https://go.dev/dl/go1.20.linux-amd64.tar.gz"
     version = "1.20.0"
-    target = ""
 
 
   [[metadata.dependency-constraints]]
