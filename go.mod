@@ -30,15 +30,15 @@ require (
 	github.com/anchore/go-struct-converter v0.0.0-20221221214134-65614c61201e // indirect
 	github.com/anchore/go-version v1.2.2-0.20200701162849-18adb9c92b9b // indirect
 	github.com/anchore/stereoscope v0.0.0-20230301191755-abfb374a1122 // indirect
-	github.com/anchore/syft v0.74.0 // indirect
+	github.com/anchore/syft v0.74.1 // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/apex/log v1.9.0 // indirect
 	github.com/becheran/wildmatch-go v1.0.0 // indirect
 	github.com/bmatcuk/doublestar/v4 v4.6.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.0 // indirect
 	github.com/cloudflare/circl v1.3.2 // indirect
-	github.com/containerd/containerd v1.6.19 // indirect
-	github.com/containerd/stargz-snapshotter/estargz v0.14.1 // indirect
+	github.com/containerd/containerd v1.7.0 // indirect
+	github.com/containerd/stargz-snapshotter/estargz v0.14.3 // indirect
 	github.com/dgryski/go-minhash v0.0.0-20190315135803-ad340ca03076 // indirect
 	github.com/docker/cli v23.0.1+incompatible // indirect
 	github.com/docker/distribution v2.8.1+incompatible // indirect
@@ -51,13 +51,13 @@ require (
 	github.com/ekzhu/minhash-lsh v0.0.0-20190924033628-faac2c6342f8 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/facebookincubator/nvdtools v0.1.5 // indirect
-	github.com/gabriel-vasile/mimetype v1.4.1 // indirect
+	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/go-git/gcfg v1.5.0 // indirect
 	github.com/go-git/go-billy/v5 v5.4.1 // indirect
 	github.com/go-git/go-git/v5 v5.6.0 // indirect
 	github.com/go-restruct/restruct v1.2.0-alpha // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
-	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/go-containerregistry v0.13.0 // indirect
@@ -92,7 +92,7 @@ require (
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
-	github.com/opencontainers/image-spec v1.1.0-rc2 // indirect
+	github.com/opencontainers/image-spec v1.1.0-rc2.0.20221005185240-3a7f492d3f1b // indirect
 	github.com/opencontainers/runc v1.1.4 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pierrec/lz4/v4 v4.1.17 // indirect
@@ -108,9 +108,9 @@ require (
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/skeema/knownhosts v1.1.0 // indirect
 	github.com/spdx/tools-golang v0.5.0-rc1 // indirect
-	github.com/spf13/afero v1.9.4 // indirect
+	github.com/spf13/afero v1.9.5 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
-	github.com/sylabs/sif/v2 v2.10.0 // indirect
+	github.com/sylabs/sif/v2 v2.11.0 // indirect
 	github.com/sylabs/squashfs v0.6.1 // indirect
 	github.com/testcontainers/testcontainers-go v0.17.0 // indirect
 	github.com/therootcompany/xz v1.0.1 // indirect
@@ -123,18 +123,18 @@ require (
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
 	golang.org/x/crypto v0.7.0 // indirect
-	golang.org/x/exp v0.0.0-20230304125523-9ff063c70017 // indirect
+	golang.org/x/exp v0.0.0-20230310171629-522b1b587ee0 // indirect
 	golang.org/x/mod v0.9.0 // indirect
 	golang.org/x/net v0.8.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/text v0.8.0 // indirect
-	golang.org/x/tools v0.6.0 // indirect
+	golang.org/x/tools v0.7.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	gonum.org/v1/gonum v0.12.0 // indirect
-	google.golang.org/genproto v0.0.0-20230303212802-e74f57abe488 // indirect
+	google.golang.org/genproto v0.0.0-20230306155012-7f2fa6fef1f4 // indirect
 	google.golang.org/grpc v1.53.0 // indirect
-	google.golang.org/protobuf v1.28.1 // indirect
+	google.golang.org/protobuf v1.29.0 // indirect
 	gopkg.in/neurosnap/sentences.v1 v1.0.7 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
