@@ -85,7 +85,7 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 				Execute(image.ID)
 			Expect(err).NotTo(HaveOccurred())
 
-			Eventually(container).Should(Serve(ContainSubstring("go1.18")).OnPort(8080))
+			Eventually(container).Should(Serve(ContainSubstring("go1.19")).OnPort(8080))
 
 			Expect(logs).To(ContainLines(
 				MatchRegexp(fmt.Sprintf(`%s \d+\.\d+\.\d+`, buildpackInfo.Buildpack.Name)),
@@ -93,10 +93,10 @@ func testDefault(t *testing.T, context spec.G, it spec.S) {
 				"    Candidate version sources (in priority order):",
 				"      <unknown> -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.18\.\d+`),
+				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.19\.\d+`),
 				"",
 				"  Executing build process",
-				MatchRegexp(`    Installing Go 1\.18\.\d+`),
+				MatchRegexp(`    Installing Go 1\.19\.\d+`),
 				MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 				"",
 				fmt.Sprintf("  Generating SBOM for /layers/%s/go", strings.ReplaceAll(buildpackInfo.Buildpack.ID, "/", "_")),
