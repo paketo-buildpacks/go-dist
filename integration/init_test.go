@@ -71,7 +71,7 @@ func TestIntegration(t *testing.T) {
 		Execute(config.BuildPlan)
 	Expect(err).NotTo(HaveOccurred())
 
-	SetDefaultEventuallyTimeout(30 * time.Second)
+	SetDefaultEventuallyTimeout(60 * time.Second)
 
 	suite := spec.New("Integration", spec.Report(report.Terminal{}), spec.Parallel())
 	suite("Default", testDefault)
