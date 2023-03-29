@@ -3,7 +3,7 @@ package components
 import (
 	"net/url"
 
-	"github.com/anchore/packageurl-go"
+	"github.com/package-url/packageurl-go"
 )
 
 // GeneratePURL can be used to populate the `purl` field of dependency metadata
