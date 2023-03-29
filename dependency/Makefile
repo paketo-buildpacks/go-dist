@@ -1,6 +1,7 @@
 .PHONY: retrieve
 
 retrieve:
-	@go run ./retrieval \
+	@cd retrieval; \
+	go run main.go \
 		--buildpack-toml-path "${buildpackTomlPath}" \
 		--output "${output}"
