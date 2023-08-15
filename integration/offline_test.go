@@ -74,7 +74,7 @@ func testOffline(t *testing.T, context spec.G, it spec.S) {
 				Execute(image.ID)
 			Expect(err).NotTo(HaveOccurred())
 
-			Eventually(container).Should(Serve(ContainSubstring("go1.19")).OnPort(8080))
+			Eventually(container).Should(Serve(ContainSubstring("go1.20")).OnPort(8080))
 		})
 	})
 }
