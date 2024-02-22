@@ -75,14 +75,15 @@ api = "0.7"
     version = "1.21.7"
 
   [[metadata.dependency-constraints]]
-    constraint = "1.20.*"
+    constraint = "1.21.*"
     id = "go"
     patches = 2
 
   [[metadata.dependency-constraints]]
-    constraint = "1.21.*"
+    constraint = "1.22.*"
     id = "go"
     patches = 2
+
 
 [[stacks]]
   id = "*"
