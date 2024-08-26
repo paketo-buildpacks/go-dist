@@ -16,7 +16,7 @@ api = "0.7"
   include-files = ["bin/run", "bin/build", "bin/detect", "buildpack.toml"]
   pre-package = "./scripts/build.sh"
   [metadata.default-versions]
-    go = "1.21.*"
+    go = "1.22.*"
 
   [[metadata.dependencies]]
     checksum = "sha256:121ab58632787e18ae0caa8ae285b581f9470d0f6b3defde9e1600e211f583c5"
@@ -75,12 +75,12 @@ api = "0.7"
     version = "1.22.6"
 
   [[metadata.dependency-constraints]]
-    constraint = "1.21.*"
+    constraint = "1.22.*"
     id = "go"
     patches = 2
 
   [[metadata.dependency-constraints]]
-    constraint = "1.22.*"
+    constraint = "1.23.*"
     id = "go"
     patches = 2
 
