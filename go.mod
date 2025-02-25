@@ -1,6 +1,6 @@
 module github.com/paketo-buildpacks/go-dist
 
-go 1.23.4
+go 1.24.0
 
 require (
 	github.com/BurntSushi/toml v1.4.0
