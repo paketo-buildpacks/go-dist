@@ -83,10 +83,10 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				"    Candidate version sources (in priority order):",
 				"      <unknown> -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.22\.\d+`),
+				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.23\.\d+`),
 				"",
 				"  Executing build process",
-				MatchRegexp(`    Installing Go 1\.22\.\d+`),
+				MatchRegexp(`    Installing Go 1\.23\.\d+`),
 				MatchRegexp(`      Completed in \d+(\.?\d+)*`),
 			))
 
@@ -121,7 +121,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 				"    Candidate version sources (in priority order):",
 				"      <unknown> -> \"\"",
 				"",
-				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.22\.\d+`),
+				MatchRegexp(`    Selected Go version \(using <unknown>\): 1\.23\.\d+`),
 				"",
 				fmt.Sprintf("  Reusing cached layer /layers/%s/go", strings.ReplaceAll(buildpackInfo.Buildpack.ID, "/", "_")),
 			))
@@ -136,7 +136,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			containerIDs[secondContainer.ID] = struct{}{}
 
-			Eventually(secondContainer).Should(Serve(ContainSubstring("go1.22")).OnPort(8080))
+			Eventually(secondContainer).Should(Serve(ContainSubstring("go1.23")).OnPort(8080))
 
 			Expect(secondImage.Buildpacks[0].Layers["go"].SHA).To(Equal(firstImage.Buildpacks[0].Layers["go"].SHA))
 		})
@@ -166,7 +166,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 			firstImage, _, err := pack.WithNoColor().Build.
 				WithPullPolicy("never").
 				WithBuildpacks(buildpack, buildPlanBuildpack).
-				WithEnv(map[string]string{"BP_GO_VERSION": "1.22.*"}).
+				WithEnv(map[string]string{"BP_GO_VERSION": "1.23.*"}).
 				Execute(name, source)
 			Expect(err).NotTo(HaveOccurred())
 
@@ -192,7 +192,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 			secondImage, _, err := pack.WithNoColor().Build.
 				WithPullPolicy("never").
 				WithBuildpacks(buildpack, buildPlanBuildpack).
-				WithEnv(map[string]string{"BP_GO_VERSION": "1.23.*"}).
+				WithEnv(map[string]string{"BP_GO_VERSION": "1.24.*"}).
 				Execute(name, source)
 			Expect(err).NotTo(HaveOccurred())
 
@@ -212,7 +212,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			containerIDs[secondContainer.ID] = struct{}{}
 
-			Eventually(secondContainer).Should(Serve(ContainSubstring("go1.23")).OnPort(8080))
+			Eventually(secondContainer).Should(Serve(ContainSubstring("go1.24")).OnPort(8080))
 
 			Expect(secondImage.Buildpacks[0].Layers["go"].SHA).NotTo(Equal(firstImage.Buildpacks[0].Layers["go"].SHA))
 		})
