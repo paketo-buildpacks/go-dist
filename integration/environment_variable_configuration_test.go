@@ -65,7 +65,7 @@ func testEnvironmentVariableConfiguration(t *testing.T, context spec.G, it spec.
 				image, logs, err = pack.WithNoColor().Build.
 					WithPullPolicy("never").
 					WithBuildpacks(buildpack, buildPlanBuildpack).
-					WithEnv(map[string]string{"BP_GO_VERSION": "1.22.*"}).
+					WithEnv(map[string]string{"BP_GO_VERSION": "1.23.*"}).
 					Execute(name, source)
 				Expect(err).ToNot(HaveOccurred(), logs.String)
 
@@ -77,19 +77,19 @@ func testEnvironmentVariableConfiguration(t *testing.T, context spec.G, it spec.
 					Execute(image.ID)
 				Expect(err).NotTo(HaveOccurred())
 
-				Eventually(container).Should(Serve(ContainSubstring("go1.22")).OnPort(8080))
+				Eventually(container).Should(Serve(ContainSubstring("go1.23")).OnPort(8080))
 
 				Expect(logs).To(ContainLines(
 					MatchRegexp(fmt.Sprintf(`%s \d+\.\d+\.\d+`, buildpackInfo.Buildpack.Name)),
 					"  Resolving Go version",
 					"    Candidate version sources (in priority order):",
-					"      BP_GO_VERSION -> \"1.22.*\"",
+					"      BP_GO_VERSION -> \"1.23.*\"",
 					"      <unknown>     -> \"\"",
 					"",
-					MatchRegexp(`    Selected Go version \(using BP_GO_VERSION\): 1\.22\.\d+`),
+					MatchRegexp(`    Selected Go version \(using BP_GO_VERSION\): 1\.23\.\d+`),
 					"",
 					"  Executing build process",
-					MatchRegexp(`    Installing Go 1\.22\.\d+`),
+					MatchRegexp(`    Installing Go 1\.23\.\d+`),
 					MatchRegexp(`      Completed in ([0-9]*(\.[0-9]*)?[a-z]+)+`),
 				))
 			})
