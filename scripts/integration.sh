@@ -110,6 +110,9 @@ function tools::install() {
     --directory "${BUILDPACKDIR}/.bin" \
     --token "${token}"
 
+  util::tools::libpak-tools::install \
+    --directory "${BUILDPACKDIR}/.bin"
+
   util::tools::create-package::install \
     --directory "${BUILDPACKDIR}/.bin"
 
