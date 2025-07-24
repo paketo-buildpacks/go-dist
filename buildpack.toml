@@ -1,4 +1,4 @@
-api = "0.8"
+api = "0.7"
 
 [buildpack]
   description = "A buildpack for installing the appropriate Go compiler distribution version"
