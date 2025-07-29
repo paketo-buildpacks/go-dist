@@ -6,7 +6,7 @@ require (
 	github.com/BurntSushi/toml v1.5.0
 	github.com/onsi/gomega v1.38.0
 	github.com/paketo-buildpacks/occam v0.28.0
-	github.com/paketo-buildpacks/packit/v2 v2.22.0
+	github.com/paketo-buildpacks/packit/v2 v2.23.0
 	github.com/sclevine/spec v1.4.0
 )
 
@@ -191,7 +191,7 @@ require (
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/olekukonko/errors v1.1.0 // indirect
 	github.com/olekukonko/ll v0.0.9 // indirect
-	github.com/olekukonko/tablewriter v1.0.8 // indirect
+	github.com/olekukonko/tablewriter v1.0.9 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/opencontainers/image-spec v1.1.1 // indirect
 	github.com/opencontainers/runtime-spec v1.2.1 // indirect
