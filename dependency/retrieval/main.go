@@ -9,6 +9,11 @@ import (
 	"github.com/paketo-buildpacks/packit/v2/cargo"
 )
 
+var supportedPlatforms = []components.Platform{
+	{OS: "linux", Arch: "amd64"},
+	{OS: "linux", Arch: "arm64"},
+}
+
 func main() {
 	var buildpackTOMLPath, outputPath string
 	set := flag.NewFlagSet("", flag.ContinueOnError)
@@ -39,11 +44,11 @@ func main() {
 	for _, version := range newVersions {
 		for _, r := range releases {
 			if r.SemVer.String() == version {
-				dependency, err := components.ConvertReleaseToDependency(r)
+				convertedDependencies, err := components.ConvertReleaseToDependencies(r, supportedPlatforms)
 				if err != nil {
 					log.Fatal(err)
 				}
-				dependencies = append(dependencies, dependency)
+				dependencies = append(dependencies, convertedDependencies...)
 			}
 		}
 	}
