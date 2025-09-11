@@ -4,3 +4,8 @@
 *.tgz
 go-cnb_*
 go-compiler-cnb_*
+.DS_Store
+.idea
+/linux
+/darwin
+/windows
