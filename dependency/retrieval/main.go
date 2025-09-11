@@ -7,11 +7,9 @@ import (
 	"github.com/Masterminds/semver/v3"
 	"github.com/paketo-buildpacks/libdependency/versionology"
 
-	"github.com/paketo-buildpacks/libdependency/buildpack_config"
 	"github.com/paketo-buildpacks/libdependency/retrieve"
 
 	"github.com/paketo-buildpacks/go-dist/dependency/retrieval/components"
-	"github.com/paketo-buildpacks/packit/v2/cargo"
 )
 
 type GoMetadata struct {
@@ -23,64 +21,7 @@ func (goMetadata GoMetadata) Version() *semver.Version {
 }
 
 func main() {
-	id := "go"
-	buildpackTomlPath, output := retrieve.FetchArgs()
-	retrieve.Validate(buildpackTomlPath, output)
-
-	config, err := buildpack_config.ParseBuildpackToml(buildpackTomlPath)
-	if err != nil {
-		panic(err)
-	}
-
-	// We set by default the targets to linux/amd64 if no targets are specified in the buildpack.toml
-	if len(config.Targets) == 0 {
-		config.Targets = []cargo.ConfigTarget{
-			{
-				OS:   "linux",
-				Arch: "amd64",
-			},
-		}
-	}
-
-	newVersions, err := retrieve.GetNewVersionsForId(id, config, getAllVersions)
-	if err != nil {
-		panic(err)
-	}
-
-	fetcher := components.NewFetcher()
-	releases, err := fetcher.Get()
-	if err != nil {
-		panic(err)
-	}
-
-	var dependencies []cargo.ConfigMetadataDependency
-
-	for _, target := range config.Targets {
-		platform := cargo.ConfigTarget{
-			OS:   target.OS,
-			Arch: target.Arch,
-		}
-
-		// dependencies = append(dependencies, retrieve.GenerateAllMetadataWithPlatform(newVersions, generateMetadata, platform)...)
-
-		for _, version := range newVersions {
-			for _, r := range releases {
-				if strings.TrimPrefix(r.Version, "go") == version.Version().String() {
-
-					convertedDependency, err := components.ConvertReleaseToDependency(r, platform)
-					if err != nil {
-						log.Fatal(err)
-					}
-					dependencies = append(dependencies, convertedDependency)
-				}
-			}
-		}
-	}
-
-	err = components.WriteOutput(output, dependencies, "")
-	if err != nil {
-		log.Fatal(err)
-	}
+	retrieve.NewMetadataWithPlatforms("go", getAllVersions, components.GenerateMetadataWithPlatform)
 }
 
 func getAllVersions() (versionology.VersionFetcherArray, error) {

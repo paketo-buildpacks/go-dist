@@ -86,3 +86,11 @@ api = "0.7"
 
 [[stacks]]
   id = "*"
+
+[[targets]]
+  arch = "amd64"
+  os = "linux"
+
+[[targets]]
+  arch = "arm64"
+  os = "linux"
