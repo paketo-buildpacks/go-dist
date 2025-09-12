@@ -8,6 +8,7 @@ require (
 	github.com/go-enry/go-license-detector/v4 v4.3.1
 	github.com/onsi/gomega v1.38.0
 	github.com/package-url/packageurl-go v0.1.3
+	github.com/paketo-buildpacks/libdependency v0.2.1
 	github.com/paketo-buildpacks/occam v0.28.1
 	github.com/paketo-buildpacks/packit/v2 v2.23.0
 	github.com/sclevine/spec v1.4.0
@@ -19,6 +20,7 @@ require (
 	github.com/BurntSushi/toml v1.5.0 // indirect
 	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/ProtonMail/go-crypto v1.2.0 // indirect
+	github.com/anchore/packageurl-go v0.1.1-0.20250220190351-d62adb6e1115 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cloudflare/circl v1.6.1 // indirect
 	github.com/containerd/errdefs v1.0.0 // indirect
