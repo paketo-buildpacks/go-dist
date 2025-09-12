@@ -11,6 +11,7 @@ import (
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/paketo-buildpacks/go-dist/dependency/retrieval/components"
+	"github.com/paketo-buildpacks/libdependency/versionology"
 	"github.com/paketo-buildpacks/packit/v2/cargo"
 	"github.com/sclevine/spec"
 
@@ -127,31 +128,40 @@ func testDependency(t *testing.T, context spec.G, it spec.S) {
 					},
 				},
 			},
+				cargo.ConfigTarget{OS: "linux", Arch: "amd64"},
 			)
 			Expect(err).NotTo(HaveOccurred())
 
-			Expect(dependency).To(Equal(cargo.ConfigMetadataDependency{
-				Checksum:        "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-				CPE:             "cpe:2.3:a:golang:go:1.19:*:*:*:*:*:*:*",
-				PURL:            fmt.Sprintf("pkg:generic/go@go1.19?checksum=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&download_url=%s", fmt.Sprintf("%s/archive", server.URL)),
-				ID:              "go",
-				Licenses:        []interface{}{"MIT", "MIT-0"},
-				Name:            "Go",
-				SHA256:          "",
-				Source:          fmt.Sprintf("%s/source", server.URL),
-				SourceChecksum:  "sha256:ad1b820bde8c32707f8bb8ce636750b1c1b7c83a82e43481910bef2f4f77dcb5",
-				SourceSHA256:    "",
-				Stacks:          []string{"*"},
-				StripComponents: 1,
-				URI:             fmt.Sprintf("%s/archive", server.URL),
-				Version:         "1.19.0",
+			Expect(dependency).To(Equal([]versionology.Dependency{
+				{
+					ConfigMetadataDependency: cargo.ConfigMetadataDependency{
+						Checksum:        "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+						CPE:             "cpe:2.3:a:golang:go:1.19:*:*:*:*:*:*:*",
+						PURL:            fmt.Sprintf("pkg:generic/go@go1.19?checksum=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&download_url=%s", fmt.Sprintf("%s/archive", server.URL)),
+						ID:              "go",
+						Licenses:        []interface{}{"JSON", "MIT", "MIT-0", "MIT-feh"},
+						Name:            "Go",
+						SHA256:          "",
+						Source:          fmt.Sprintf("%s/source", server.URL),
+						SourceChecksum:  "sha256:ad1b820bde8c32707f8bb8ce636750b1c1b7c83a82e43481910bef2f4f77dcb5",
+						SourceSHA256:    "",
+						Stacks:          []string{"*"},
+						OS:              "linux",
+						Arch:            "amd64",
+						StripComponents: 1,
+						URI:             fmt.Sprintf("%s/archive", server.URL),
+						Version:         "1.19.0",
+					},
+					SemverVersion: semver.MustParse("1.19.0"),
+					Target:        "*",
+				},
 			}))
 		})
 
 		context("failure cases", func() {
 			context("when there is not a release files", func() {
 				it("returns an error", func() {
-					_, err := components.ConvertReleaseToDependency(components.Release{})
+					_, err := components.ConvertReleaseToDependency(components.Release{}, cargo.ConfigTarget{OS: "linux", Arch: "amd64"})
 					Expect(err).To(MatchError("could not find release file for linux/amd64"))
 				})
 			})
@@ -184,6 +194,7 @@ func testDependency(t *testing.T, context spec.G, it spec.S) {
 							},
 						},
 					},
+						cargo.ConfigTarget{OS: "linux", Arch: "amd64"},
 					)
 					Expect(err).To(MatchError(ContainSubstring("unsupported archive type")))
 				})
@@ -218,6 +229,7 @@ func testDependency(t *testing.T, context spec.G, it spec.S) {
 								},
 							},
 						},
+							cargo.ConfigTarget{OS: "linux", Arch: "amd64"},
 						)
 						Expect(err).To(MatchError("the given checksum of the artifact does not match with downloaded artifact"))
 					})
@@ -251,6 +263,7 @@ func testDependency(t *testing.T, context spec.G, it spec.S) {
 								},
 							},
 						},
+							cargo.ConfigTarget{OS: "linux", Arch: "amd64"},
 						)
 						Expect(err).To(MatchError("the given checksum of the source does not match with downloaded source"))
 					})
