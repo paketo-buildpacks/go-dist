@@ -4,12 +4,14 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
 	"github.com/BurntSushi/toml"
 	"github.com/onsi/gomega/format"
 	"github.com/paketo-buildpacks/occam"
+	"github.com/paketo-buildpacks/packit/v2/cargo"
 	"github.com/sclevine/spec"
 	"github.com/sclevine/spec/report"
 
@@ -21,6 +23,7 @@ var (
 	buildPlanBuildpack string
 	offlineBuildpack   string
 	root               string
+	defaultVersion     string
 
 	buildpackInfo struct {
 		Buildpack struct {
@@ -52,6 +55,14 @@ func TestIntegration(t *testing.T) {
 
 	_, err = toml.NewDecoder(file).Decode(&buildpackInfo)
 	Expect(err).NotTo(HaveOccurred())
+
+	parser := cargo.NewBuildpackParser()
+	buildpackTomlConfig, err := parser.Parse("../buildpack.toml")
+	Expect(err).NotTo(HaveOccurred())
+
+	goDefaultVersion, ok := buildpackTomlConfig.Metadata.DefaultVersions["go"]
+	defaultVersion = strings.TrimRight(goDefaultVersion, ".*")
+	Expect(ok).To(BeTrue())
 
 	root, err = filepath.Abs("./..")
 	Expect(err).ToNot(HaveOccurred())
