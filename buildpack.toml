@@ -16,7 +16,7 @@ api = "0.7"
   include-files = ["buildpack.toml", "linux/amd64/bin/build", "linux/amd64/bin/detect", "linux/amd64/bin/run", "linux/arm64/bin/build", "linux/arm64/bin/detect", "linux/arm64/bin/run"]
   pre-package = "./scripts/build.sh --target linux/amd64 --target linux/arm64"
   [metadata.default-versions]
-    go = "1.23.*"
+    go = "1.24.*"
 
   [[metadata.dependencies]]
     arch = "amd64"
@@ -147,12 +147,12 @@ api = "0.7"
     version = "1.24.7"
 
   [[metadata.dependency-constraints]]
-    constraint = "1.23.*"
+    constraint = "1.24.*"
     id = "go"
     patches = 2
 
   [[metadata.dependency-constraints]]
-    constraint = "1.24.*"
+    constraint = "1.25.*"
     id = "go"
     patches = 2
 
