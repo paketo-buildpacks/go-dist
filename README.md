@@ -8,6 +8,7 @@ including building Go application binaries. Examples of buildpacks that perform
 this binary building process include the [Go Mod
 CNB](https://github.com/paketo-buildpacks/go-mod) and the [Dep
 CNB](https://github.com/paketo-buildpacks/dep).
+The buildpack is published to DockerHub for consumption at `paketobuildpacks/go-dist`.
 
 ## Integration
 
