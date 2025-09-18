@@ -7,6 +7,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/Masterminds/semver/v3"
 	"github.com/paketo-buildpacks/occam"
 	"github.com/sclevine/spec"
 
@@ -189,10 +190,12 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 			Eventually(firstContainer).Should(BeAvailable())
 
 			// Second pack build
+			version := semver.MustParse(defaultVersion)
+			nextVersion := fmt.Sprintf("%d.%d", version.Major(), version.IncMinor().Minor())
 			secondImage, _, err := pack.WithNoColor().Build.
 				WithPullPolicy("never").
 				WithBuildpacks(buildpack, buildPlanBuildpack).
-				WithEnv(map[string]string{"BP_GO_VERSION": defaultVersion + ".*"}).
+				WithEnv(map[string]string{"BP_GO_VERSION": nextVersion + ".*"}).
 				Execute(name, source)
 			Expect(err).NotTo(HaveOccurred())
 
@@ -212,7 +215,7 @@ func testLayerReuse(t *testing.T, context spec.G, it spec.S) {
 
 			containerIDs[secondContainer.ID] = struct{}{}
 
-			Eventually(secondContainer).Should(Serve(ContainSubstring("go" + defaultVersion)).OnPort(8080))
+			Eventually(secondContainer).Should(Serve(ContainSubstring("go" + nextVersion)).OnPort(8080))
 
 			Expect(secondImage.Buildpacks[0].Layers["go"].SHA).NotTo(Equal(firstImage.Buildpacks[0].Layers["go"].SHA))
 		})
