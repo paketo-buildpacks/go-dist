@@ -139,7 +139,7 @@ func testDependency(t *testing.T, context spec.G, it spec.S) {
 						CPE:             "cpe:2.3:a:golang:go:1.19:*:*:*:*:*:*:*",
 						PURL:            fmt.Sprintf("pkg:generic/go@go1.19?checksum=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&download_url=%s", fmt.Sprintf("%s/archive", server.URL)),
 						ID:              "go",
-						Licenses:        []interface{}{"JSON", "MIT", "MIT-0", "MIT-feh"},
+						Licenses:        components.GetBsd3LicenseInformation(),
 						Name:            "Go",
 						SHA256:          "",
 						Source:          fmt.Sprintf("%s/source", server.URL),
@@ -196,7 +196,7 @@ func testDependency(t *testing.T, context spec.G, it spec.S) {
 					},
 						cargo.ConfigTarget{OS: "linux", Arch: "amd64"},
 					)
-					Expect(err).To(MatchError(ContainSubstring("unsupported archive type")))
+					Expect(err).To(MatchError(ContainSubstring("the given checksum of the source does not match with downloaded source")))
 				})
 			})
 
