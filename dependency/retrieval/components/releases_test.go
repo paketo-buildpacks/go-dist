@@ -160,7 +160,7 @@ func testReleases(t *testing.T, context spec.G, it spec.S) {
 
 				it("returns an error", func() {
 					_, err := fetcher.Get()
-					Expect(err).To(MatchError(ContainSubstring("Invalid Semantic Version")))
+					Expect(err).To(MatchError(ContainSubstring("invalid semantic version")))
 				})
 			})
 		})

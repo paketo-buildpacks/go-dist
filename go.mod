@@ -4,6 +4,7 @@ go 1.24.6
 
 require (
 	github.com/BurntSushi/toml v1.5.0
+	github.com/Masterminds/semver/v3 v3.4.0
 	github.com/onsi/gomega v1.38.2
 	github.com/paketo-buildpacks/occam v0.30.0
 	github.com/paketo-buildpacks/packit/v2 v2.25.0
@@ -29,7 +30,6 @@ require (
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.53.0 // indirect
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping v0.53.0 // indirect
 	github.com/Masterminds/goutils v1.1.1 // indirect
-	github.com/Masterminds/semver/v3 v3.4.0 // indirect
 	github.com/Masterminds/sprig/v3 v3.3.0 // indirect
 	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/Microsoft/hcsshim v0.13.0 // indirect
