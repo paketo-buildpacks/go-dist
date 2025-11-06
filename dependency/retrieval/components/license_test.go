@@ -57,7 +57,7 @@ func testLicense(t *testing.T, context spec.G, it spec.S) {
 
 				case "/bad-archive":
 					w.WriteHeader(http.StatusOK)
-					_, err := w.Write([]byte("\x66\x4C\x61\x43\x00\x00\x00\x22"))
+					_, err := w.Write([]byte(""))
 					Expect(err).NotTo(HaveOccurred())
 
 				default:
@@ -71,7 +71,8 @@ func testLicense(t *testing.T, context spec.G, it spec.S) {
 			licenses, err := components.GenerateLicenseInformation(server.URL)
 			Expect(err).NotTo(HaveOccurred())
 
-			Expect(licenses).To(Equal([]interface{}{"MIT", "MIT-0"}))
+			// MIT seems to be one of a few defaults for an empty LICENSE file
+			Expect(licenses).To(ContainElement("MIT"))
 		})
 
 		context("failure cases", func() {

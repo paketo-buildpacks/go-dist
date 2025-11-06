@@ -1,15 +1,10 @@
 # Dependency
 
-Pre-compiled distributions of Python are provided for the Paketo stacks (i.e.
-`io.buildpacks.stack.jammy` and `io.buildpacks.stacks.bionic`).
+Pre-compiled distributions of golang are provided by google and are supported on any stacks.
 
-Source distributions of Python are provided for all other linux stacks.
-
-This directory contains scripts and GitHub Actions to facilitate the following:
-* Identifying when there is a new version of Python available
-* Compiling Python against all supported stacks
-* Packing the Python source for use in all other stacks (i.e. where we do not
-provide pre-compiled binaries of python)
+This directory contains the script to facilitate the following:
+* Identifying when there is a new version of golang available
+* Create json file used as input by jam to update dependency versions in buidpack.toml
 
 ## Running locally
 
@@ -18,36 +13,35 @@ Running the steps locally can be useful for iterating on the compilation process
 
 ### Retrieval
 
-Retrieve latest versions with:
+Retrieve latest versions with the following. This takes the current buildpack.toml as input and will only add new versions to the json file it produces. For testing purposes you can remove all existing versions from buildpack.toml while leaving the constraint definitions and it will generate all new versions.
 
 ```
 cd ./retrieval
 
 go run main.go \
   --buildpack-toml-path ../../buildpack.toml \
-  --output /path/to/retrieved.json
+  --output ../../metadata.json
 ```
 
 See [retrieval/README.md](retrieval/README.md) for more details.
 
-### Compilation
+### Updating buildpack.toml
 
-To compile on Ubuntu 22.04 (Jammy):
+Update bulidpack.toml from metadata.json with the following command:
+
+* This assumes you are running from the root of the repo
+  * `cd ../..`
+* jam is required. You can run `scripts/package.sh -v SOME_SEMVER` and it will install jam to `.bin/jam`
+  * Change `SOME_SEMVER` to something like `0.0.0`
 
 ```
-docker build \
-  --tag cpython-compilation-jammy \
-  --file ./actions/compile/jammy.Dockerfile \
-  ./actions/compile
-
-output_dir=$(mktemp -d)
-
-docker run \
-  --volume $output_dir:/tmp/compilation \
-  cpython-compilation-jammy \
-    --outputDir /tmp/compilation \
-    --target jammy \
-    --version 3.10.7
+.bin/jam update-dependencies \
+  --buildpack-file buildpack.toml \
+  --metadata-file metadata.json
 ```
 
-See [actions/compile/README.md](actions/compile/README.md) for more details.
+It will produce the output like this:
+
+```
+Updating buildpack.toml with new versions:  [1.24.6 1.24.7 1.25.0 1.25.1]
+```

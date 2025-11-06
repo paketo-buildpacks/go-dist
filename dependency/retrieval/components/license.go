@@ -11,6 +11,12 @@ import (
 	"github.com/paketo-buildpacks/packit/v2/vacation"
 )
 
+func GetBsd3LicenseInformation() []interface{} {
+	return []interface{}{
+		"BSD-3-Clause",
+	}
+}
+
 func GenerateLicenseInformation(url string) ([]interface{}, error) {
 	dir, err := os.MkdirTemp("", "")
 	if err != nil {

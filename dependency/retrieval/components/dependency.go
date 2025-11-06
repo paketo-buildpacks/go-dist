@@ -28,10 +28,7 @@ func ConvertReleaseToDependency(release Release, platform cargo.ConfigTarget) ([
 
 	purl := GeneratePURL("go", release.Version, archive.SHA256, archive.URL)
 
-	licenses, err := GenerateLicenseInformation(source.URL)
-	if err != nil {
-		return nil, err
-	}
+	licenses := GetBsd3LicenseInformation()
 
 	// Validate the artifact
 	archiveResponse, err := http.Get(archive.URL)
