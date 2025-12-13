@@ -33,6 +33,8 @@ function util::tools::arch() {
         echo ""
       elif [[ "${1:-}" == "--format-amd64-x86_64" ]]; then
         echo "x86_64"
+      elif [[ "${1:-}" == "--format-amd64-x86-64" ]]; then
+        echo "x86-64"
       else
         echo "amd64"
       fi
@@ -156,7 +158,7 @@ function util::tools::pack::install() {
 
     util::print::title "Installing pack ${version}"
 
-    os=$(util::tools::os macos)
+    os=$(util::tools::os)
     arch=$(util::tools::arch --blank-amd64)
 
     curl "https://github.com/buildpacks/pack/releases/download/${version}/pack-${version}-${os}${arch:+-$arch}.tgz" \
@@ -167,7 +169,6 @@ function util::tools::pack::install() {
     if [[ "${pack_config_enable_experimental}" == "true" ]]; then
       "${dir}"/pack config experimental true
     fi
-
   else
     util::print::info "Using pack $("${dir}"/pack version)"
   fi
