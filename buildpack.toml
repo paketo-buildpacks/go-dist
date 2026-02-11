@@ -20,38 +20,6 @@ api = "0.7"
 
   [[metadata.dependencies]]
     arch = "amd64"
-    checksum = "sha256:bceca00afaac856bc48b4cc33db7cd9eb383c81811379faed3bdbc80edb0af65"
-    cpe = "cpe:2.3:a:golang:go:1.24.11:*:*:*:*:*:*:*"
-    id = "go"
-    licenses = ["BSD-3-Clause"]
-    name = "Go"
-    os = "linux"
-    purl = "pkg:generic/go@go1.24.11?checksum=bceca00afaac856bc48b4cc33db7cd9eb383c81811379faed3bdbc80edb0af65&download_url=https://go.dev/dl/go1.24.11.linux-amd64.tar.gz"
-    source = "https://go.dev/dl/go1.24.11.src.tar.gz"
-    source-checksum = "sha256:ffdf97766a4c4b135cd53809713978e9ee1a943b2c8e28ad221a5429de30e210"
-    stacks = ["*"]
-    strip-components = 1
-    uri = "https://go.dev/dl/go1.24.11.linux-amd64.tar.gz"
-    version = "1.24.11"
-
-  [[metadata.dependencies]]
-    arch = "arm64"
-    checksum = "sha256:beaf0f51cbe0bd71b8289b2b6fa96c0b11cd86aa58672691ef2f1de88eb621de"
-    cpe = "cpe:2.3:a:golang:go:1.24.11:*:*:*:*:*:*:*"
-    id = "go"
-    licenses = ["BSD-3-Clause"]
-    name = "Go"
-    os = "linux"
-    purl = "pkg:generic/go@go1.24.11?checksum=beaf0f51cbe0bd71b8289b2b6fa96c0b11cd86aa58672691ef2f1de88eb621de&download_url=https://go.dev/dl/go1.24.11.linux-arm64.tar.gz"
-    source = "https://go.dev/dl/go1.24.11.src.tar.gz"
-    source-checksum = "sha256:ffdf97766a4c4b135cd53809713978e9ee1a943b2c8e28ad221a5429de30e210"
-    stacks = ["*"]
-    strip-components = 1
-    uri = "https://go.dev/dl/go1.24.11.linux-arm64.tar.gz"
-    version = "1.24.11"
-
-  [[metadata.dependencies]]
-    arch = "amd64"
     checksum = "sha256:bddf8e653c82429aea7aec2520774e79925d4bb929fe20e67ecc00dd5af44c50"
     cpe = "cpe:2.3:a:golang:go:1.24.12:*:*:*:*:*:*:*"
     id = "go"
@@ -84,35 +52,35 @@ api = "0.7"
 
   [[metadata.dependencies]]
     arch = "amd64"
-    checksum = "sha256:9e9b755d63b36acf30c12a9a3fc379243714c1c6d3dd72861da637f336ebb35b"
-    cpe = "cpe:2.3:a:golang:go:1.25.5:*:*:*:*:*:*:*"
+    checksum = "sha256:1fc94b57134d51669c72173ad5d49fd62afb0f1db9bf3f798fd98ee423f8d730"
+    cpe = "cpe:2.3:a:golang:go:1.24.13:*:*:*:*:*:*:*"
     id = "go"
     licenses = ["BSD-3-Clause"]
     name = "Go"
     os = "linux"
-    purl = "pkg:generic/go@go1.25.5?checksum=9e9b755d63b36acf30c12a9a3fc379243714c1c6d3dd72861da637f336ebb35b&download_url=https://go.dev/dl/go1.25.5.linux-amd64.tar.gz"
-    source = "https://go.dev/dl/go1.25.5.src.tar.gz"
-    source-checksum = "sha256:22a5fd0a91efcd28a1b0537106b9959b2804b61f59c3758b51e8e5429c1a954f"
+    purl = "pkg:generic/go@go1.24.13?checksum=1fc94b57134d51669c72173ad5d49fd62afb0f1db9bf3f798fd98ee423f8d730&download_url=https://go.dev/dl/go1.24.13.linux-amd64.tar.gz"
+    source = "https://go.dev/dl/go1.24.13.src.tar.gz"
+    source-checksum = "sha256:639a6204c2486b137df1eb6e78ee3ed038f9877d0e4b5a465e796a2153f858d7"
     stacks = ["*"]
     strip-components = 1
-    uri = "https://go.dev/dl/go1.25.5.linux-amd64.tar.gz"
-    version = "1.25.5"
+    uri = "https://go.dev/dl/go1.24.13.linux-amd64.tar.gz"
+    version = "1.24.13"
 
   [[metadata.dependencies]]
     arch = "arm64"
-    checksum = "sha256:b00b694903d126c588c378e72d3545549935d3982635ba3f7a964c9fa23fe3b9"
-    cpe = "cpe:2.3:a:golang:go:1.25.5:*:*:*:*:*:*:*"
+    checksum = "sha256:74d97be1cc3a474129590c67ebf748a96e72d9f3a2b6fef3ed3275de591d49b3"
+    cpe = "cpe:2.3:a:golang:go:1.24.13:*:*:*:*:*:*:*"
     id = "go"
     licenses = ["BSD-3-Clause"]
     name = "Go"
     os = "linux"
-    purl = "pkg:generic/go@go1.25.5?checksum=b00b694903d126c588c378e72d3545549935d3982635ba3f7a964c9fa23fe3b9&download_url=https://go.dev/dl/go1.25.5.linux-arm64.tar.gz"
-    source = "https://go.dev/dl/go1.25.5.src.tar.gz"
-    source-checksum = "sha256:22a5fd0a91efcd28a1b0537106b9959b2804b61f59c3758b51e8e5429c1a954f"
+    purl = "pkg:generic/go@go1.24.13?checksum=74d97be1cc3a474129590c67ebf748a96e72d9f3a2b6fef3ed3275de591d49b3&download_url=https://go.dev/dl/go1.24.13.linux-arm64.tar.gz"
+    source = "https://go.dev/dl/go1.24.13.src.tar.gz"
+    source-checksum = "sha256:639a6204c2486b137df1eb6e78ee3ed038f9877d0e4b5a465e796a2153f858d7"
     stacks = ["*"]
     strip-components = 1
-    uri = "https://go.dev/dl/go1.25.5.linux-arm64.tar.gz"
-    version = "1.25.5"
+    uri = "https://go.dev/dl/go1.24.13.linux-arm64.tar.gz"
+    version = "1.24.13"
 
   [[metadata.dependencies]]
     arch = "amd64"
@@ -145,6 +113,38 @@ api = "0.7"
     strip-components = 1
     uri = "https://go.dev/dl/go1.25.6.linux-arm64.tar.gz"
     version = "1.25.6"
+
+  [[metadata.dependencies]]
+    arch = "amd64"
+    checksum = "sha256:12e6d6a191091ae27dc31f6efc630e3a3b8ba409baf3573d955b196fdf086005"
+    cpe = "cpe:2.3:a:golang:go:1.25.7:*:*:*:*:*:*:*"
+    id = "go"
+    licenses = ["BSD-3-Clause"]
+    name = "Go"
+    os = "linux"
+    purl = "pkg:generic/go@go1.25.7?checksum=12e6d6a191091ae27dc31f6efc630e3a3b8ba409baf3573d955b196fdf086005&download_url=https://go.dev/dl/go1.25.7.linux-amd64.tar.gz"
+    source = "https://go.dev/dl/go1.25.7.src.tar.gz"
+    source-checksum = "sha256:178f2832820274b43e177d32f06a3ebb0129e427dd20a5e4c88df2c1763cf10a"
+    stacks = ["*"]
+    strip-components = 1
+    uri = "https://go.dev/dl/go1.25.7.linux-amd64.tar.gz"
+    version = "1.25.7"
+
+  [[metadata.dependencies]]
+    arch = "arm64"
+    checksum = "sha256:ba611a53534135a81067240eff9508cd7e256c560edd5d8c2fef54f083c07129"
+    cpe = "cpe:2.3:a:golang:go:1.25.7:*:*:*:*:*:*:*"
+    id = "go"
+    licenses = ["BSD-3-Clause"]
+    name = "Go"
+    os = "linux"
+    purl = "pkg:generic/go@go1.25.7?checksum=ba611a53534135a81067240eff9508cd7e256c560edd5d8c2fef54f083c07129&download_url=https://go.dev/dl/go1.25.7.linux-arm64.tar.gz"
+    source = "https://go.dev/dl/go1.25.7.src.tar.gz"
+    source-checksum = "sha256:178f2832820274b43e177d32f06a3ebb0129e427dd20a5e4c88df2c1763cf10a"
+    stacks = ["*"]
+    strip-components = 1
+    uri = "https://go.dev/dl/go1.25.7.linux-arm64.tar.gz"
+    version = "1.25.7"
 
   [[metadata.dependency-constraints]]
     constraint = "1.24.*"
