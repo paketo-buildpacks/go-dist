@@ -9,3 +9,6 @@ go-compiler-cnb_*
 /linux
 /darwin
 /windows
+
+/metadata.json
+
