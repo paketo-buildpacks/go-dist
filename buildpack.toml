@@ -16,7 +16,7 @@ api = "0.7"
   include-files = ["buildpack.toml", "linux/amd64/bin/build", "linux/amd64/bin/detect", "linux/amd64/bin/run", "linux/arm64/bin/build", "linux/arm64/bin/detect", "linux/arm64/bin/run"]
   pre-package = "./scripts/build.sh --target linux/amd64 --target linux/arm64"
   [metadata.default-versions]
-    go = "1.24.*"
+    go = "1.25.*"
 
   [[metadata.dependencies]]
     arch = "amd64"
@@ -146,6 +146,38 @@ api = "0.7"
     uri = "https://go.dev/dl/go1.25.7.linux-arm64.tar.gz"
     version = "1.25.7"
 
+  [[metadata.dependencies]]
+    arch = "amd64"
+    checksum = "sha256:aac1b08a0fb0c4e0a7c1555beb7b59180b05dfc5a3d62e40e9de90cd42f88235"
+    cpe = "cpe:2.3:a:golang:go:1.26.0:*:*:*:*:*:*:*"
+    id = "go"
+    licenses = ["BSD-3-Clause"]
+    name = "Go"
+    os = "linux"
+    purl = "pkg:generic/go@go1.26.0?checksum=aac1b08a0fb0c4e0a7c1555beb7b59180b05dfc5a3d62e40e9de90cd42f88235&download_url=https://go.dev/dl/go1.26.0.linux-amd64.tar.gz"
+    source = "https://go.dev/dl/go1.26.0.src.tar.gz"
+    source-checksum = "sha256:c9132a8a1f6bd2aa4aad1d74b8231d95274950483a4950657ee6c56e6e817790"
+    stacks = ["*"]
+    strip-components = 1
+    uri = "https://go.dev/dl/go1.26.0.linux-amd64.tar.gz"
+    version = "1.26.0"
+
+  [[metadata.dependencies]]
+    arch = "arm64"
+    checksum = "sha256:bd03b743eb6eb4193ea3c3fd3956546bf0e3ca5b7076c8226334afe6b75704cd"
+    cpe = "cpe:2.3:a:golang:go:1.26.0:*:*:*:*:*:*:*"
+    id = "go"
+    licenses = ["BSD-3-Clause"]
+    name = "Go"
+    os = "linux"
+    purl = "pkg:generic/go@go1.26.0?checksum=bd03b743eb6eb4193ea3c3fd3956546bf0e3ca5b7076c8226334afe6b75704cd&download_url=https://go.dev/dl/go1.26.0.linux-arm64.tar.gz"
+    source = "https://go.dev/dl/go1.26.0.src.tar.gz"
+    source-checksum = "sha256:c9132a8a1f6bd2aa4aad1d74b8231d95274950483a4950657ee6c56e6e817790"
+    stacks = ["*"]
+    strip-components = 1
+    uri = "https://go.dev/dl/go1.26.0.linux-arm64.tar.gz"
+    version = "1.26.0"
+
   [[metadata.dependency-constraints]]
     constraint = "1.24.*"
     id = "go"
@@ -153,6 +185,11 @@ api = "0.7"
 
   [[metadata.dependency-constraints]]
     constraint = "1.25.*"
+    id = "go"
+    patches = 2
+
+  [[metadata.dependency-constraints]]
+    constraint = "1.26.*"
     id = "go"
     patches = 2
 
