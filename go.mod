@@ -5,7 +5,7 @@ go 1.26.3
 require (
 	github.com/BurntSushi/toml v1.6.0
 	github.com/Masterminds/semver/v3 v3.5.0
-	github.com/onsi/gomega v1.40.0
+	github.com/onsi/gomega v1.41.0
 	github.com/paketo-buildpacks/occam v0.31.3
 	github.com/paketo-buildpacks/packit/v2 v2.25.5
 	github.com/sclevine/spec v1.4.0
