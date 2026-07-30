@@ -561,8 +561,8 @@ github.com/gookit/color v1.6.1/go.mod h1:9ACFc7/1IpHGBW8RwuDm/0YEnhg3dwwXpoMsmty
 github.com/gpustack/gguf-parser-go v0.25.0 h1:1AMBhMKtI24nTtn588Bq53FqNiOvEw1x9Nb4HbRrThs=
 github.com/gpustack/gguf-parser-go v0.25.0/go.mod h1:y4TwTtDqFWTK+xvprOjRUh+dowgU2TKCX37vRKvGiZ0=
 github.com/grpc-ecosystem/grpc-gateway v1.16.0/go.mod h1:BDjrQk3hbvj6Nolgz8mAMFbcEtjT1g+wF4CSlocrBnw=
-github.com/hashicorp/aws-sdk-go-base/v2 v2.0.0-beta.73 h1:LXhjywNxHsex3qFY2p2iOaHK4nFvdqVp9T9QLdZfpjQ=
-github.com/hashicorp/aws-sdk-go-base/v2 v2.0.0-beta.73/go.mod h1:AsbUhwFfdK9ipM8G0i8WVHS0IesKck6M0M9NcuMQTJ8=
+github.com/hashicorp/aws-sdk-go-base/v2 v2.0.0-beta.74 h1:mymLUKThnV9wFvogOK8NnsMP9/vlhnjXY98gr2QIGW8=
+github.com/hashicorp/aws-sdk-go-base/v2 v2.0.0-beta.74/go.mod h1:Bh9qYL8ehmDxSg14Tk8oxFCP90XHfs6NxV1D84884xA=
 github.com/hashicorp/consul/api v1.11.0/go.mod h1:XjsvQN+RJGWI2TWy1/kqaE16HrR2J/FWgkYjdZQsX9M=
 github.com/hashicorp/consul/sdk v0.8.0/go.mod h1:GBvyrGALthsZObzUGsfgHZQDXjg4lOjagTIwIR1vPms=
 github.com/hashicorp/errwrap v1.0.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
