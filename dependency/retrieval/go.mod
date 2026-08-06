@@ -108,7 +108,7 @@ require (
 	golang.org/x/sys v0.46.0 // indirect
 	golang.org/x/text v0.39.0 // indirect
 	gonum.org/v1/gonum v0.17.0 // indirect
-	google.golang.org/grpc v1.80.0 // indirect
+	google.golang.org/grpc v1.82.1 // indirect
 	gopkg.in/neurosnap/sentences.v1 v1.0.7 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
