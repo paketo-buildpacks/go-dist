@@ -6,7 +6,7 @@ require (
 	github.com/Masterminds/semver v1.5.0
 	github.com/Masterminds/semver/v3 v3.5.0
 	github.com/go-enry/go-license-detector/v4 v4.3.1
-	github.com/onsi/gomega v1.43.1
+	github.com/onsi/gomega v1.44.0
 	github.com/package-url/packageurl-go v0.1.7
 	github.com/paketo-buildpacks/libdependency v0.2.1
 	github.com/paketo-buildpacks/occam v0.31.4
