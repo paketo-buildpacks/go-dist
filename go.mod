@@ -7,7 +7,7 @@ require (
 	github.com/Masterminds/semver/v3 v3.5.0
 	github.com/onsi/gomega v1.44.0
 	github.com/paketo-buildpacks/occam v0.31.4
-	github.com/paketo-buildpacks/packit/v2 v2.25.7
+	github.com/paketo-buildpacks/packit/v2 v2.25.8
 	github.com/sclevine/spec v1.4.0
 )
 
@@ -125,7 +125,7 @@ require (
 	github.com/docker/go-units v0.5.0 // indirect
 	github.com/dsnet/compress v0.0.2-0.20230904184137-39efe44ab707 // indirect
 	github.com/dustin/go-humanize v1.1.0 // indirect
-	github.com/ebitengine/purego v0.11.1 // indirect
+	github.com/ebitengine/purego v0.11.2 // indirect
 	github.com/elliotchance/phpserialize v1.4.0 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/envoyproxy/go-control-plane/envoy v1.40.0 // indirect
@@ -159,7 +159,7 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.23 // indirect
 	github.com/googleapis/gax-go/v2 v2.26.2 // indirect
-	github.com/gookit/color v1.6.2 // indirect
+	github.com/gookit/color v1.6.3 // indirect
 	github.com/gpustack/gguf-parser-go v0.26.4 // indirect
 	github.com/hashicorp/aws-sdk-go-base/v2 v2.0.0-beta.75 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
@@ -328,7 +328,7 @@ require (
 	google.golang.org/protobuf v1.36.12 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	howett.net/plist v1.0.1 // indirect
-	modernc.org/libc v1.78.0 // indirect
+	modernc.org/libc v1.79.0 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.12.1 // indirect
 	modernc.org/sqlite v1.60.1 // indirect
