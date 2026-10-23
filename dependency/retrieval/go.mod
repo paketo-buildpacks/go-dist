@@ -10,7 +10,7 @@ require (
 	github.com/package-url/packageurl-go v0.1.7
 	github.com/paketo-buildpacks/libdependency v0.2.1
 	github.com/paketo-buildpacks/occam v0.31.4
-	github.com/paketo-buildpacks/packit/v2 v2.25.7
+	github.com/paketo-buildpacks/packit/v2 v2.25.8
 	github.com/sclevine/spec v1.4.0
 )
 
@@ -34,7 +34,7 @@ require (
 	github.com/distribution/reference v0.6.0 // indirect
 	github.com/docker/go-connections v0.8.2 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
-	github.com/ebitengine/purego v0.11.1 // indirect
+	github.com/ebitengine/purego v0.11.2 // indirect
 	github.com/ekzhu/minhash-lsh v0.0.0-20190924033628-faac2c6342f8 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/felixge/httpsnoop v1.1.0 // indirect
