@@ -8,7 +8,7 @@ require (
 	github.com/go-enry/go-license-detector/v4 v4.3.1
 	github.com/onsi/gomega v1.44.0
 	github.com/package-url/packageurl-go v0.1.7
-	github.com/paketo-buildpacks/libdependency v0.2.1
+	github.com/paketo-buildpacks/libdependency v0.2.2
 	github.com/paketo-buildpacks/occam v0.31.4
 	github.com/paketo-buildpacks/packit/v2 v2.26.0
 	github.com/sclevine/spec v1.4.0
@@ -53,7 +53,7 @@ require (
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jdkato/prose v1.2.1 // indirect
 	github.com/kevinburke/ssh_config v1.6.0 // indirect
-	github.com/klauspost/compress v1.20.4 // indirect
+	github.com/klauspost/compress v1.20.5 // indirect
 	github.com/lufia/plan9stats v0.0.0-20260330125221-c963978e514e // indirect
 	github.com/magiconair/properties v1.18.13 // indirect
 	github.com/moby/docker-image-spec v1.3.1 // indirect
